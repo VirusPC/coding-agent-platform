@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:664a74fd1804627f318ddfaf0876d7b9ba2b1cb8aed09137bea46a28b2e60f72",
+  "claims": [
+    {
+      "id": "claim_9af71a15903f4a4084fe0a06c0995c38",
+      "statement": "The createConnector server action in lib/actions/connectors.ts validates FormData with insertConnectorSchema, encrypts oauthClientSecret (when present) and JSON.stringify(env) (when present) through lib/crypto.ts's AES-256-CBC primitive, and inserts the new row with a hard-coded status of 'connected'.",
+      "evidence": [
+        {
+          "resource": "repo://lib/actions/connectors.ts#L18-L100",
+          "version": "repo-lines-v1:sha256:00f064f6f52cb8cc2c27a4e741464ece3594793cff451dded4ca9109382255f9:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMzgwZmQ5ODEzNDU4ZmI3YjU3OGNmNzg0ODU2NDM3YzBkMDRkOWQwYzNjMGVhZjMwMTUxNjk0ZjAyMTI1ZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1ZDhkODdmMGZmM2I5NTAzMmJkNTBiZTAzZWVjYzRlYWVkYzNlZGM0MTM1ZmUwYWE3MGQzNjBmYjU0ODRhZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM1MGUxMDUxMjAxZTM5ZjM3YThjODgxYzRiOWIwNjE3YjA0OWI1ODgwZjA3YTMyNGZiYWI1ODUxMWE1YTcxZDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3daad9f32b6245e7b6d6e3de117dd08f",
+      "statement": "Connector secrets (oauthClientSecret and env) are decrypted at exactly two read sites: GET /api/connectors in app/api/connectors/route.ts for the management UI, and the task worker in app/api/tasks/route.ts before passing the array to executeAgentInSandbox. Any other read path receives ciphertext only.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/connectors/route.ts#L23-L29",
+          "version": "repo-lines-v1:sha256:83c16a1b76f28cd847f51605108992042f878201b1667617e32fbe28af18e8ea:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ3NThjYmE2ZWQzYjA1ODM4ZTI0MjhkNzY4N2JiYTdkMTc3YmI1ZGJhMTBhZGJmODM4Y2M0ZjAyNGI4Yjk0YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWNjY2YwN2U4NTg4MWUzZWM4MGE4YWI3NzQ4NDhjMGY4Nzg2ZWJmZWFjMjFjZTE0OWUxYjQ1ZTM4NDFjMDFmYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWEyZmUyYzZlNzNiOThiNjI3NTc1ZWY2YTNjODJmODgzM2QxN2RmNTdmNzRhYTFjZWE3MzlkNGI4ODI1NDVhZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjNkZmI0YWRmNWRiMzU5MjVjNDE3MDNlZWZlMGVjNDc3MGJhZTRiYmI0MzY4YzJmYWU3NjNjZGYwZWY2MDY3MiJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L231-L238",
+          "version": "repo-lines-v1:sha256:e8ce5d9d30be9bc1a84d80454c9f88bc3ac44089a625332f5dd919601023b46c:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTFlYjkwNTA1OWQ0ZTA2MjNhODM4NGRhMDAxMDRmMTIxOGI2ZWZmNzAxZDYwOTRmYzFjYjExYzg0NWY5ZmM1YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjA2NjA5ZWM2YmNiODgzMTg5M2ExMzc5MDY0Y2I0MGMxMGRiMjZmNzA5NTAxMzQyZWNiNDNlMjMwYTc1ZWI0NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzcwNTY5YTE1MmJhY2NhZjEyMTBhMTJjOTgzZThmYzU1YWUwYTcyZjg4YjJkNTU2YTllNGJkNzE3ZmE3ZjI1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7339e3da8e014386ac4508bd9a411690",
+      "statement": "The task worker selects connectors with both eq(connectors.userId, session.user.id) and eq(connectors.status, 'connected'), decrypts env and oauthClientSecret, then writes mcpServerIds = mcpServers.map(s => s.id) to the tasks row before invoking executeAgentInSandbox; the decrypted secrets are never persisted.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L542-L568",
+          "version": "repo-lines-v1:sha256:cc83d38608461bee59308e0ac9a1828386b33adfa15706fcc1716293a219bae6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MDE2M2ZiNjcyMjhhYzkwZGM5Zjk3N2Y2MTRmMjMyZWQyNDY5Yjg2NzU5YjczYTg5ODlmMGM4YTM0Yjg3N2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MDgwOGM4MTkwNzgzYmVkYTk2YmJhNDA4OGUzNzYwNjNjYmEwZTY0MzljMDQ2ZWQ3YTlhMWY5OTAyYzBjMTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjliMTI2NGIwMGJmYzJkMzI3ZjZiZTVmMjlhMzgyZDM2ZWUwNDA2MjVhNzI0MDY5MDAwNWQ2NGYxY2Q0YTkxNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5MzA3MDhjYWQxNzYyZDkyN2Q2ZWMyYzVjMzgwMjk4Nzg1YzUwZGE4NzljNDA4YzNiNzRmYzM2NWIwMTkwMzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a760656167b24f9d9a0bbc50aeb0c6a6",
+      "statement": "Any error in the task worker's connector block is caught, logged as 'Warning: Could not fetch MCP servers, continuing without them', and the dispatcher is invoked with an empty mcpServers array — the only failure mode that is silently absorbed by the runtime.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L575-L578",
+          "version": "repo-lines-v1:sha256:b5c46a0cdbb9aef157e17163725874361de414b446439e666d483102a6935f4e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDMwMzcxZWZjYjA2YTY4ODZiOGFkODEwMGY2ZGU0ZTljZDgzODI1OGJiMzFlNzNkMjUwOGYzOTE1NzUyZWM4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjdiYmYwZDg5NmIwYjgyMzdkOTljNTJlNGMwY2JhZTQxMDg4MjQyMmIxNGZkYmM1ZmFjYjI5NjgyNzMzNTE3NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWE5NWY5OTBiNGRjNzcyODkxM2UzMTY0ODNhODBlYzJiNjJhMjU4NzUzY2FlNjE1NTI0ZWMxMWRkYzkwMzYyNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_49c43675a48a40d8847400bc27defc90",
+      "statement": "The Claude wrapper's installClaudeCLI iterates over mcpServers and runs one `claude mcp add` per server: `claude mcp add \"<name>\" -- <command>` with --env KEY=VAL flags for local servers, or `claude mcp add --transport http \"<name>\" \"<baseUrl>\"` with --header flags for remote servers. Every command is prefixed with ANTHROPIC_API_KEY and ANTHROPIC_BASE_URL populated from process.env.AI_GATEWAY_API_KEY and the literal 'https://ai-gateway.vercel.sh'; without that prefix the --header values are rejected.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L99-L150",
+          "version": "repo-lines-v1:sha256:ec10a31c5bfbe2fddadf081e768d7d8d6327c2537e0adcd0a0d0a878b16899ac:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZTcwODFhZGU4NWM4YzFkOGVmM2U4NGE1OTYyMmRkNmNmODliMjYyMDI4MGYwMWYzNTNmYzhmYTEwNmUzY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjQ5M2I5MGYyY2QwNzcxNGE5ZGVkNGVmOTQyYTJlZDZmMzcxYzU3N2I5ZTQ3ZTE4ZmMwNGY5MTQ3MjZkNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjOGRiODM4ZTIyNjc4ZWRlODg5N2Q1ZTAxYzQ4Yjg5NmE0NTk5NmIzYTU5YmMxY2JmNTBiOWRhNjVlYTIzODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_74c0b4187f6b4df9a7b4b8a55101c3af",
+      "statement": "The Copilot wrapper does not run per-server add commands. It assembles a JSON { mcpServers: { <name>: { type, command/args/env or url/headers } } } object in memory, writes it to ~/.copilot/mcp-config.json, and passes the path to the Copilot CLI via --additional-mcp-config @<path> flag. It does not require an ANTHROPIC_API_KEY prefix because Copilot CLI is authenticated by GH_TOKEN/GITHUB_TOKEN set by the dispatcher's temp-env-var pattern.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L103-L164",
+          "version": "repo-lines-v1:sha256:3608e554025000314008d1aad81165380527dac650cf1f2aef85a7138cc3a56a:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMWVmNTlkNWZiMTI5NGI1ZGEzY2FkYWIwMTk4ZjkzMDM4NTliNGRiNzdhODhjZDYzMzg3OTA2OWZiNDZkNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1MWM2ZWFjMGM3N2I2ZWI0MzdlZTgwNDJkZTQyM2JhZTVhNjcyNjdhNjg0YWFkYjI1MzQxNDY2NjAxNzliODIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MmU0ZWU1ZDdhMjgyZmM0MzhiOTgxMzAxODhmMGIyMjM1MDc5Yzk5M2RjNGY5YmNkMzk2NDRlMTBiZDkxZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0MDBiOWNiZTA0MDAyNWEwZjdlZjc1MzljYmE3NjY0OTNkMTFkZmQ2ZDJmMjJiNGJiYjU5Njg3NWNiYzgzMmMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L278-L289",
+          "version": "repo-lines-v1:sha256:c9e0a12572e4015f710c27ffc95077849da495deb315083c39ac16cc9719a69c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmZDhhNjA3NzU3MWY0ZTAzMWJmNzhkOGQ3ZTU0ODI4ZWMzNWU4MGYwZTIwNTExMzI0OTFiY2Q4MTI5NjVmNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzYThkNjE3NzllZTVmNTMxMTI4MDJmZjg4Njc3MmFiMzkyODM2ZGFkNWU3NTFiMzVmZjY4YmU0MzI5MjFkN2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjE5YmRkNGZlOWI3MTA0YWYyZDBhY2MyYTg2MzM0NzNkNTVlZjA5YzRiYWZiYjA0ZDU2YmE1YmUzNjA0MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmZmM3NjkwMWY0OTI2YjY1NzY3MWQ5MjVhYTNhMGVlZTk5ZWFhNDIxYzU5MTZlYzc0MTczZTEzZWI5Njc2MTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_06e47abd112c4abc9194bdd2c9a2c977",
+      "statement": "The ConnectorDialog's form submit closure explicitly copies the selected preset's command (local) or url (remote) back into the FormData before invoking the server action, so a preset's transport cannot be silently overridden when the corresponding input is disabled while the preset is selected.",
+      "evidence": [
+        {
+          "resource": "repo://components/connectors/manage-connectors.tsx#L436-L468",
+          "version": "repo-lines-v1:sha256:fac37eb4f92013fe289c6f7cf854abb2544f04689a85ab32faef33290e13c14c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1NzUzN2FlY2QyOWFiYzJmMzRkMWFkY2FlZDE5MzU3NzM3ODljZjg2OTk4YjljN2QxZDFiOWI3NGNmOTEyZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZGQ4NDcyMzBlZGQ5NTNhNGIwZmY0MGVhN2U4ODNiNTU0NDZhOTk0ZmU3YTY2ZWE5ZGUxZGNkNzAzOTc3ZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjNmY4Zjk1NzQ5MjdlN2JmM2FkZTU3M2VhMDA5ZDgzNjgxYTY0NDA5NGQyNWNmY2YwMTUxNjdlMjI5MWJhZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlYTkxNDg4NjM2N2I1ZGY5ODZkOGM1YTgxMjg0ZDUxZTcwN2UzN2JhOWUzNThkZjI4NDI4ZWE2OWYzODI5ZmIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:a7a473de397083b6d64447d58b5c924c2ae3a2df8e1f388d4273606d55b679a0",
+  "claims": [
+    {
+      "id": "claim_a47de5450b76436aaee583959a587209",
+      "statement": "The three generators in `lib/utils/` (branch-name-generator.ts, commit-message-generator.ts, title-generator.ts) share a common skeleton: AI SDK 5 `generateText` with `model: 'openai/gpt-5-nano'` and `temperature: 0.3`, a `process.env.AI_GATEWAY_API_KEY` precondition that throws when absent, a `result.text.trim().replace(/^[\"']|[\"']$/g, '')` cleanup, a length-or-regex validation step, and a synchronous fallback function that produces a usable string with no AI dependency.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts#L10-L71",
+          "version": "repo-lines-v1:sha256:34080810031fd89ff87e2f657bb99b607a31726b567873aacd739dd1f41a43ba:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExNTM0MmM2YTdkOTg2NzNhOGM4YWVlYzY5YTkwOWFkMTY2ODllOTY4YzVmZjU3OTIyZDdjMzA1NmVhMjU3ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzZWU5YTg4NWY0ZDIwMDM0YjhkNmZmYTliYTBkZTc1NDg4N2I1MjI3NDJiMzA5NzUyMjU4YTIzYTM2Yjg5MmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4MWMyN2E0Y2NiZThmYjZhOTJhYjdjOTQ0MWYwYzRmY2I5ODY2NDJjOTYzZjFkODc2MDExYmViZGYxYmVkYWUifQ"
+        },
+        {
+          "resource": "repo://lib/utils/commit-message-generator.ts#L9-L62",
+          "version": "repo-lines-v1:sha256:950a4e74eccf0f90bc02d8ea6da23a8f87e4b83b5e7bc3400cea2b1dec4e2993:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNmM2YTcwNGRjNzIyMTNjM2RmMDgyZDQ3ZDY4ZDExM2Y1ZWM1MjFkNzgyNWFlNDI4NjhiMDAwZjAxYWJmNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzZWU5YTg4NWY0ZDIwMDM0YjhkNmZmYTliYTBkZTc1NDg4N2I1MjI3NDJiMzA5NzUyMjU4YTIzYTM2Yjg5MmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1ZTQxMzUxNDAxZWM4NWIyOWJhZWMwNTgyOGNkNGYzMTM0NmMzOGY0MzBkZDk4M2Q1ZTU2MGE1ZTM3N2Y0NDgifQ"
+        },
+        {
+          "resource": "repo://lib/utils/title-generator.ts#L9-L60",
+          "version": "repo-lines-v1:sha256:05994130c484eeaecd3fc738bc8c269391e36004580bce6c1f3a8c2ddeb28e0e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwNGQyMTBlZTA0NmFiM2E5ODljNzMxNzQ0NDJmY2FiNThmYTBkNDZlZmIxYTkzNWI4MDE3NWQ2NjY2ZDMwOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzZWU5YTg4NWY0ZDIwMDM0YjhkNmZmYTliYTBkZTc1NDg4N2I1MjI3NDJiMzA5NzUyMjU4YTIzYTM2Yjg5MmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiNmE2MTI3YjhhMjA4OTAyZGYxNDRlODAxZDAzNmMyMzJmMTI1ZWQwOTFlYmFlODQwZGFkZDEzOTcxNWVmYWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a50b5c25228a4965a4dac150b4a60ddd",
+      "statement": "`generateBranchName` returns `<base>-<6char-hash>` where the base must match `^[a-z0-9-\\/]+$`, the total length must be ≤ 50 characters, and the 6-character suffix is produced by `nanoid`'s `customAlphabet('0-9A-Za-z', 6)` to guarantee uniqueness across simultaneous task creations; any validation failure throws and the route's outer `catch` writes the fallback.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts#L41-L66",
+          "version": "repo-lines-v1:sha256:d139f741d9af3620c6b1a3c3753c5abf6008d4942eb0fe4242dc98a4c4c2de84:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhNzg5MjY5ZDQwZWJkM2UyNmZiODEwZTlmODJlM2VkM2M5MjNjYWQ3Mzg2NmNjZWVjODBlYjU5YjgwMjgzZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxNjA1YWNiMGMwNGJjNzE1MjMwYWVhYTZkYzg2NjRmYjY3Njg3YzM1OTEzNzNjMTAxNDNhYWViNzdhNzgyOTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzMGVkZTczMTU3YTUyZDNmMDYyMTA2ZDEyODg4YzI5N2FhMTIxNThlYWY1M2YwYWY0ZjM1YTQxN2Q2OWZhMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkMGU5YTg4NTNmNjM3M2ZjMjVlY2YxMGE4YjU5ZTQ1MzM1OWQxYTkyOTA2NDE3ZjMxMjE0NjZjZWZiMzBmN2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_68b635e22a5e472e9be82b31cdb86706",
+      "statement": "`createFallbackBranchName(taskId)` returns `agent/<ISO-timestamp-with-colons-and-dots-replaced-by-dashes>-<first 8 chars of taskId>` and is invoked both when `AI_GATEWAY_API_KEY` is missing and when the generator throws.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L94-L155",
+          "version": "repo-lines-v1:sha256:b9f11067fa99a239aec458c07d7556dfa564b6829f5bbfb7d464407eacffb540:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxODE1MmY1ZDI4ZTI3MDBkN2Y4MzJlMDlhNmQ2YjBjNDk0ZDdhNzUyNzMxZjI3NDBhM2E0YTNkNmZhOTNkOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0NGVkNDdhOGEzNDJhMGM4M2U3YzBiOWQ1YTczNDlmZTQyMjg3ZTUxZDk0Njk0NjhhMmNhODU2ZTU2NjBkYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxMGQ0ZmFhNGIzMDQ4OTIxOGM0NTNiNzhmZjY4NTNmOTY1NzkwY2U2NTdlMjY1ZDk4ZGM3N2IyOGVlNWM3M2UifQ"
+        },
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts#L73-L76",
+          "version": "repo-lines-v1:sha256:18199002e8f0f07e5f71c6522ba42f5e6b8e07aaf1376ddc8801f302d18a617d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJlODViODlkMmIzYmVkMzk2MmRiNDI5M2Y5ZjFhNDVlYTFhMGE3NThhM2JkM2FiOTdlZTkwMzAyMDA3ODEzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmI1ODBlOTY0ZjgzYTQ3M2Y0M2Q0NDM4NDYyOTQ5ZDY4YjU2MDBmZGE3ODdmMTYzNzQ1ZDAwZGU4OWNiZjM2YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d2d53f53efd4a0cae7d756700ad698e",
+      "statement": "Branch-name and title generation in `POST /api/tasks` are each wrapped in a separate Next.js `after(async () => { ... })` callback (route lines 94 and 158) so the new `tasks` row is returned to the client before the AI Gateway round-trip completes; both callbacks first check `AI_GATEWAY_API_KEY` and skip the SDK call when the key is absent.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L158-L211",
+          "version": "repo-lines-v1:sha256:434fbdecc99260defaeb240d3e93fe7f6620eec2b9723ccc6d85452cdb108151:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxODE1MmY1ZDI4ZTI3MDBkN2Y4MzJlMDlhNmQ2YjBjNDk0ZDdhNzUyNzMxZjI3NDBhM2E0YTNkNmZhOTNkOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyZDgwZDE4YWFlMTQ5NjQ2M2Y2NTAwODRlZTU1ZmM3MWViN2M4YWRmYzdiOGQ5NzNlNTUxZmYzNjRlMDhkMTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwOGViNDgwMzI4YWUyMzFmZDA3ZWI2MGQ4Nzk0ZjA2NDlhMWI0MGRhMTRmNGI2MzUzYWNjY2QyZDlkNDU2MzUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L94-L155",
+          "version": "repo-lines-v1:sha256:b9f11067fa99a239aec458c07d7556dfa564b6829f5bbfb7d464407eacffb540:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxODE1MmY1ZDI4ZTI3MDBkN2Y4MzJlMDlhNmQ2YjBjNDk0ZDdhNzUyNzMxZjI3NDBhM2E0YTNkNmZhOTNkOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0NGVkNDdhOGEzNDJhMGM4M2U3YzBiOWQ1YTczNDlmZTQyMjg3ZTUxZDk0Njk0NjhhMmNhODU2ZTU2NjBkYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxMGQ0ZmFhNGIzMDQ4OTIxOGM0NTNiNzhmZjY4NTNmOTY1NzkwY2U2NTdlMjY1ZDk4ZGM3N2IyOGVlNWM3M2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_67a621c11288424ab6cd4ae176d8caef",
+      "statement": "`waitForBranchName(taskId, 10000)` polls the `tasks.branchName` column every 500 ms for up to 10 seconds before sandbox creation; if no value appears in that window, sandbox creation receives `preDeterminedBranchName: undefined` and falls through to its own deterministic branch name.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L335-L353",
+          "version": "repo-lines-v1:sha256:8617c5f3d0a4fcccfe75a716cbf11b1dd7e5a5d4df68a262ea1dfc502c5112de:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NmNhMDhkNGZhZjJhNjg3NWZhMDQ1YTdiZTljYjBjMzI5ZGVkODg0OTk0NGI0MjVjYThlNDA1Y2E2MzY1ZDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0Y2YzYmQ3OTdjYzQ0MjliY2JmYzhkNTc4NzY0N2VhMTQzZDdjMDZlZWE3ZTYxMjlmM2RlZWE0NjY2NGU1OTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5NTBiMzRmMGZkZGUyNjYwYTNjYTEyNDZkYjljNTg5YjY3ZDMxMTk0OTZmMmIxODBmNmYyMmY5Y2ZkNGU3MjkifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L425-L438",
+          "version": "repo-lines-v1:sha256:e45e72d5cce11b3cbb65f24fcf573057cf52b9534c784935af7222fd3cee9e69:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1YzgzYWRjOTUxNThjZTMzOTM1MjM5YzcxMGI2YjEzNmQxZDE2ZmJkZWVhOWRmOTMzODJjMDRjZjcwMTdmZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkOTdmZmEwN2I3MDkxYzkxODdkZWI0MTAyY2JhMmNkOTIzZWI1MGI2ODA0OTQ3NzExN2Q5NzFjOGJjYTE5ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4MjJlOGExNDNjOGQwNTFkNDFmMWI1OWJiNzFhM2E5OWE0YzU0ZDM4ZWQ4MGJlNmRlOWQ3YWQ2ZTE0YjdjMjYifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L466-L466",
+          "version": "repo-lines-v1:sha256:fe51e9ada1067001f943e3e4560110dfca02b81efef4c7db2ec24770c9bffb1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmU1MWU5YWRhMTA2NzAwMWY5NDNlM2U0NTYwMTEwZGZjYTAyYjgxZWZlZjRjN2RiMmVjMjQ3NzBjOWJmZmIxZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmU1MWU5YWRhMTA2NzAwMWY5NDNlM2U0NTYwMTEwZGZjYTAyYjgxZWZlZjRjN2RiMmVjMjQ3NzBjOWJmZmIxZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODBkNTBhZmQzMDYzYmY3ZjAyNDU3NGVhZmY3ZTA3YmQzN2ZlMDYzOTk3MDA5NTMyZmE3NDYyY2E1YTRlNmQ3ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDg3ZWViYTA4NjQ5NTg4NmE2MjRmZGE2YTVjNGRkODYzMmI4NTFiNzllNzBkMmU0NDZiNDc5MDFiOWQzZTAyZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c6ad87aab09c407aaeefde40dea8061a",
+      "statement": "`lib/sandbox/creation.ts` generates its own deterministic branch name `agent/<ISO-with-dashes>-<randomId>` when `config.preDeterminedBranchName` is absent; this is parallel to but distinct from `createFallbackBranchName`, which uses the first 8 chars of the task id rather than a fresh `generateId()` suffix.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L956-L978",
+          "version": "repo-lines-v1:sha256:16e75e1f1752b844a2788c8c845e6fbac4a00895c7c2c08a988b7f71b0cab529:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YjQwOWMxYTE2YWY3ZDU0NWQzMzdmYzJkMmQ3ZmFmZThlZWY0MWIzMzIwNWVlNTVkOGVlODY5NGI4ZjY5ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2MjYwMWMxODM1Y2E4MjRlNzA1Zjc1ZTYyZTYzZDFlNjdmMGMyZDQ2MjA5ZDU0ZjcxMjNkNGQ2NGU3ZGZlYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM4YTM5ZDNkZWVlZTBmODhlMDkwOGI1OWM5YzNlNzQ3NWE0NTYwMWM3ZGYwNTI1ZjQ0Y2U0YWViMjUwYWYxYzAifQ"
+        },
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts#L73-L76",
+          "version": "repo-lines-v1:sha256:18199002e8f0f07e5f71c6522ba42f5e6b8e07aaf1376ddc8801f302d18a617d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJlODViODlkMmIzYmVkMzk2MmRiNDI5M2Y5ZjFhNDVlYTFhMGE3NThhM2JkM2FiOTdlZTkwMzAyMDA3ODEzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmI1ODBlOTY0ZjgzYTQ3M2Y0M2Q0NDM4NDYyOTQ5ZDY4YjU2MDBmZGE3ODdmMTYzNzQ1ZDAwZGU4OWNiZjM2YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_65c1ee1c294e4f90abfc163cebc93616",
+      "statement": "`generateCommitMessage` is called synchronously from both `app/api/tasks/route.ts` (new task, line 651) and `app/api/tasks/[taskId]/continue/route.ts` (follow-up turn, line 381), always on the agent-success path just before `pushChangesToBranch`; both routes select `createFallbackCommitMessage(prompt)` directly when `AI_GATEWAY_API_KEY` is unset, bypassing the SDK entirely.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L370-L393",
+          "version": "repo-lines-v1:sha256:f18199afec3e7954569e0d24bc3c801258bbf2fd3a219773b2ebcc3c87354360:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMDBkNzgyOWZkYjU1MTdjMDA0ZTNiZWJmODVlNDhkOTdmNWU2NTg0OWY3MWM2YTY0ZTRkYWM1OGU3NDhhYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5ODgyMDdlODUyNWE5ZDY3NzQ0MGNiNmZlOTZhMGZmZjA3NWJjNjNmZGEzODVjOThiMmY4ZmZmN2M3ZjBhNDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2ODIyZTUxZDg5YWY4ZTIzY2QxNzk1NTFjMzljODdhN2E5Yjg3YzAwOTgwYjE2OTlmNzI3NmUzNmQyZmEzYzAifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L636-L663",
+          "version": "repo-lines-v1:sha256:e15b0d4394d220a42008e85fe22ed9e20b3e4f90f5e7548cb1d7d34ba6502b87:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjMTU1ZWY5Mjc5NjM5NGMzMDRkMDkyNzg5MmQ5ZjY4ZTljYTE5NmQ5NmM0Yzc3ZDdkNjBkNTA3MmI4YjNiOGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlZGQ2M2Q2ZTBiMWNhMGYzOWU1ZGQxNDRjYzg4OWRmODlmMmVmNmIyYWFiNmJhMmU3OWVlOGQ3Njg4MzVkNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3Y2YzNDA3MTNhMjM3OTdlMTVhMzE5OTI0MDk4MTFjMjlkZTJjMTM2MTU3YmM3NGI2NTBlYzRhNmVlMDg0NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9759802ef9ff4d1aa123f16b86338be8",
+      "statement": "`generateCommitMessage` and `generateTaskTitle` each contain an internal `catch` block that returns the synchronous fallback (`createFallbackCommitMessage` / `createFallbackTitle`) on `generateText` failure, layered on top of the route-level `try/catch` that does the same thing; `generateBranchName` does not have this internal catch and always throws on failure.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts#L67-L70",
+          "version": "repo-lines-v1:sha256:253760a7f04038cb6edd5815d0c799d1a2c3d749f19fef6df0530241135362f1:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGVkYmY4Mzg3NTM2ODk2NmYzMTNhZTYzOTUzOWM0MDM3MDA0NWJhNTNlMmUyY2VlOTNiYjY3ZDVkYTE3Yjk4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQ1YjlmNWFlNzFiODg3YWI1ZGI4MDYyZTU1NzA2ZjI3ZDc2NmY1NzQ2NTk5YjNkMzU0MTcyZDUyMTMzZGEzZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzY1YTA1OTY4MDk5ZjViZTI4YWU1ZDNiZTI5OTdhMjRiOTU3ZmQ3NzdmZmFlNGUyZTM3Nzc0OWFmMzNmMjE0ZiJ9"
+        },
+        {
+          "resource": "repo://lib/utils/commit-message-generator.ts#L57-L61",
+          "version": "repo-lines-v1:sha256:868d18f5462efccda8e275dae680029267951c7b7ba9988fce871fdf7c1f8896:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGVkYmY4Mzg3NTM2ODk2NmYzMTNhZTYzOTUzOWM0MDM3MDA0NWJhNTNlMmUyY2VlOTNiYjY3ZDVkYTE3Yjk4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2JlY2YwZTc5ZGEwZjVlZDVkYWJhNzMwNjllMWE0MmE2ODMwY2ZlYmRmMzdjOTU1NTliMWU5YzFkMTg2ZDQ0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTFlNzcyNTJiNmQ2ZDRkNjYwYmVhYTMyMzM2MjNhMWRmZjNiOGY4MGIxY2VkYmM1MWQzZDk4NzA0NTgwZTAyNCJ9"
+        },
+        {
+          "resource": "repo://lib/utils/title-generator.ts#L55-L59",
+          "version": "repo-lines-v1:sha256:9260c0f0c425ab14ad96e06f0dcaa53e3a9e086750066f3b0c737d7d96e8a57d:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGVkYmY4Mzg3NTM2ODk2NmYzMTNhZTYzOTUzOWM0MDM3MDA0NWJhNTNlMmUyY2VlOTNiYjY3ZDVkYTE3Yjk4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWNiOTAwYjE2NmJhMDA1MjgzMzA0MTlhYjNmMWY2M2Q2ZjJhNDQ3ODAzMzhkY2QyYmZjMmIzNjIwN2VjNmE3NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTNjYTNkNjVmNDM0OGY5ZWJlNjFiNjQxMzAxZWYzMDhjZmQ1MzdhM2U1MGM2OTY4OGU2N2VlMGFjZmIyODRlNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_88cafec4b87b408796d4a88022910d20",
+      "statement": "The `after()` callbacks for branch-name and title generation in `POST /api/tasks` check `process.env.AI_GATEWAY_API_KEY` before calling the AI function and skip the SDK call entirely when missing, rather than relying on the generator's own throw; this avoids a needless round-trip when the absence is already known.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L160-L164",
+          "version": "repo-lines-v1:sha256:ffd055207984bcbd5e4eeeb5e5ce544230f4e5d380671d207d5d8d6f9ab0a8a1:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTFkNTRmOTA3M2YxZGU3MWJlOGNiYzIzNDdkNWE5MzIxZDM4ZWQzZDBlMDA3NTFjYTNkOTBhNzE4NTA0YWY2ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZiMDQ0OTE0Njk3MjJlODM2M2E5NGU0MDQ0NTM4ZTAxM2EyYTIxN2UzNmIxZTU2OGJhNjBhY2I3YjRjOGYyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDgzOTJmZDY5ZGU0MzE0OGQzNjg0Y2FhZmZmOTJmOGExYzk2NTQxNzNkOGQxOGEyYWE4OTZlMDI4NzUyYzlhZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjhkZjExNGQ0M2JmYWY0NTBkNjg3MjI3YmFkZGFjOTliODM4ZjhhNjYyMzE3MjY3M2RhOTkzYmRhY2RkMjlmNSJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L96-L100",
+          "version": "repo-lines-v1:sha256:389b57aa3873d1b53bfe9ae7093635518c6a9b3e5f14cdb63cce7d904ad28621:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTFkNTRmOTA3M2YxZGU3MWJlOGNiYzIzNDdkNWE5MzIxZDM4ZWQzZDBlMDA3NTFjYTNkOTBhNzE4NTA0YWY2ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZiMDQ0OTE0Njk3MjJlODM2M2E5NGU0MDQ0NTM4ZTAxM2EyYTIxN2UzNmIxZTU2OGJhNjBhY2I3YjRjOGYyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTMwM2Q0YmE0YTIyNmQyNTA5MWQ0YjE1NWE2NGVmODVlMGZjNDQwYzE4NjQxZGNkZWQ4NGYzOWM5YTJiMDc5ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGUzOGNmYjA4YTQxMWVlZDRmMjJkNGE2NWQ1NzAxNmFmZDUzYjNmY2NmOTBjNDNmNmM4MjU1ZTRlNmIzYjdjNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c5edc4a64cbc4b6ba93448be490a3dae",
+      "statement": "After sandbox creation, `processTask` only writes `tasks.branchName` from the sandbox result when no AI-generated value was observed via `waitForBranchName` (lines 513-516), so an AI branch name that lands after the 10-second polling window is never overwritten by the sandbox's deterministic name.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L506-L518",
+          "version": "repo-lines-v1:sha256:9f69eb0747f8c3ddc5f7608b418b578e9ad15ff4615a97e220c626c373c9ed87:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMTkwYmIzMjJlMjc0Yjg1ZTRiNWFiOWYyY2IyZWVhZjM3NzAwN2Q4YmZjYzIxNTUzMDI3ODY3ZjBhNzljMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0MzZhNDVjMWMyOWQ4MTcyNmVmZWZhZDM0MWQ1Y2NlMjA1Y2Y5OTdlNjlkODU0OWU5MDVjMjIyZDYyOWMxNGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwYzhkYzEyZDM0OWMzNjE0YTc5YTgwNTZlY2ZmOWVlYThhNzViMjAzYmQwYWU5MjY1ZjFkZWFjOGI5MTkxYjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFlMmIwOTY3NDJiOWEzMTYyMTQ5YzdjNjhmYjc0YTA2NWE1ZjZjNDU4ZjAwZmIzNWYzMTdjMDYxOTkyMGRlNTIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

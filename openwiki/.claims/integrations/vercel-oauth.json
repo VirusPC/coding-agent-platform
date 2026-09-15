@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:188be1858da72547d1e450e04542b3102788a87b20b67c557a408843e4dc264f",
+  "claims": [
+    {
+      "id": "claim_ab02225fbc76494eae24904d1b187fca",
+      "statement": "The Vercel callback hard-codes `https://vercel.com/api/login/oauth/token` as the token endpoint passed to `arctic`'s `OAuth2Client.validateAuthorizationCode`, because `arctic` does not ship a Vercel adapter and the library's default token URL would be wrong.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts#L26-L41",
+          "version": "repo-lines-v1:sha256:8ed659b769f0563f93092b96f40861ae5b010f7ecf84e663b2cd9285d6b6e7cf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwNzJkZGUxN2E0YWZiNmIyZTk5ZWQ3N2IzNDJhMDYwY2JiZDk1MTkwYmUzMzYwNjQxYzk2MzZkNWY4ZTY1MzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljNzlmNjZkZTFhMGY2NmIwZWU2MzVhNDc5OTI2MTJhMzZkMjA2YWEyMzcxODY0M2E4ZTFjMDQxYzM5YTNkZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYjU2ZDgzNGVmZGU0Y2MzYWRkM2NkMTc4YThkMDQyYzFjMTk2MGZjMzUyYzZiZTczODMxN2UxODZiMDYyZGQifQ"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L1-L42",
+          "version": "repo-lines-v1:sha256:cb6f9dd7f5e9fe4af000128aa268bb72f669518169688e29f3f6d0c2fbda8049:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlZWFhMWQ5Yzc1MTdkMDM4OWY0MTQwMmExYzQxZjIwMDA5OWZkOWVmYzJhMmVjZTA5NzA1NGNlYTVkNWEwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1Mzg0ZjdmZDBlZjkwOGU5OTc1NDEyZmZhMmYyNWQ3ZWZiMGZkM2RhYjRmZTNhZWI0ZjY1OTdkMjYwYmU0YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d7837fb17644d469f09a48b07574aa6",
+      "statement": "The Vercel sign-in start route at `POST /api/auth/signin/vercel` is the only OAuth start route that returns the authorize URL as a JSON `{ url }` body rather than issuing a 302, because the PKCE handshake requires a client-driven navigation rather than a server-side redirect.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L1-L42",
+          "version": "repo-lines-v1:sha256:cb6f9dd7f5e9fe4af000128aa268bb72f669518169688e29f3f6d0c2fbda8049:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlZWFhMWQ5Yzc1MTdkMDM4OWY0MTQwMmExYzQxZjIwMDA5OWZkOWVmYzJhMmVjZTA5NzA1NGNlYTVkNWEwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1Mzg0ZjdmZDBlZjkwOGU5OTc1NDEyZmZhMmYyNWQ3ZWZiMGZkM2RhYjRmZTNhZWI0ZjY1OTdkMjYwYmU0YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/session/redirect-to-sign-in.ts#L1-L14",
+          "version": "repo-lines-v1:sha256:36be0ef18a67c318c0b6bc5b4ce607bd30031d0810888c876c605c7f2cbdd71a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzZmYyM2FkMzA0ZTU3NjhjZTViNzY2NGI4OGIxYzAwNjRmYzczYzdhNzhkM2YzZWI2MTc4NGEzYTcxNWEwMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d31ce2c00db24021848c34a09f9ec279",
+      "statement": "`fetchUser` in `lib/vercel-client/user.ts` tries `https://api.vercel.com/v2/user` first and falls back to `https://vercel.com/api/www/user` when the first returns non-200; the parser also normalizes the two response shapes (bare user vs `{ user }` envelope) so both endpoints work.",
+      "evidence": [
+        {
+          "resource": "repo://lib/session/create.ts#L11-L47",
+          "version": "repo-lines-v1:sha256:bad876f27fed1a84732fa3da4113765eff3a3ce8770a4f78ab19282519efd9d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmYzA4ZDE2M2NjYzNlODZiNjc5YTkxZDlkMGEyOTYyYzkxMDM3OTI3NDZkYThkMzczY2ZkMjNiNDJmMjRmOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2Nzc0ZTgxZDgxMDk3YmMyZmFmYjc1M2YxODM1ODQzNzVhYjc4NmVmYjNkNTM5ZDgyN2E4ZjY4OTRlYmZlMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MzQwMGZiZTkzNzMwNTI5OGI0M2EyNGQ2ZDhhNTkzMjg1OWMxNGNiMDQ2MDE4MTVkN2IyMzVjNjNhZjE0ODUifQ"
+        },
+        {
+          "resource": "repo://lib/vercel-client/user.ts#L1-L35",
+          "version": "repo-lines-v1:sha256:c7b37fa07f6a3ae63be37f33a5e45fb7fe05a423d1a3fdf0e22ce7dbe5d55952:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI5ZDc1MTVmZDI2ODk2MTBlOTA3YmViMmQ0NDdlOWM4MzVjODAwN2VmZjQ5ZDU1NTc4ODUwMWE2ZTVkNDhjNTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_10a9e4de4bc041e0b0116701e7ed0338",
+      "statement": "`fetchTeams` in `lib/vercel-client/teams.ts` treats HTTP 403 from `https://api.vercel.com/v2/teams` as an empty array (expected for personal accounts that have not been added to any team) but returns `undefined` for any other non-200 status, which the `/api/vercel/teams` route then surfaces as a 500.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/vercel/teams/route.ts#L1-L49",
+          "version": "repo-lines-v1:sha256:4a4751d416e5813ee8395a390f49606f19bcb90e52257a5c181f29b58c60b67c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyMWFmZGMxMmYxMGZiZDRiOWJiMmExMmRhN2ZkZGJiMGM4Y2JmNGVmMWY3YWU4ZjNhMzAyODYxYTM5NTJlYjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/vercel-client/teams.ts#L1-L25",
+          "version": "repo-lines-v1:sha256:6fb6aa040911c95c4ca76d6280a374479d002d835e6c5db87b397c40d59bfa65:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2NjVjOWJkY2Q4YzgzNGY5ODVlZTYwNDZkMjVhZjc5NzQ4MmZjZmVjZGU3MmY3NGE0YjAwNDE1YmMxY2M0MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1157238445fb436fac952bb59dd9fa08",
+      "statement": "Vercel is always a primary identity and never appears in the `accounts` table: `lib/session/create.ts` stores both the access and refresh tokens (encrypted) on the `users` row via `upsertUser`, and the `accounts.provider` schema enum is hard-coded to `'github'`, so the database itself rejects a Vercel link.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts#L258-L283",
+          "version": "repo-lines-v1:sha256:3560e0b5be165dddea7997114b6db0cf6ac0fc9714a87d5c7ebd17d960c2c6c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMGU5M2Q3ZmYwNDY1NGU4MzhmYWExNzI4MDU4NmU2MmY1NmJiNGEyZGU1NTBlYzc4YTdiNTBiZDQ3YjEzNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1OGFkYTIyMGE3NmMyZDVlOTE4YTRlNTFiYTM3M2FiOGM3OWMyNmU3YThmYjQyOTQ4MDUzNDA5NWYwN2I1NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1MWU5OTAwMTE0ZGZhMjVlYmJhNDI4YzAxZTRiNjVkY2IzNjVhOWMzZTYzNzVkYmU2NDAyM2VjYzhiMzZhNDMifQ"
+        },
+        {
+          "resource": "repo://lib/session/create.ts#L11-L47",
+          "version": "repo-lines-v1:sha256:bad876f27fed1a84732fa3da4113765eff3a3ce8770a4f78ab19282519efd9d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmYzA4ZDE2M2NjYzNlODZiNjc5YTkxZDlkMGEyOTYyYzkxMDM3OTI3NDZkYThkMzczY2ZkMjNiNDJmMjRmOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2Nzc0ZTgxZDgxMDk3YmMyZmFmYjc1M2YxODM1ODQzNzVhYjc4NmVmYjNkNTM5ZDgyN2E4ZjY4OTRlYmZlMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MzQwMGZiZTkzNzMwNTI5OGI0M2EyNGQ2ZDhhNTkzMjg1OWMxNGNiMDQ2MDE4MTVkN2IyMzVjNjNhZjE0ODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a7cf1644a60246eea92b747539308487",
+      "statement": "`/api/auth/info` rehydrates a Vercel session on every request by re-running `createSession` with the decrypted token from `getOAuthToken`, then re-encrypts the refreshed `user` block and re-issues the JWE cookie; for GitHub-primary users the route returns the existing session verbatim without re-fetching.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/info/route.ts#L1-L52",
+          "version": "repo-lines-v1:sha256:7da4fc0fb284ad2a49259126fac2ca3d69428e7f709f5ebf4c3ae8e87c4684e0:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxNDY4NjcyYWNmZGI1NzU1N2U3N2RhMzNlODA2NjM3NjdjM2U3ODVmMzliM2Q0Y2QwM2RjNDA4OWU4OTA4Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/session/get-oauth-token.ts#L17-L83",
+          "version": "repo-lines-v1:sha256:45970c7552fa04403eb15b593cd28aa9df2c4b9736eed8d95c6e9757fcbc9f94:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyZThjODY5ZjNmMTM3YTgyYjIyZjc5ODM0MDQ3YzcyOGJkMzA4ZjJjM2M5ZDYwNGM3YmE3NTFmNzgyYzdhMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjYTc2ZjIxNTVmYjVlMTcxNmU0YzBiYzU4MzIxMmU1NzkxMTZjZThlODAzMTUwMTYwNjRlYTU5NzQ1YTAwNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7a98fe1cd3f4b2dbc4c8e63b82575aa",
+      "statement": "The Vercel sign-in start route writes three short-lived (10-min) aux cookies — `vercel_oauth_state`, `vercel_oauth_code_verifier`, and `vercel_oauth_redirect_to` — all `HttpOnly`, `SameSite=Lax`, and `Secure` in production, and the callback deletes all three after a successful exchange.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts#L9-L69",
+          "version": "repo-lines-v1:sha256:379da53105b3b9a0c491f61faca0d2c12fd75f70389348372c5e38b28d364a7f:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhNzViZDc2Y2E3MzhhYWQ3MDhkOTQ1MTM1ODE2MjhiZTZiZWY5OGZhMDI1ZWFmY2MyYTU2ODY5ZDgyNDE3YjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MTZlMWQxMWQ3YzFlZmQ4ZTc0MWFmNTBmNmQwYmJlMjI4ZDZhMjJiNWJlMDAxOGE0MGFmZDBkMTc5NDczMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiNWI2NTk4MWM2NTY5YzJhMjE5Y2FhMTYxMGQwMzRiMjRmNGVhNjBmZGUwMzlhZmZkNDVkMDEzOWU2MGYyY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L23-L40",
+          "version": "repo-lines-v1:sha256:36f5389823458f2cd9917c970dda72582f6d89c018f48ecb8763aa6f928d65ea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMGQ5YTFkNDRjYmY0NjI4YTliOTA4MjBkNTIyNjRmNGZhYTA5OGNhYTJlMTNhYWQxOGY5YjAwMDdhNzM0ZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlNzhlYTM2MzAwMDA1MGQ5ZTFkMTE4NmRkNWUwMGQyNWNhMjY2YjVkMDFhNTAzNWI5NmRkOGNmMGY2MjFhYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3NjQ2NmZiNDllMzE5MWE5NzIzYzRlZmRhNzcwZjAwOWEwZmJkZjQ4NGVjNGJiMWQ4ZDZjNTAxMjVkODJlOTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1c873b27f764423a4ec208a4133e50a",
+      "statement": "The Vercel callback constructs its 302 `Response` (with `Location: storedRedirectTo`) *before* it calls `createSession`, so that a single round-trip can both set the JWE session cookie and navigate the browser to the post-auth target.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts#L43-L69",
+          "version": "repo-lines-v1:sha256:c563641c933c39aa40d0c8aca3ec77dff2d391fbf464fd6a079a519f489fad9f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlYWI2NWZlZTllZjIxZjE2ZDI2ZTVmNzg3ZGI0OTk1OWY3ZjAwZDg0NTE2NjQ0ZGExODVmNGEzNjM1Mjg3MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MTZlMWQxMWQ3YzFlZmQ4ZTc0MWFmNTBmNmQwYmJlMjI4ZDZhMjJiNWJlMDAxOGE0MGFmZDBkMTc5NDczMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljNzlmNjZkZTFhMGY2NmIwZWU2MzVhNDc5OTI2MTJhMzZkMjA2YWEyMzcxODY0M2E4ZTFjMDQxYzM5YTNkZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_013f6d34a0fe41c99580902174d12379",
+      "statement": "The Vercel authorize URL is built with an empty scopes array (the inline comment says `Vercel uses default scopes`), and `createSession` explicitly passes `scope: undefined` to `upsertUser` so no scope value is persisted on the `users` row.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L15-L21",
+          "version": "repo-lines-v1:sha256:96540946d287c8e487318e2709869d0f82e251a4c3ea23554a1381fbd5f2f776:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkNDZmM2U2Nzc1ZjEyMDE0ZGZlYzk2NGRjMTY0NTkyZTdiNzE3YWVlMzAyMzMxYzE2NTEwMjNiYzcxZjk4OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTYyNjc5MzVmYzYzMzQ2NWQ4NDhiNDBhNGVkNjk2N2U3YjdhMzIzZjgxY2Q1M2MxMTBhZTIxMDI5Njg3YWExMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzY1NjcxNGE5YzAwYzRhYWNjYjM0MTEyZGE0M2ViOGVmZTZkYWQ1ZDQ5MWM4OTc5ZThmNmZlYWUxY2RiMWE4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODRiYzVjMjliYTg2NDU2N2ZkNzc0MjU1ZjhkOWM3MDQxMzM0Y2U3MTZkZDIxYTg2MGU3MDJkYmU3NDY5ZGE5MyJ9"
+        },
+        {
+          "resource": "repo://lib/session/create.ts#L11-L47",
+          "version": "repo-lines-v1:sha256:bad876f27fed1a84732fa3da4113765eff3a3ce8770a4f78ab19282519efd9d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmYzA4ZDE2M2NjYzNlODZiNjc5YTkxZDlkMGEyOTYyYzkxMDM3OTI3NDZkYThkMzczY2ZkMjNiNDJmMjRmOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2Nzc0ZTgxZDgxMDk3YmMyZmFmYjc1M2YxODM1ODQzNzVhYjc4NmVmYjNkNTM5ZDgyN2E4ZjY4OTRlYmZlMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MzQwMGZiZTkzNzMwNTI5OGI0M2EyNGQ2ZDhhNTkzMjg1OWMxNGNiMDQ2MDE4MTVkN2IyMzVjNjNhZjE0ODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ec15838e5beb48aa93a34cd0ca2a6129",
+      "statement": "For Vercel sign-ins, `upsertUser` only takes the same-primary-update path (case 1) or the fresh-insert path (case 3); the GitHub reconnect-merge branch (case 2) is gated by `if (provider === 'github')` and is skipped for Vercel, so a single real-world Vercel identity always maps to exactly one `users` row.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/users.ts#L15-L90",
+          "version": "repo-lines-v1:sha256:b0912c5e6093d5cefa799a5aa4fed375e7034af498048da28a89b5542ccb9ed3:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwYjFjNDAwMDJhZjE0MjdhYzdjNTQwZWExYTFlYjQwZTljOGVhMTBmY2U2MmZkNjNmNjg2ZDQwMWJhMzA1MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyMmE1ZDEyMzlmZTc1ODM5NTZkODFkMWYzZGEzZTc2NTAzMGNmYzc2ODlmZWM4OGYyYmRlNzRiYjJkNDk3YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0Zjg4Zjc1YTk0OWE0ZDM1ODM3MTM1MTZlN2Q2ODg1MDc1NTVhMzk4ZGJhNjYyODhkMTk0ZDg0MzJmYmE4MDYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

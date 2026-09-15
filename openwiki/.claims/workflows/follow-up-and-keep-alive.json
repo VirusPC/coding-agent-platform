@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:26f3761f4678b4c727ad8023fade7334af76368fa77c0047c03f9e37124ab861",
+  "claims": [
+    {
+      "id": "claim_65755921ff2e47648970db4390a1e08e",
+      "statement": "POST /api/tasks/:taskId/continue is a thin shell that authenticates, runs checkRateLimit, validates the message, loads the task with the standard userId + isNull(deletedAt) filter, rejects with 400 if branchName is null, persists a taskMessages row with role='user', rewinds the row to status='processing', progress=0, completedAt=NULL, snapshots userApiKeys + getUserGitHubToken + getGitHubUser + getMaxSandboxDuration, schedules continueTask inside after(), and returns 200 { success: true } before any sandbox or agent work runs.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L22-L116",
+          "version": "repo-lines-v1:sha256:8f0145d8422de3bee08e427072be1fb43cfeaf82743829f59b78dccad8bca5c8:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNGFhOGRjYjAwZTZjOGQ5MzdkNzQ5OTNkYmFmOTRjN2FmNDBhZGRkMWE5Yjk0NzVjZTFlODZkZjRlODQwNjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkODA4YTE1YWMwYjA0OWZmZGU1MDA2OWJkNjAyODZkYmYxYTZhZTY0MTFmZDcxNmMyNmY0NTIyZThmNTVlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4NzUzNjU4Y2I1YTZmYTQyOTY0NmUyZjY5Njc5NzQzYjBhYzRhYTNiOTJjYmMyMDE4NzY5ZGRmZmQ5ZDcyOTUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L53-L85",
+          "version": "repo-lines-v1:sha256:cbb56d4998ae8f4f69fbe9417b54c3e33865a8c7cac96513e2eb6bf1f1d3950d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYTRmYmYwOTY2NzZjNmFiZGQ5YjExM2ViOTZhNTY0OGI3MGNjYjczYWMwNjE3OGE1ZDFmY2RkZWNlMmJjZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4OTU1YzFlOWY3MWZmMjBmZTI5YTA4NDY1MDE2YWY4NzA0YTU5Njc0MDBkNjJlNGE4YWU4ZTNiYmQxYTViNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmYmNhNDgzOGM2NTZkNGYyMTA4MTc4ZjVlZGY4NTIxY2QwYWU5MTJiZmY0YjAyZTk4YjU1NjZjOGE4MDUzMGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2MGY5YWIyNjRhOTdmZjVkNGU2MWRiMWM2YjgyYjVlNjE1YjAwOGNhY2JhNGUwMDQ4NzM2YmJkZDNmZDc5ZTQifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L87-L111",
+          "version": "repo-lines-v1:sha256:72657baca7af4585317d8d3e2fc6662ab5bca4765adcce514d7556161ad28f50:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYjg5M2MyMTYxMGMwMmE3ZmJhZGQ4N2M2MTdkMmQ5NzA3MGIyZmMxM2Y3ZDNiOTZmNzFjOWY2NDNmNDRhYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlMzcxOTg5ZGE0NWEwNzhjYTJiYTRkN2FhNGRkNDhlY2Q2Njk4YTkxNWZmYzI0YjY2ZmRiOWVjZTlhMDEzZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzOGEwMWY0ZjUyODdjYzVlODk5MmFkZmE4NzU2OWJlMzAyOWFkZGVkYzIyN2MwMzJhZDg0YTBiZGMwNTUzNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlMjM5ZmI5ZTJmOTdlNWE3YTg0MTM4NzdmMmE3ZGRjODRjZTRkOTc3NmYwZWNmMTcyYTk3NmUxMWE2NWJkN2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69c4a7d2b7934d769fcf5c4fde0e5282",
+      "statement": "Every follow-up message counts against the daily rate limit: the continue handler calls checkRateLimit(session.user.id) at the top and the combined tasksToday + userMessagesToday counter joins tasks to taskMessages on role='user' createdAt >= startOfTodayUtc() with isNull(tasks.deletedAt). A 429 response carries the combined total, remaining, and the next UTC midnight as resetAt.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L30-L42",
+          "version": "repo-lines-v1:sha256:5f1ed02ddb1437f1c2c3d881a84e6be46e6662afac81ad8a57f364f7c756bbbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjYmI4ZTlmNWJhNzczOWJlZmZkNTE5YWJhYzU0MmNiMWYzODMwM2JjZWM5Zjc4ZDE0MjM3YzdlMzNkNjA2ODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4MGY5ZjU2YjdhMDZjNjI0ZDllMDg0YmNmYzI4YmE5ZjY2OGJmOTgyNGUzN2QxMzJiYjVlNGE2OWFjMTNkOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMDVjMTMyY2M4YmM1MDUzNTRhMzQ1NzNkNGVkNmRmZGFmZTk4ZDA5NTViYzAyOWMwZWQ1Mjg2OWJhY2MxZjAifQ"
+        },
+        {
+          "resource": "repo://lib/utils/rate-limit.ts#L6-L50",
+          "version": "repo-lines-v1:sha256:e830cc3600f4d0a34a7c741456a4bc50cca06ef78fc0f05ffef4c1c72814960e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3MjllMTk0MTllZWJiNjk5MzVkZTJmYWYyYmMzMTNkZGQyMDI2ODliMjhiZmFkMWJmMTZkNWM5Y2Q1YWU5MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2ZTQ3NWQyNTJiOTJjYjUwNTBlZmFmODc5ZjEwMzkxYTcyODM1NTRmMjJmYzYzMWVhMWM5MzI2ODI2ZmVkYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3fd81ae303244d1db9d7837579b718f0",
+      "statement": "continueTask attempts to reconnect to the existing VM via Sandbox.get(sandboxId) only when task.sandboxId and task.keepAlive are both set; on a Sandbox.get failure or when keepAlive is false, it falls through to createSandbox(...) with preDeterminedBranchName: branchName so the follow-up commit lands on the same branch as the original. The in-memory Map<taskId, Sandbox> is not consulted — the continue handler runs in a different serverless execution than the worker that registered the sandbox, so the durable tasks.sandboxId column plus Sandbox.get is the only path.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L162-L243",
+          "version": "repo-lines-v1:sha256:1696e2751495ee431c2d6f06a14b18154fe4c9042f90fdbb82f65fdd460756c1:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiZjAzZjNiNDFiNjk2ZGUwYWQ3YjA4NjU4ZmY2ODYzYThhZDM5YzFmMjNlN2E1NTU2YTYxOTQzNjUwMDcxZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkYmNhNWZiZjZhYWFiMTcxNzRjMDhiMmU2Y2Q4MzljNGIzNzExYWMzOGQ1MTNlZjc2YjVmNzY0MzQwOTBmNmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyYTJlMTI5MGU0Zjg2MmU5YmI3MDZlYjg1YzYzMDY4YjA1YjU2NTdkN2FmMTVmMmNhNWU3M2YyMjFmYWZhYTUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L220-L220",
+          "version": "repo-lines-v1:sha256:5ef1da980fd25511e65085e3767f21aa6d7a5c8cc638b863bc08203be5496d94:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmMWRhOTgwZmQyNTUxMWU2NTA4NWUzNzY3ZjIxYWE2ZDdhNWM4Y2M2MzhiODYzYmMwODIwM2JlNTQ5NmQ5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmMWRhOTgwZmQyNTUxMWU2NTA4NWUzNzY3ZjIxYWE2ZDdhNWM4Y2M2MzhiODYzYmMwODIwM2JlNTQ5NmQ5NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDBjMTU0YzZmOWYwMjEzZjNhOTRiNTg4MzU1NDNjYzA3NTdlOTZkZGE1ZDczMDg1MWI0ZWIyM2YzMzhhNWZmMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDNlNWFkZTM3OTYyMDA3ODE5NjRmMjQ3MjQyMjExN2NmZjAyYzBkNjkyMGRmNGVlNjlkZWFjZDAxNDRmNzVmMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_abfd156147ab4d8a9eb77d536074b0cc",
+      "statement": "continueTask assembles a last-5-messages textual prefix from taskMessages only when !isResumedSandbox, and passes isResumedSandbox + currentTask.agentSessionId to executeAgentInSandbox so the per-agent wrapper can append its --resume (claude/copilot/cursor), --session / --continue (opencode), codex resume --last (codex), or no resume (gemini) flag. The CLI's --resume carries the full conversation; the textual prefix is the fallback for fresh sandboxes and the only path for Gemini.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L248-L284",
+          "version": "repo-lines-v1:sha256:233e13e4916a6ec068299f3eaeaa9fdec9f47446d68bdabaec7969fa562796b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YTc3Yzk0MGRhMGNjZGZiMWEzODI4MGRmZTk3YjZkMTcyZDJkMzIwZDczYWMyZWRkMDVlMzUwMzQ5M2JhY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2MjNlNmVjZjBmOGE5NGVhNjU0OTdlYjZjYWRiNzZjZGMxYjQ4OWJjNjVkYzFjN2Q1YjViOWJiY2UxY2QzNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmOTQzMTI2MDlhNGQ0N2Y1NTAyZjExZTllNDQ5Mjg5ZjRlZmUyOTIzZmYyM2NkZDU0YWZmMDlmMWE5NWNkN2IifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L324-L337",
+          "version": "repo-lines-v1:sha256:9fff3399ca93f121d7d12da1292ef835a990653c387e0240f753f0aa51967623:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzMzg5ZTQwZDgzNjExZDc5ZjJmN2M2NGM2NDQ4ZmI0N2EyODY5MTNmMmYwMTVjMjMyZmI1YzdjMTUzZDk4OGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwYWFhMDcyYWJjYWMzZmZlYmJhYTQxNzFiOGU0MWY2ZmQyNjE2NGJhZTgwMTQ0YjJkYmMwMzFiZTdiODhmYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkNGYyN2FkMWRjNTJhYjFjMWExYmI4ODM0OWEwMTkwNGQ5MjNjNWNkZDE0N2Q3NWFmMjc5MDZjYzM0ZTYxYTYifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L280-L293",
+          "version": "repo-lines-v1:sha256:ed4673ad0c93fe0d17e174d23b926da4b3c7100a76709060124aeb9e61380acd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwNTQ4NTRhODQ4ZjhkNTkxY2EzZWFiOWUzMzVkODg0OWY4YTY5NmJmN2VkOTY0ZWE5NTRmNGE3MGRjNzliYWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5NzYxNDQ5NTgyMzdjM2NkYzkwMjkxOGZkY2JmNDA4NDJkMzRjYjVjZjM5OTQ5Nzc3MWU0MmI5MGU1NTkyMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhNTZmOTg4OWE2OTY1N2MxNTY1NzM1ZWVlMmI2YzFjNzhjZTY2MWE1ZDk1NmUxODNkMGVkYTcyYjk1N2YyNDMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L281-L292",
+          "version": "repo-lines-v1:sha256:6a726317f0688d6af5d1cca705d1e8417e9b828d99df9a7190b905b82e5bbf0f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3NDI3OTExMzUzYmZlMWYxNDFjM2FmZThkODA1MDA5ZjE2NTE0NGRhNDZlYThkNTcyNDdjOWU5NDk2YjU2YmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0MTIyZGFiZWI5ZTljMjQ0NWY1OTA3NTgzNTBhZmYwMGQzMzIxZmY2ZjUzMjg4ZTQzZmE2ZDI4NWVhNWU0ZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkwNjAwNmM0ZTA2MTZkYWU1NjQyM2MwNmVkYjQ2YTQ1M2Q1ZTI2YzU5ZTAyNTQxZTcxMjI2MjA3NDc5OTgxNGUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L331-L344",
+          "version": "repo-lines-v1:sha256:56d386ec03a5450fa9438893e82f92963132e2fb42561441ead5095f38917f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExZDgzYjkxOTg1MDhhMWM2MTFiNmM2ZWZhOThkYTcwYTJkYzg4ODRiZmE4ZWNmYTcwZTMwNTEzNGM0MGUwNDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4ZTQ0ODU4MDI0ZWRiYWE3NzM5MjExZjViNjI1MTk2MjVmMDJjYTE5ZGJjNjk3ZTYyYjJlNDBiY2U3MDI3NWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0NTA5MzZhMWQ3MzAzZWExMjBjZDY1NzllMDg3Njg4NjllYThiODM5YmJlMTk1NDM1NGI0NGI0NzNhOGViNzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_824f83ece66447c9979428fafe3a320f",
+      "statement": "The continue handler re-consults task.keepAlive on both the success and the error branches after pushChangesToBranch returns: keepAlive=true logs 'Sandbox kept alive for follow-up messages' and leaves sandboxId/sandboxUrl intact; keepAlive=false runs unregisterSandbox(taskId) + shutdownSandbox(sandbox). pushFailed===true always settles the row to status='error' regardless of keepAlive.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L398-L424",
+          "version": "repo-lines-v1:sha256:626cd6364d12a958fe472e62bd3c97d3b90456d6fed1d80222c1af3190e0eb5e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0NGQxMDYxZjJjOWVmZDI2NmMzMTlhY2U2MWI3NmMxZjhkZmEwMTgwZWMyNDRmYmJmOWQyYzFkY2VhMzE1NGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwYTQ0Y2E0NjJmNTRhM2Q1ZDY2MDBkNGJlZmVhYmM4MDY3NThmZmZiODg4MWYwMTJlY2FhZmQ0YTNkZGY0NTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViMDM1ZjdlMjdiNDc1YjFiYTg4NTU5MzQwNmMwNzgwYWVhNGU5NzU5NzFmMDRlMjYyZTU1NzE1NmIxNDUzODcifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L442-L457",
+          "version": "repo-lines-v1:sha256:9f094c8085da0b5a2cb3587938e376ca5d5e5b8ac05855045cd3de1d844cb35c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZGY4N2E0NzMxNmM3MDhjNTUwMjA5OGU5YWY2YzQ0NTM0ZWI4MGJlYWRjZjYwNjMwMjhlZmNhODU5MzdhYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiYTY0MGFjNTFkODE5MzlkY2JmOTM0N2ZjOWI5OThlYmI4NWU5NWY0MTRlMThmYTZlM2VjNDU1MWFlYWVjOTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5MWVhYmNmNmUzYWUyNGJiMGI2NjEyNGZjYTUwZjgxODcxYTdiN2ZjNzJlMDc2NmUzZjU1MjE5YzYwYjBkY2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_08f2ee8ddc0943ebaa47a7410ecda3fd",
+      "statement": "PATCH /api/tasks/:taskId with { action: 'stop' } is the only writer of status='stopped' and only succeeds when existingTask.status === 'processing' (else 400 'Task can only be stopped when it is in progress'). On success it writes status='stopped', error='Task was stopped by user', completedAt=now, updatedAt=now, and calls killSandbox(taskId) which removes the entry from the in-memory Map and calls sandbox.stop() (best-effort; SDK errors are swallowed). killSandbox falls back to killing the oldest registered sandbox if no entry exists for the taskId — a 'Try Again' fallback. After the worker has finished and the registry is empty, the DB flip to status='stopped' is the only effect; the SDK timeout bounds the VM.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L62-L110",
+          "version": "repo-lines-v1:sha256:9f1ed284289220e1fbdc20d1540a6388da77ea46e4f13d714ee900155ec9fd21:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MTYyZDE4NGI0MjRhYzM4OTg3YjdlMmU2ODljYjFmZjQ5OGEzYjI5Yjg2ZmIxMDZjODY1MDkwMDYzMDljZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhY2ExODMxMzg2ZjJlNWRlMGMxN2U3YzU3ZTdjY2UyZmZlZDVkZmY1YmIxZGZmNjBkYzJjZWU1OGI3MTAxYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMGMyZGU0YzEzZjcxNDY3MjI5NDdmODEzODI1NzllOWJjNjRlYzY0NjljOTU2OTk3MDYxMjI4MTkxYTMxNTgifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L25-L60",
+          "version": "repo-lines-v1:sha256:6328408ec72cc44adfd8ddda66a1ae7ecb12db2da4c4eb655758e555baf31993:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2OTFhMmY2ZDUxMzljZGVkYzg0ZDZhMzljZTk5NzU1Mzc3MWVhM2Y0ZjkwM2U2ZmNjYzMxMjFlNDBiMGMwYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmMWUxNjQ3ZTJkNmUyYjU4ZDViYjg1YjM2MDhkM2E0MGY4MzY0NzI2YjkwZDI5YzgwOGZkMzk2MDVlMzFiYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlZjM0NmRiOWYyOGIzMzIwMGVjNTkzMWQxMmMyNzBjMDViYTI1MDg5Mjg4NTZjYjY3NjM2NWJlMWZkYWU0MWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_41551c041921473c9013ed1a30cdaac7",
+      "statement": "POST /api/tasks/:taskId/start-sandbox rejects with 400 'Keep-alive is not enabled for this task' when task.keepAlive is false; when keepAlive=true it probes any existing sandboxId/sandboxUrl via Sandbox.get + runCommandInSandbox('echo', ['test']), returning 400 'Sandbox is already running' on success or clearing the DB columns and falling through to a fresh Sandbox.create({ source: { type: 'git', url: task.repoUrl, revision: task.branchName, depth: 1 }, timeout: maxDurationMinutes * 60_000, ports: [port], runtime: 'node22', resources: { vcpus: 4 } }) on failure. The route configures git, installs Node/Python dependencies, starts the dev server in detached mode with [SERVER] log capture, and persists sandboxId/sandboxUrl back to the row.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L37-L110",
+          "version": "repo-lines-v1:sha256:a30bcd9b6389eac6daa55f8d6a083cc4beaf12f5c3f976dc324305aca3b178f9:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4NWJiMTFkNmUwNWI4ZTRkMjE3MjMyNmQyOThjYWQxZTU2ZDQxYjA4MWQxOWNlYTY4OWJlYzdjYmMxMjY4MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiYTdiYjg5YjgzNTZmZWI3ZWIyNzQ0ODBjZjUwZTUxYmI3YjNjMTkwMDM4YjE4OTYzZjU2YmQxZTY0OGE0MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmNDA0YWM1NzhhNzczZDlhYmUwNTVmYzFlMzVkYTMwYWYzY2NjMjU4MGE5YjY4MGJiM2YxMTIzNmRkZDUzYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwNzJkOGIwY2ZkZWVjYjEyZGI5YjYxMDZlNzIzODIxZmE5OGFhZDIwYWU4N2Y5MjVmYjg2YjE1NjBlZjY0NjAifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L44-L72",
+          "version": "repo-lines-v1:sha256:bec15be6a7dd9d02459ef0e793c07dca329a36f561929276b5cdc1af3f660156:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1NDI5MDY4MGE5ZGY4MDliODE0NWU1NTZlODQzMzFkODk5OWZlZTdkYWY4YmQ1YWM2OTY1ODA2ZWE4M2QwOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlMTE2OTNlN2UyYjUzNjQ2MTc2OGY0ZWE0MzhiNWQ3ZDFmODViZTAxNGI4ZTZlN2QyMjdjYjYxYTBjMzk4MDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyNWRjMDAxMTk1MjYwMmYxNzg2Y2ZjMTVkZmMwZDYzZTUzYTg2YjZjYjhmNzQ3ZDYwYzA0MjM1ZTljMWZiN2MifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L91-L319",
+          "version": "repo-lines-v1:sha256:be03615fe8d47514371d27e91663a702947e362f2407b041c17aeb63c8022b06:eyJzZWxlY3RlZExpbmVDb3VudCI6MjI5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyM2Q5MTJiYzczZDdkMjk2ZjBkNDZjNTc2YjBmMzE5OWYyM2EyNjljMWQxMWM1YWMyZDM1ZGFlOTgxNGI1OTkyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2NDc1ZTk0YTkwNGFjNDliMzE1NGQ0NjcyYTY2ZTg2MjliODZkYWM3NGUzZTI5MzdiZTY5MjdhZTNkYTExYzUzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0ZTQ0ZjE3N2I2MTFlNTJlMmVkN2ZlMGFhMDYzOWUwODY5NDllNTNmYTNjMGUxZThjMjA3MmE0MDdmZTYyMDU0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmNzlmYzE0NmM2MjNmOTE5MTQ2MDFlMDk2ZGQzMTNjZTU5ODllNzE4OWQ4ODNhOTlmZGQ5OTEyMDUyMzU1NzI4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_5785ad04faec42eeb3b0510899a0c861",
+      "statement": "POST /api/tasks/:taskId/stop-sandbox is the only endpoint outside the worker that calls sandbox.stop() on the SDK directly. It rejects with 400 'Sandbox is not active' if task.sandboxId is null, reconnects via Sandbox.get(sandboxId), calls sandbox.stop(), unregisterSandbox(taskId), and writes sandboxId=NULL, sandboxUrl=NULL. The keepAlive flag is not consulted — an explicit stop tears the VM down regardless of the original task opt-in. The task status is left as-is; only the two pointer columns change.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/stop-sandbox/route.ts#L30-L62",
+          "version": "repo-lines-v1:sha256:f8c39d4495ac2477479cfb42208bc557857e6a7215dfbe604c42decc759722a4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4ZTk1ZWZiNjllMGQ1ZGU1MTA1NTY2ZjA1NGFlZWJjOWMxZjczNGU1MzI3MWMzYTg0Njk4YmRiYTNkYjllNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmNDA0YWM1NzhhNzczZDlhYmUwNTVmYzFlMzVkYTMwYWYzY2NjMjU4MGE5YjY4MGJiM2YxMTIzNmRkZDUzYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVhZjgwMWRmM2MzNmRmMzdhOTMwMmQ0YjBiYmY1ZjQwZmU4YTMzM2ZhNWIzNTNjMjQ3NjdmMjQ1YjY1YzA4ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a3ad2ffc9bb74d5eb776f4176df073c3",
+      "statement": "components/task-chat.tsx is the chat panel that drives the follow-up surface. handleSendMessage fires fetch POST /api/tasks/:taskId/continue with { message }, clears the input optimistically, restores it on error, and refreshes the messages list. TaskChat polls GET /api/tasks/:taskId/messages every 3 seconds (faster than the 5-second useTask poll) so the just-inserted user bubble appears within a tick of the click. The stop button (handleStopTask) hits PATCH /api/tasks/:taskId with { action: 'stop' } and uses an isStopping flag to prevent double-clicks. PR review comments can be sent as follow-ups via handleSendCommentAsFollowUp, which formats the comment into the chat input rather than submitting directly.",
+      "evidence": [
+        {
+          "resource": "repo://components/task-chat.tsx#L264-L273",
+          "version": "repo-lines-v1:sha256:8f5393d50684dc3f626cfb17d58488390c189d0ce9c555035148d01d1fd41da0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NjZmYmZhODg5OThkYTc0NjU2YzUwMTk0OTU2YzI1ZjA4NDk0NTc2NjBjMDA5ZmU2M2QxZTlmYTlkYzkzMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyN2NjMjExNmMyMWM1ZTYyOTYyYTBjZThkMDhiZTliMjZhYmY1Y2ZjMDE1MDVlNDEzYTRhNGI2MmYyN2QxOWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjYTNhNWIyZjNiZDZiZjljMmU0ZjQ1ZjM5YjZmNTdjYjAzMDE1M2FkMGQ4OWVhNjczYzE4NzgzODM5NWU3OWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI3MGI0YjE2NWMwM2I2ZjdmYzI2NWEwNTJmYjRmZjk4NjNkNjQyZGNlOTE5ZDY1ODliYWJjNTEzNGNiZDdhNDIifQ"
+        },
+        {
+          "resource": "repo://components/task-chat.tsx#L463-L500",
+          "version": "repo-lines-v1:sha256:e95b981099c3d0c1a07e4d9a88962c02b7aefdf05edd3c0c1ba6a181a9396feb:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjOGZjNzg3ODg3YmE0YWEwYjdhZDVlZWUzOWQ5MjZlYTEyOTFkMzhiNzY1NmE1NzBhYmYxYWUyMGZkYzdiYTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4ZmM1Yzk5MmI0N2RjNTYzMmVkYmY2ZTY0NWQwZjkxNDg2MDJlNWE3NjQ3OTI2Y2M5NzIxYjRmYmVkYmU4MTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxNDUzYWY0YWYzY2UwMWJjYjczNTc0NWY3YTYyNGFlN2IxY2EwZTQzMzEwMGUwMmNlNzdiYzE0MDY5ZjVlMjEifQ"
+        },
+        {
+          "resource": "repo://components/task-chat.tsx#L552-L577",
+          "version": "repo-lines-v1:sha256:02311b381dc751d525556067878f2af555e5363248608c7f6d8fd77fc7ee2a02:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzMjhlODA2NDdkZTYyZWMxNzhjODc4YzE3YmI0NmU4OWFmY2FiMzBhMzJkNmFhMmFhNDgzZTRjY2M2NWRjN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3ZDg2MzJlNTRlOTI5OGFiYjk1ODcyN2UyZDUxNDA4YWJhZjEzNjYwMzUzNzkxMDE0MGFiZjY1YjMwYWI2MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1YTIwYzczNjk3MTM4MmM0NjkxZWExOGY1NDFhY2UzYTQxNzdhNTVlNGFhOTJkODFjMTg5YmRmOThkNzI0YzUifQ"
+        },
+        {
+          "resource": "repo://components/task-chat.tsx#L593-L605",
+          "version": "repo-lines-v1:sha256:5d1ceeef5de94fb1096765e086474ee752b1d6e2c60edac3bc5771947e1b1637:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZmUwOTljODg5MmY0OGZjZGQwZjBkN2I3YTRiZmUzNGJlOWQyZTA4YTYxZGQ4ODI2NzE3NmIwOTVlOTk5NDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3ZDg2MzJlNTRlOTI5OGFiYjk1ODcyN2UyZDUxNDA4YWJhZjEzNjYwMzUzNzkxMDE0MGFiZjY1YjMwYWI2MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhZjFkZTBmYjMwN2YzM2NhMjEzY2ViOTk5MTY5YTM5ZTk4NTI5MTU0NzkwYTI5ZTA0ODM4MmMwYTFiOWU3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_46fc2a5a93a149018f267f3ec8dd2d95",
+      "statement": "The four follow-up routes have distinct row-state effects: continue rewinds any non-pending row to status='processing' + completedAt=NULL; start-sandbox leaves status untouched and creates/registers a sandbox; stop-sandbox clears sandboxId+sandboxUrl but not status; PATCH action=stop flips to status='stopped', error='Task was stopped by user', completedAt=now, and only fires when the row is currently processing. Only continue touches the daily rate-limit counter; the other three do not insert taskMessages rows.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L77-L85",
+          "version": "repo-lines-v1:sha256:b7a88dcb0b6fecd4d62326693f3f0a3d1e89852d0ceb9698ffe3a44187b9347a:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTNiMjY0ZDJkODE2NTFlYjgzZDg0ZjcwZWJjZWJhMTZkMjBjYWMxZGMxNDk4MGUxNDBmMGM5MzczNDc2YjVkYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjg5NTVjMWU5ZjcxZmYyMGZlMjlhMDg0NjUwMTZhZjg3MDRhNTk2NzQwMGQ2MmU0YThhZThlM2JiZDFhNWI1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDMzYTU4NWE1ZmVkNmU0ZmZlZGM3ZTdlOWNiZTEyY2FmYjNlOGRlNTAzYzVmNWY2OGNkMDM5Yzk4MGYxZTI2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjYwZjlhYjI2NGE5N2ZmNWQ0ZTYxZGIxYzZiODJiNWU2MTViMDA4Y2FjYmE0ZTAwNDg3MzZiYmRkM2ZkNzllNCJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L62-L110",
+          "version": "repo-lines-v1:sha256:9f1ed284289220e1fbdc20d1540a6388da77ea46e4f13d714ee900155ec9fd21:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MTYyZDE4NGI0MjRhYzM4OTg3YjdlMmU2ODljYjFmZjQ5OGEzYjI5Yjg2ZmIxMDZjODY1MDkwMDYzMDljZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhY2ExODMxMzg2ZjJlNWRlMGMxN2U3YzU3ZTdjY2UyZmZlZDVkZmY1YmIxZGZmNjBkYzJjZWU1OGI3MTAxYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMGMyZGU0YzEzZjcxNDY3MjI5NDdmODEzODI1NzllOWJjNjRlYzY0NjljOTU2OTk3MDYxMjI4MTkxYTMxNTgifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L37-L40",
+          "version": "repo-lines-v1:sha256:f9ab032be684d84a0a96d9bf3025c91556019a99b6b1a7e384601b3429bc5002:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzg1YmIxMWQ2ZTA1YjhlNGQyMTcyMzI2ZDI5OGNhZDFlNTZkNDFiMDgxZDE5Y2VhNjg5YmVjN2NiYzEyNjgzOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWY0MDRhYzU3OGE3NzNkOWFiZTA1NWZjMWUzNWRhMzBhZjNjY2MyNTgwYTliNjgwYmIzZjExMjM2ZGRkNTNiMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2UxMTY5M2U3ZTJiNTM2NDYxNzY4ZjRlYTQzOGI1ZDdkMWY4NWJlMDE0YjhlNmU3ZDIyN2NiNjFhMGMzOTgwNiJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/stop-sandbox/route.ts#L50-L57",
+          "version": "repo-lines-v1:sha256:6f786792dbcf8061c3c26d7fbe9a439bf65891951c7beece7c43a11ce22eda30:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTNiMjY0ZDJkODE2NTFlYjgzZDg0ZjcwZWJjZWJhMTZkMjBjYWMxZGMxNDk4MGUxNDBmMGM5MzczNDc2YjVkYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjg5NTVjMWU5ZjcxZmYyMGZlMjlhMDg0NjUwMTZhZjg3MDRhNTk2NzQwMGQ2MmU0YThhZThlM2JiZDFhNWI1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjI1ZmVhN2VmODA2M2FlY2NmZmQ0YmY4ZmE5OTgyZGEzOThjYTYwNTdiNTVlMjQ0MzBiNjVlY2Q2Njc3Nzg1MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjNkZmI0YWRmNWRiMzU5MjVjNDE3MDNlZWZlMGVjNDc3MGJhZTRiYmI0MzY4YzJmYWU3NjNjZGYwZWY2MDY3MiJ9"
+        },
+        {
+          "resource": "repo://lib/utils/rate-limit.ts#L26-L42",
+          "version": "repo-lines-v1:sha256:141b2f56de6cede8884a4b905c8ae116b7e4c00ddceab4f9e3535cb901298b92:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MDYyMjVlNDQ3ZWRkYTk5NTc0ZmM0ODllYThlNTZmNzgzOGNkNGJiNDJiY2U0ZjgyNzBiYWM2MjY4NjEzNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZDEzM2NmNmYxYWFlMTJkYTBjMTA0ZGQ0ZTIyYzc2MWU3NzdlZTFjMTY2NDZhYjU1OTZhZTlkM2U5OGI3YTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk4MWJjNWRhN2Y0MDI4ZGE1ZDJmY2JiZDE1Zjc3YjdjZWU4NDNhNjEzODk0M2NmMzM3ZGI3ZGFiNGE5ZGQ4NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFiYzAzYjY2M2MzODBjMTU1NGIzZWQ4YjgzYjI2OWIzNTBlYzBhY2M4M2JlZmQwZDNkODI5MjMxMGY4YWFhOGEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

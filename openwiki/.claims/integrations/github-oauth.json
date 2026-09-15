@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d53dca3b86bee1c32b6e7df4e8d39588a0a2f491aa1d7be75befaef3696e3f98",
+  "claims": [
+    {
+      "id": "claim_a81b288595a640ab877f531927056f2f",
+      "statement": "The GitHub OAuth flow always requests the scopes `repo,read:user,user:email` and uses plain OAuth 2.0 authorization code (no PKCE), with CSRF protection via `arctic`'s `generateState()` stored in a short-lived cookie.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts",
+          "version": "repo-file-v1:sha256:e173fc757fb6cfed49e0bb53ab09d9b8ccc70af2383da83d39c40358111d2762"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        }
+      ]
+    },
+    {
+      "id": "claim_23a290b0ff5f464caf7d7a7e6b21860f",
+      "statement": "Two environment variables back the GitHub OAuth app: `NEXT_PUBLIC_GITHUB_CLIENT_ID` (client-exposed, used to build the authorize URL) and `GITHUB_CLIENT_SECRET` (server-only, used by the callback for the code exchange). Missing values are reported as `/?error=github_not_configured` from the sign-in routes and 500 from the callback.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts",
+          "version": "repo-file-v1:sha256:e173fc757fb6cfed49e0bb53ab09d9b8ccc70af2383da83d39c40358111d2762"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4089babac294b3d913e1eb2b157f360",
+      "statement": "The callback at `GET /api/auth/github/callback` dispatches between sign-in and connect by reading a `github_auth_mode` cookie whose value is either `signin` or `connect`. The mode cookie's presence also selects between the unified `github_auth_*` cookie names and the legacy `github_oauth_*` cookie names, so the callback tolerates flows started before the unified entrypoint existed.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        }
+      ]
+    },
+    {
+      "id": "claim_d09c84c92954454db4c6e1eb66181f6c",
+      "statement": "In the sign-in flow the callback calls `createGitHubSession(accessToken, scope)` from `lib/session/create-github.ts`, which fetches the GitHub profile (with a `/user/emails` fallback when the public `email` is null) and runs `upsertUser({ provider: 'github', accessToken: encrypt(accessToken), refreshToken: undefined, ... })` so the encrypted token lands on the `users.accessToken` column. The resulting session is sealed with `encryptJWE(session, '1y')` via `saveSession`, after which the three `github_auth_*` cookies are deleted.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://lib/db/users.ts",
+          "version": "repo-file-v1:sha256:52d4835c01f84e825d7eaa0a78f8668d0ff0af60b31354b30c9bb063ae2c3e94"
+        },
+        {
+          "resource": "repo://lib/session/create-github.ts",
+          "version": "repo-file-v1:sha256:cc383bc5c156f0685e5fb3620d89e98d9007aff6db7465b6bfed2b65a2b76554"
+        }
+      ]
+    },
+    {
+      "id": "claim_0da02538745c488d9c4ae6e7828104b9",
+      "statement": "In the connect flow the callback encrypts the GitHub access token with `encrypt(token)` from `lib/crypto.ts` (AES-256-CBC, 16-byte random IV, 32-byte key from `ENCRYPTION_KEY`) before writing it to the `accounts.accessToken` column for the connecting internal user, with `refreshToken` always undefined because GitHub's standard OAuth flow does not issue one.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://lib/crypto.ts",
+          "version": "repo-file-v1:sha256:f354cf9b293496f1f3cda82e75ca8b705a88260488908b013068f1ce4ce7f121"
+        }
+      ]
+    },
+    {
+      "id": "claim_abc594812a8a4f2ea94ddce870027ab8",
+      "statement": "The connect branch in the callback handles three sub-cases after the code exchange: (1) same user reconnecting — update the existing `accounts` row's token in place; (2) conflict where the same GitHub numeric ID is already linked to a different internal user — reparent every row in `tasks`, `connectors`, `accounts`, and `keys` from the old user to the connecting user, delete the old `users` row, then update the `accounts` row; (3) fresh link — insert a new `accounts` row carrying the encrypted token.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f91c2ff3e4f4db6b02c162df8fb76bf",
+      "statement": "`POST /api/auth/github/disconnect` deletes the linked `accounts` row for the current session and refuses (400) when `session.authProvider === 'github'` so the user is never left signed in with no underlying OAuth identity.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/disconnect/route.ts",
+          "version": "repo-file-v1:sha256:078673db4d1935cc4f18cfcf95891d18981ae3311ac7f4ab70b05d9447df79f5"
+        }
+      ]
+    },
+    {
+      "id": "claim_5d26ff5813cd4cacb067de907c53463f",
+      "statement": "`GET /api/auth/github/status` returns `{ connected: false }` when there is no session, or `{ connected: true, username, connectedAt }` taken from either the `accounts` row (linked path) or the `users` row with `provider = 'github'` (primary path), so the UI shows the same \"Connected as …\" badge for both cases.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/status/route.ts",
+          "version": "repo-file-v1:sha256:109e46c2321e125abaf3da255de3750899111455a6ce4ad0e58b9b49db073681"
+        }
+      ]
+    },
+    {
+      "id": "claim_d4c6418e1c3e427aa4e0252d9f12b2e4",
+      "statement": "`getUserGitHubToken(req?)` in `lib/github/user-token.ts` is the canonical GitHub token reader: it resolves the session via `getSessionFromReq(req)` or `getServerSession()`, first looks up `accounts.accessToken` for the user with `provider = 'github'`, and falls back to `users.accessToken` for users whose primary identity is GitHub. It decrypts via `lib/crypto.ts`'s `decrypt` and returns the plaintext string (or `null`), and is consumed by the GitHub REST routes under `app/api/github/`, by the task creation and continuation routes, and by `lib/sandbox/agents/index.ts` to inject the user's GitHub token into the sandbox.",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/client.ts",
+          "version": "repo-file-v1:sha256:ea5e11255cb94eee8b1167a82ad7876f506326f65660df598de2873be30aa0de"
+        },
+        {
+          "resource": "repo://lib/github/user-token.ts",
+          "version": "repo-file-v1:sha256:b6902e663e710ad5be2840ffbfc6a982283985a36b820174732e4378978deed5"
+        }
+      ]
+    },
+    {
+      "id": "claim_d68fdb21b6384b3eaa18b4af25dba348",
+      "statement": "The callback clears the short-lived per-flow cookies after consuming them — the unified `github_auth_state` / `github_auth_redirect_to` / `github_auth_mode` set, the legacy `github_oauth_state` / `github_oauth_redirect_to` pair, and the connecting-user cookie `github_oauth_user_id` — and the unified sign-in entrypoint appends a `github_connected=true` query parameter to the post-auth redirect URL so the UI can show a one-shot toast after a successful connect.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        },
+        {
+          "resource": "repo://components/home-page-content.tsx",
+          "version": "repo-file-v1:sha256:c86340135baf386012c17cb076615b70b1d94c30fbe7487fe716338ad9bcfe78"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

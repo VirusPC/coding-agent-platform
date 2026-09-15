@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4c71d561dcad9c3d325d352381cf291b33a4fa50301de41e3e1c6e2e3d637be1",
+  "claims": [
+    {
+      "id": "claim_a2b9a11a6044493ab336fff1e3e78ea7",
+      "statement": "drizzle.config.ts at the repository root pins the Drizzle schema source to ./lib/db/schema.ts, the migration output directory to ./lib/db/migrations, the SQL dialect to 'postgresql', and the database URL to process.env.POSTGRES_URL, making lib/db/schema.ts the single source of truth for both runtime queries and migration generation.",
+      "evidence": [
+        {
+          "resource": "repo://drizzle.config.ts",
+          "version": "repo-file-v1:sha256:9af84cbb31426f554f8b3bfd98cf6765c7d4bbdbd27be2524402dd8cdaf10cc7"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_4968e355bd794270bed318fee591b19a",
+      "statement": "lib/db/client.ts exports the database client as a lazy JavaScript Proxy that defers opening the postgres connection until the first property access, and throws 'POSTGRES_URL environment variable is required' when that environment variable is unset, so importing the module never throws and only the first query surfaces a missing URL.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/client.ts",
+          "version": "repo-file-v1:sha256:480acbac99eef445592dfecf6980cd611b2d370aae03d7309ab16a5c98bfe3a4"
+        }
+      ]
+    },
+    {
+      "id": "claim_b42f7152c0e340309037b0ed8a4e0321",
+      "statement": "Every per-user child table (accounts, keys, connectors, tasks, settings) declares a foreign key from its user_id column to users.id with onDelete: 'cascade', and task_messages.task_id declares a foreign key to tasks.id with onDelete: 'cascade', so deleting a users row removes every account, key, connector, task, and setting the user owns in a single statement and deleting a task removes its conversation transcript automatically.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/migrations/0010_concerned_exodus.sql",
+          "version": "repo-file-v1:sha256:58c5a1c4793c041506bc76f3d751b74fc45d28a5d5881f0ef0f8964404a2cf15"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_16e3f70e41cf4774b831f85206c442cb",
+      "statement": "The schema enforces four one-per-X uniqueness invariants with btree unique indexes: users_provider_external_id_idx on users(provider, externalId), accounts_user_id_provider_idx on accounts(userId, provider), keys_user_id_provider_idx on keys(userId, provider), and settings_user_id_key_idx on settings(userId, key); tasks and task_messages carry no unique indexes beyond their primary keys.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/migrations/0010_concerned_exodus.sql",
+          "version": "repo-file-v1:sha256:58c5a1c4793c041506bc76f3d751b74fc45d28a5d5881f0ef0f8964404a2cf15"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_b2991f3a8a824d018689e0f25a074774",
+      "statement": "tasks.logs is declared as a JSONB column typed as LogEntry[] (with type restricted to 'info' | 'command' | 'error' | 'success'), and tasks.mcpServerIds is declared as a JSONB column typed as string[]; the connector IDs in mcpServerIds are stored by value rather than via a foreign key so that deleting a connector does not cascade into tasks that referenced it.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_fafdc1a842cd4b928f1a6ecb2708804f",
+      "statement": "The accounts.provider column is declared with the enum ['github'] and a default of 'github', meaning the accounts table is wired up only for linked GitHub identities today; the schema is structured so additional providers can be added later by extending the enum without further code changes beyond the Zod validators and the upsert paths.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_99b0f581d6064270b38d61194f384e51",
+      "statement": "lib/db/schema.ts re-exports the accounts table as userConnections and the Account / InsertAccount types as UserConnection / InsertUserConnection for backwards compatibility with code written before the table was renamed, so import { userConnections } and the UserConnection types resolve to the same Drizzle table instance and the same TypeScript types as their accounts counterparts.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7d32cb76d2c47f2adb8feada10c22ec",
+      "statement": "upsertUser in lib/db/users.ts is the only writer to users and implements a three-tier identity merge: it first looks up users by (provider, externalId) and updates the existing row, then for GitHub sign-ins falls back to looking up accounts by (provider='github', externalUserId) so a user who originally signed in with Vercel and later signs in directly with GitHub converges on the same users row, and otherwise inserts a fresh nanoid()-keyed row with timestamps set to now.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        },
+        {
+          "resource": "repo://lib/db/users.ts",
+          "version": "repo-file-v1:sha256:52d4835c01f84e825d7eaa0a78f8668d0ff0af60b31354b30c9bb063ae2c3e94"
+        }
+      ]
+    },
+    {
+      "id": "claim_be39e7cae1124945825d4bc5d6d9a2c6",
+      "statement": "lib/db/settings.ts exposes four helpers that read the settings table with a constant fallback: getSetting returns the raw string value or the supplied default, getNumericSetting parses it with parseInt(value, 10), and the two domain-specific wrappers getMaxMessagesPerDay and getMaxSandboxDuration wrap getNumericSetting around the MAX_MESSAGES_PER_DAY and MAX_SANDBOX_DURATION module constants from lib/constants.ts, with all four short-circuiting to the default when the userId argument is undefined.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/settings.ts",
+          "version": "repo-file-v1:sha256:779939141f5fc3af879a6f9b9e298db3ce74b1f2236a12e475ef27021067a0bf"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7ebd9d10c1b453da0ff9d09a69557a6",
+      "statement": "Five sets of text columns hold secrets that are always encrypted with the AES-256-CBC primitive from lib/crypto.ts before write and decrypted on read: users.accessToken and users.refreshToken, accounts.accessToken and accounts.refreshToken, keys.value, and connectors.oauthClientSecret and connectors.env (the env column is a JSON object encrypted as a single string); the schema does not flag these columns as encrypted — the convention is enforced by every write call site.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_000e075c340d44da995d99a0146ac99b",
+      "statement": "Every table in lib/db/schema.ts is paired with two Zod schemas — an insertXxxSchema that validates payloads going into the database with defaults mirroring the Drizzle column defaults (selectedAgent defaults to 'claude', maxDuration defaults to parseInt(process.env.MAX_SANDBOX_DURATION || '300', 10), tasks.status defaults to 'pending', progress to 0, connector.type to 'remote', connector.status to 'disconnected') and a selectXxxSchema that mirrors the column nullability so nullable text columns come back as string | null, nullable integers as number | null, and nullable JSONB columns as T | null.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_ba5ac5047f2342bc929ec864b8b904ad",
+      "statement": "The connectors.env column undergoes a type change on the insert/select boundary: the insertConnectorSchema accepts a Record<string, string> (the unencrypted JSON object from the connector dialog), the column stores the AES-256-CBC-encrypted <iv_hex>:<ciphertext_hex> string, and selectConnectorSchema returns string | null reflecting the encrypted wire format; the application layer decrypts and JSON.parses the value at task execution time.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_4eab56e0961d4a77afec40be122cf5b1",
+      "statement": "tasks.deletedAt is the soft-delete tombstone that distinguishes a user-removed task from a task that was stopped while running; it is written only by DELETE /api/tasks/:taskId, every task-scoped read in the system filters isNull(tasks.deletedAt), while a stopped task (status='stopped') remains fully readable and can be rewound via POST /api/tasks/:taskId/continue.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts",
+          "version": "repo-file-v1:sha256:e3e0b462c2559771cb79f5e323e078adde80f6fc40980e1193b4b1a7f83b279d"
+        }
+      ]
+    },
+    {
+      "id": "claim_53ff7ecc49b54ea792b7ad63ea14731e",
+      "statement": "The schema migration workflow edits lib/db/schema.ts, runs pnpm db:generate to produce a new numbered SQL file under lib/db/migrations, and applies the migration locally with pnpm db:migrate; in production scripts/migrate-production.ts runs the same drizzle-kit migrate but only when VERCEL_ENV === 'production', so schema changes ride along with production deploys but no-op on preview and local environments.",
+      "evidence": [
+        {
+          "resource": "repo://drizzle.config.ts",
+          "version": "repo-file-v1:sha256:9af84cbb31426f554f8b3bfd98cf6765c7d4bbdbd27be2524402dd8cdaf10cc7"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

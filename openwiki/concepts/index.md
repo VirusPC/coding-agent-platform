@@ -1,0 +1,7 @@
+# Files
+
+- [Agent System & MCP Connectors](agent-system.md) - How the dispatcher in lib/sandbox/agents/index.ts routes work to the per-CLI agent wrappers, how user MCP connectors are decrypted and threaded into each invocation, and how the temp-env-var pattern snapshots and restores process.env around agent execution.
+- [Authentication & Sessions](auth-and-sessions.md) - The two primary OAuth providers (GitHub and Vercel), the JWE-encrypted cookie session, the linking model between Vercel users and connected GitHub accounts, and where OAuth token decryption happens.
+- [Encryption & Log Redaction](encryption-and-redaction.md) - The two cryptographic primitives that protect secrets at rest and in transit (AES-256-CBC for database-stored credentials, JWE A256GCM for the session cookie) and the redaction layer that scrubs known credential patterns from any log line that reaches the UI.
+- [Sandbox Lifecycle](sandbox-lifecycle.md) - How a Vercel Sandbox is created during task setup, used while the agent runs, optionally kept alive for follow-ups, and shut down — including the dual persistence model (in-memory Map vs sandboxId/sandboxUrl) and the Sandbox.get() reconnect pattern.
+- [Task Lifecycle & Status Model](tasks-lifecycle.md) - The single tasks row that anchors every agent run — its statuses (pending/processing/completed/error/stopped), fields, append-only logs JSON, soft-delete semantics, and the API guards that gate status transitions.

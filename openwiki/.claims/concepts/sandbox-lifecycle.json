@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:25991cf7eef95b9661e06d7af4dcabbeab6439f252e4fabfd23c6f9fdfce4876",
+  "claims": [
+    {
+      "id": "claim_cf804410309544d79401b6afb076ff65",
+      "statement": "The sandbox is created via `Sandbox.create` without any `source` argument, and the repo is manually cloned inside the sandbox to `/vercel/sandbox/project` with `git clone --depth 1 <authenticatedUrl>`; the authenticated URL embeds the GitHub token as username and `x-oauth-basic` as password for `github.com` URLs only.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/commands.ts#L1-L4",
+          "version": "repo-lines-v1:sha256:8bd490d8140964e9412e640e0fe98b8bbb9d59c529969393ce80673d8d7e4d39:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2VjNTBkYmQyMDE4MzhjNzQzOTk2ZTU2ZGYwMDJkM2I0MTg3OTMyOWU3NjdkOWJmMjkxMTMyOWFiZDAzNzI1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2I5MDkxN2FmYzMyMWZmNDZiZmI2Yjc1MGY5ZTU1Yjc4MDNlZTlhYWY5ODQ5YjUyYTg2NjE1MDFmZmYxZDA3NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjM4MmM2MmU4NDAwM2JhNGIzNTNhZTk5ODkwNDEyZGVlYjM0OTViNjVhM2ZmMDE1NGMyOWE3Y2RjYjM4MTc4NyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/config.ts#L69-L86",
+          "version": "repo-lines-v1:sha256:94f8b47bdd50dd04ff13bee78e93b34f8c1f32b3fe330111702a3d0ed7d3a441:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlNTVmMzA1M2NlMGUzMzI5YjE2MzE2OWUwNjcyZDFjZmRlODliNDc1MmY0YWU2OTQzNTQ2OTFiYmY5NzlmMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzOTQ0ZjhkZjU2YmNlMWU2YzU0ZTM3MGVjNGIzNzA5MmVkNGMxMmM1OTMwYjYwYTlmYTUyNjlkZDgwZGEzNGUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L82-L132",
+          "version": "repo-lines-v1:sha256:adb13c049f73228064d1b4ed7d9ef0a5ef81fef99e8cc27a425a70d3f46117ce:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0MjNiZjA2NzFkMjAzOTkyZGE5MTBkODE1MjU5NGJmNGI5NThlZjhlODY4MjI5ZWUzOTA4OGU1NDM2MDc5MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2ZDdjMWIyYWU2ODU2ODNkODVlOTE0M2U3ZmFmMjljN2QyMmYwNjc1OGQyYTMxMWY0NDk3N2RlOGU2MzUxMTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAzNDdlN2MyNTY2MzU5NTgwOGFjNzg3MTY4OWRlN2I3MDM1Zjc2MzE5ODU0YWUwZWQ3MjkxNTBhYzczZmMwY2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc990faa35614764b31d65a9f54d9930",
+      "statement": "The `timeout` argument passed to `Sandbox.create` is computed solely from `maxDuration * 60_000` ms (with `maxDuration` resolved from `task.maxDuration` then `getMaxSandboxDuration(userId)` then `MAX_SANDBOX_DURATION`); the `keepAlive` flag plays no role in this calculation.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L80-L108",
+          "version": "repo-lines-v1:sha256:149b146fee270d348aff5af0dc9a6fb31a15719dfa12885b7f2844663d5126e2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NWFjMTYyZjJhNWMzYTMyMGQwMWExY2I2NjI0MTA5ZTQ4NzU4ZjY5Mjk5Nzg4ZGM3MDk5Njg2YzdhMDRhMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwZDdkYmI4ZGE3MjhmZDg4NmU4MDUwZTIyZTczNjA2NzAwOTgxZmUyMDk5MTMxNTZlYzNhMzc5ZTk2ZjhjMjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkwMTFhNzE3YTI0NmMzMmUxYzBjNGUwMWQwMmZlZGE3YWE0YmI3ZjRiM2FlNzE3MGVlZTRhYmVhZGMzZWQ3ZTUifQ"
+        },
+        {
+          "resource": "repo://lib/db/settings.ts#L69-L72",
+          "version": "repo-lines-v1:sha256:dab56cca2306b7962dce9709e275c854be02476f80440280209a848728ef416c:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjJmMDcwMWIxZDU1YjVkN2UwYjBkOGQwODJiZDY4N2M5ZjY3MzdjZDY1NThmZTI5Y2QxZDIzZjI0Yzc2ODJiMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjRlN2MzMjJiMTQ4ZDM1MThmYzFmMmRkMGI4YmE1ODViNDQxODFjOGVkYzI2NjY0YTAyYzBkY2E0YjE5OTYyZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L73-L90",
+          "version": "repo-lines-v1:sha256:4e53340a4f13779fdc35d28d7de00204bd770beec716ae5f58edd1a75b4e2da3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViZjdmMTU0ZDZhNDhmY2Q5NGRkNTg5OTU0OTRhNjY0ZWNmZWI1NWI2NGM0MjljZTFkZjk5NmUyN2ViYjUxNWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiMWRiODkyMDExNDI5ZjZlZTUzNWViNWMzODBjZjg5ZGJkMzgwYmU1ZWI3OGFmZjM1MmVhMTg2MjYzYmRhYzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmZTcwOGZmNDQ2ODE4ZGM3ZTM3YmM5NDc1OWI3ZWQwN2RiYjczMjdkMzg5NTIyZGI3MjcyYWFmMWNhNjQxNTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_43167cb515a343c5806cf0f03682ac30",
+      "statement": "The `keepAlive` flag has exactly one operational effect: it controls whether the worker calls `unregisterSandbox(taskId)` and the best-effort `shutdownSandbox(sandbox)` after the agent run completes (and on error). It does not extend the SDK-side sandbox lifetime.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L398-L453",
+          "version": "repo-lines-v1:sha256:476534d125fae7d1857e75e1342928d5f037667c5b49abc66b449b50d95331a1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0NGQxMDYxZjJjOWVmZDI2NmMzMTlhY2U2MWI3NmMxZjhkZmEwMTgwZWMyNDRmYmJmOWQyYzFkY2VhMzE1NGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwYTQ0Y2E0NjJmNTRhM2Q1ZDY2MDBkNGJlZmVhYmM4MDY3NThmZmZiODg4MWYwMTJlY2FhZmQ0YTNkZGY0NTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OGVlYzNlZjUyNTQxNDNiZmM3ZDg5ZGRmZTg3NTA4YzNiYjIxNDEwMDhmODg5MGUwNzBkMTcxMmUyZWNmMzEifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L668-L727",
+          "version": "repo-lines-v1:sha256:4d2399b17691f39764cb8343a9a6c0064025b98e6bfc453a72954028c7ac8a48:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmY2U2YmVmNDQ1ZjI2ZGU2ZDhiZDMxZTBlNDI2YThkYTcxODY0ZDk0MjE5YmUxYjUzOGY2ZDdjNzU1NzRhYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0ZWY2YzBiMDM2MTQ1MjU5NGVkZWE4MzMzZjRlMGZmYmYzZjgyZTY1YmQ4NTQzNTA5ODNhZDI5ODdhOTRmYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4YmMwZDM0NWYwMzZiNzdlNDQxZTQ0Njk4NDYzYTNhMGU5MjI2NDA3MzBkMWFmODAxMmI3YWViODE0MWUyZDYifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L73-L75",
+          "version": "repo-lines-v1:sha256:ee788b85362109ad2e95434abc8ea87659292e48299cd80c42ac848541c7001b:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJmN2YxNTRkNmE0OGZjZDk0ZGQ1ODk5NTQ5NGE2NjRlY2ZlYjU1YjY0YzQyOWNlMWRmOTk2ZTI3ZWJiNTE1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGI4NGQ0MWQ4ZjBhMzZmN2UyNzNkOTg3YjQxMGFkOTNlYWFlN2MxMDE2YWFkODkyNDRhNGE0MmM4MWM3NjM4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmIxZGI4OTIwMTE0MjlmNmVlNTM1ZWI1YzM4MGNmODlkYmQzODBiZTVlYjc4YWZmMzUyZWExODYyNjNiZGFjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODMyZmI5YjE3ZTBmN2ZiMTIwYzk2MjRkZDA5YWZiNTcyNDBkZTM0YjQ0YjYxZDFlZjk3NTI3YmI1NWRkOTNhOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb043e0e89904bb89a3f5538297085ea",
+      "statement": "`createSandbox` calls `registerSandbox(taskId, sandbox, keepAlive)` immediately after `Sandbox.create` returns successfully and before any further work (clone, dependency install, dev server), so the in-memory registry always has a live reference for any later `killSandbox(taskId)` call.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L97-L109",
+          "version": "repo-lines-v1:sha256:698e3ec3f3ef0d240c0e452b7f5cb67aa65daa4f500baba2d947608ba89e07c4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MjA5MWI2MmM1ZTU0YzI4ODdmODM3YTIzYzc2MzFkZTYyMzkwNTVkNDY3ZDgxNGY4NjhmZGUyYzY3MGE5MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwYmZmN2I4MjA2YTcyN2Q5ZDQ2NmIzMjgzYzFhYWFlMjhkMGIwMTAxMmI2YmJjZTU3ZGZkMmQ3YjI1NDU2ODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyZDkzZDE2ZWFhOTFkNzNlYmIxNGQ3MmE0ZDdiMzYxZGRmM2I2MDI2OThjYWYwNGRiZTcyYTYyZTI2MGUyMjUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L11-L19",
+          "version": "repo-lines-v1:sha256:f3fa22d508c8020908b752b800e380d3d079b60a035630ab56a2ce7480089ebc:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRlOGI3NTcyZDAxMjM3NmQ1MTkxYjI3MGRmODdlZTNiODUwNDhlNTcwYjI3ZmUzYzllYTg1MTlhZTBhODQ1ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzFkNzMxMjI1MzQ5Mzc3NjRmZGVjMjM5NTkyNDZlM2Y0MzU5MDNhZDMxNDFhOWI1NjcxNDlhMGFiZWIyMmFiZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTU1MzdiZWE0MGU2YmFiNjE2ODg1NGFlOTUzMjdlYWQwNjJjNThkNDY3YzgwZjg3YWNmY2NjZTQ2NjVkMWU2ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0a66cfb7ff5c4015be38842fbc82a8a2",
+      "statement": "Sandbox reachability is split between two stores with different lifetimes: an in-memory `Map<taskId, Sandbox>` (`lib/sandbox/sandbox-registry.ts`, valid for a single serverless execution) and the persistent `tasks.sandboxId` + `tasks.sandboxUrl` text columns on the `tasks` row (`lib/db/schema.ts`). The two are written together after `createSandbox` returns and cleared together on `keepAlive=false` shutdown.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L518-L518",
+          "version": "repo-lines-v1:sha256:9436a45c1c29d81726efefad341d5cce205cf997e69d8549e905c222d629c14b:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQzNmE0NWMxYzI5ZDgxNzI2ZWZlZmFkMzQxZDVjY2UyMDVjZjk5N2U2OWQ4NTQ5ZTkwNWMyMjJkNjI5YzE0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQzNmE0NWMxYzI5ZDgxNzI2ZWZlZmFkMzQxZDVjY2UyMDVjZjk5N2U2OWQ4NTQ5ZTkwNWMyMjJkNjI5YzE0YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDFhYjU0OTE4NzU0MTUxNGNjY2VmMDQwZDRjMmZmZDQ0NDJjNzkwYTUyYzZhMmZmNDExZGY5NTFlNjAwZDkyMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWUyYjA5Njc0MmI5YTMxNjIxNDljN2M2OGZiNzRhMDY1YTVmNmM0NThmMDBmYjM1ZjMxN2MwNjE5OTIwZGU1MiJ9"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L99-L101",
+          "version": "repo-lines-v1:sha256:c7e31008c65b57e56811f93c29b16fc08a14e0d942e4ad90c479484b400427a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQwOGQzNDc2NjIxM2JmMjA1NTAwMzcyNDNmYTgxMWZkYzRhMWVjYzM5NDA4OTdiMjQxMTdmODhjZDI3MzQyNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGJkZmQzNWIwY2Q2ZjE5MWE2YjIyNWFjMTcyMjI2NDJkMmNkNDUyNjkzODQ3Mzc3ZTA2MjVlOGUyMGQ2YjM2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzVkOTdlZDdmMTliMTI5ZWI5ZWE4ZjRjZWEyN2E4ZmQ0NzZjMjU4MmQ4ODNhZmVlODBhNzM5ZTMwY2VkYmVlNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjU3ODllZGVmNmU3NmNiYTViZWVjZjM4OTJiNmJkODMwYWZiYWUxODI5Njk5M2E2MDRhY2EyODc2ZmVmNTZhNyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L9-L23",
+          "version": "repo-lines-v1:sha256:903a9ed65a3c6537a8f4b3ebcc39f36a0f57ec32cae1a9bc6d7f8a372436a62a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiZGI5MjAwYzg3OTc4NjY3NzVhNDhmYmI1Zjc3ODQyNjQ0YWQyOWUxOTZlMjQ3ZGExNzhjNTM5NmNlZjdhYzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxMGRiZGY0MWU4NGFlZjYxNzM0MmQyYjU0OWM1MWFjZjc0ZTQ0OTNjZWQ4YWIyNjMzYzc0ODc0OGYyZjZhYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1ZWRlOGE3OWFkNTA5ZWUzZjZkMmNiNzhhMmI2YmQwZjVhZmFlZGFhZWVkZmUxNDg0OWQ4NGUwYzlkMzUwMDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b3bd06244af4006a264939d241c1010",
+      "statement": "Cross-request reconnect is performed via `Sandbox.get({ sandboxId, teamId, projectId, token })` reading `tasks.sandboxId` and the three `SANDBOX_VERCEL_*` env vars; every endpoint that needs the sandbox outside the original worker (continue, terminal, file ops, sandbox-health, restart-dev, merge-pr, stop-sandbox, etc.) follows this pattern.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L169-L190",
+          "version": "repo-lines-v1:sha256:cdc24e4d10e0d7145c298bc4eb4a2b7a6447ae9e980b9081c5995c898d5256fb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjODgyOWZjNDIwYTY5OThlMTFmM2MyOGZmNjYzMWZiNDllMDRhNzFkZGM1MzAwNmViNjMxZTM0ZmYwYzJkYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyYjA0MzQzMTlhOGVkNGMwOTkzZjZiN2E1Y2M0MGRhZmRhYjZkNmUwMDA4MzFiYmJiNTI4OWI0ZDgxNjZiZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5YTUzOGUwMmJjOTIxZTZiOGM2MzBjYzQwYzNlZDRhNWU2ZjNjY2QzNTE4NjQ2YjNiODNhYmNhM2RiNjIyYzQifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/sandbox-health/route.ts#L40-L45",
+          "version": "repo-lines-v1:sha256:715496734eacb50dd1a14ae0991434470569a2d699474242ded48e42d011a7e5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGM3ODcxYTc5MzU4M2YzNTg4YzE2NjcxZTViMTBmM2Y2MmI1NDY1YmY1YjZjMjUwM2NjMWU2ODA0ZWE5NzIwOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTgzNTUyYWI1NzE0OTRiMzk5YjE4MTk5NjIyZGJlM2IzODI2ZWI2MWZjZDFmNzRjZmIxMmFiY2Y4OGU0ZjcyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTA5NTFjMDg5YmE0MTg3NjJkODQ0NDliMDhkYmEzOWNlNDI3YzBjZjg4ODYwN2VmMzMwZGFlZjk0Mzk3Y2ExMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjVjNTZhMGZiZGMzMmJiYzFiMWI1NmFjMjY0ZjNiMWQyYTVlNzQ1NWVkOTFiZjA1NTM1OTE5YmQ1NzcyOGJlNCJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/terminal/route.ts#L42-L66",
+          "version": "repo-lines-v1:sha256:8edc193ba63b620de05e8d08da8db86c000dad7672ad5234c2ce2d00f21f2a3a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViYzRiNjM5ZDM0N2FiY2Q4Mjc2Mzk2OWM2NWQzNjY1NWIzNDdkYzU3NTFjNmRhM2UyZjNhMjA4ZGJhZmQ3MDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlZDZmOTVlZTg3ZTI1Zjk0NDY0NmEzZGM5YWFmNjk0OWFlZDk4ZmJkOGVjMGViODU0NDM4ODNmN2U1ZWY3Y2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlZGUwYzllYzJiMDZjNDliMWRmNzBjMzlkZjE2ZTAyNDg5MmM2ZTNjNzUzZTExMDZmYjUzZDMzNzdmZWJlYTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_394d385e154b49a3856b690b5cb1cbc2",
+      "statement": "The canonical reconnect preamble in API route handlers is `getSandbox(taskId) ?? await Sandbox.get({ sandboxId, teamId, projectId, token })` — consulting the in-memory map first as a fast path and falling back to `Sandbox.get()` when the map no longer has the reference (cross-execution).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/terminal/route.ts#L42-L66",
+          "version": "repo-lines-v1:sha256:8edc193ba63b620de05e8d08da8db86c000dad7672ad5234c2ce2d00f21f2a3a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViYzRiNjM5ZDM0N2FiY2Q4Mjc2Mzk2OWM2NWQzNjY1NWIzNDdkYzU3NTFjNmRhM2UyZjNhMjA4ZGJhZmQ3MDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlZDZmOTVlZTg3ZTI1Zjk0NDY0NmEzZGM5YWFmNjk0OWFlZDk4ZmJkOGVjMGViODU0NDM4ODNmN2U1ZWY3Y2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlZGUwYzllYzJiMDZjNDliMWRmNzBjMzlkZjE2ZTAyNDg5MmM2ZTNjNzUzZTExMDZmYjUzZDMzNzdmZWJlYTAifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L21-L23",
+          "version": "repo-lines-v1:sha256:3effc4ec922fbee044dee46f5833eab4944ed36edb66c0b6d1d90ab0aa52d84f:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGMyMmI2NWNiZGUzOGI0YTU4ZTAzMDkyMWMxOGJkMTBmZGMxYjU3MzM4YmQzZTNiOGQzOTJjNjg4MTQxMjY0NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTIyNzQ2MWQ3OTkwMzdhNTBhZWRlMGIxNjJlYzNmMzZkYTI2MDNjMzBiNzVhYTMzNjFiMjMwMTUxNzFmOWExMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTVlZGU4YTc5YWQ1MDllZTNmNmQyY2I3OGEyYjZiZDBmNWFmYWVkYWFlZWRmZTE0ODQ5ZDg0ZTBjOWQzNTAwNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8832eb91c0f2437683b05e5320e92a6c",
+      "statement": "Three shutdown paths exist with non-interchangeable semantics: (A) the worker's success/error branches call `unregisterSandbox + shutdownSandbox` (best-effort `pkill` of node/python/npm/yarn/pnpm, no SDK stop); (B) `POST /api/tasks/:taskId/stop-sandbox` reconnects via `Sandbox.get` and calls SDK `sandbox.stop()` then clears the DB columns; (C) `POST /api/tasks/:taskId/merge-pr` does the same after a successful merge and ignores `keepAlive`.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/merge-pr/route.ts#L57-L86",
+          "version": "repo-lines-v1:sha256:b65787f130730962df3273dfe7ccc43a720458b3a8c05dbff2abd9b64b3d397a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMDA0NzZmNGU5ODBiMDkwNDUyY2NiZmNhODgzY2QzNDVmZDc5YjJhNGQwZTg5YjI4OWE1OTk2YWZhZmNhNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjM2E2YTUyODczZDhmZWM1M2MzZWE1NDc2OTY1NzAwMTk3ODc0ZWJhZjdlNzM4MTYzMGQ2MWNkYzA5NjBlMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwNTlmMWM2NmI2MjQwNGRmYzZmZmQ0YWE4ZjE3OGQ2NWNlMDJkMGFkYjE3NTFlODE1MmU3ZjQwYTBmYWQ0ZGQifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/stop-sandbox/route.ts#L36-L57",
+          "version": "repo-lines-v1:sha256:f83d2ffa5dcf3dbcbeeddb73bc3c0935ed82ad9bf7ef687ba9dfdc9e85db1902:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmMDE3YzI1NGM2N2E3MTM1NjI2OGFmNmRhODcwMThlMWYxYWM2ZDE1NjU5Yjc2MjRmMDk1YmMzY2JhOWVmOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4OTU1YzFlOWY3MWZmMjBmZTI5YTA4NDY1MDE2YWY4NzA0YTU5Njc0MDBkNjJlNGE4YWU4ZTNiYmQxYTViNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjNTQwODM5YmZiYTc2OTU3ZGFmN2VhMTg0YzhmNGNiMTJhMzcyOWFhMmE2M2U5YjFhNzk4M2M3YzVmMTA5YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzZGZiNGFkZjVkYjM1OTI1YzQxNzAzZWVmZTBlYzQ3NzBiYWU0YmJiNDM2OGMyZmFlNzYzY2RmMGVmNjA2NzIifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L674-L727",
+          "version": "repo-lines-v1:sha256:499034d7603b0e97c5e984f41bfd44f21610de8d4a197b66babbf066eb9cbdea:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMDliMjYxNDlhNzI0Y2E5ZGQ0ODJkOGZhMTc4YThiOGZhMDA0NzAzMjBhOGVlY2Y0YzRlZDU4Njk5ZTExNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5NjIwOTA2ZjA0YzczMDYyMjU3ZjhlM2M5ODIwNmZmN2JjZGM4NjUxMDc1YTk4NDdmNjg3MjYzNmM1YzAyZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4YmMwZDM0NWYwMzZiNzdlNDQxZTQ0Njk4NDYzYTNhMGU5MjI2NDA3MzBkMWFmODAxMmI3YWViODE0MWUyZDYifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/git.ts#L75-L100",
+          "version": "repo-lines-v1:sha256:cffe7a31b654303c1a3e63ffa3c025ef92e755cb752dc1b15ece5e3042d36cff:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMDM1NzgxODhlZjg3ZDdlMjhkODFkNzhhNzlhOGM0MWZkNjQ4ZmFlMDFmNjkxMjBmMDMxYjdkZWVhOGRhZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ab4b477ce6e4e9f8955d118e16c7724",
+      "statement": "`killSandbox(taskId)` falls back to killing the oldest entry in the in-memory registry when no entry exists for the given taskId; this handles \"Try Again\" cases where a new task id is created while the old sandbox is still registered.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L86-L97",
+          "version": "repo-lines-v1:sha256:d9e4d1dc5dae17835f442df4aec18582cab2d8d8df1a51e567fbf819e5bd7e22:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkOGE2OTViMWI5ZmNkNDg1NzljNDBlMzlkZGI5YmIwNmFmYzNjODZkMzhjMzU0NTcxNzUyMmU4ODA5NmI3MjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1NTRlM2I3ZGEzMjQ3ODU1MThlMDQ1NzAxN2NhYmZmNDgxZDhlMjVmODg0MmQwZTA1OTU2ZjhhOTRiYmQwNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxYWMzNDljY2NjMTA3NDYyMzNhMjJhYjFjMWQwMzE2YzYxNDY3NzNhOWQ4OTIyODAzMzQ2OTljNWYwZGYyNTQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L25-L60",
+          "version": "repo-lines-v1:sha256:6328408ec72cc44adfd8ddda66a1ae7ecb12db2da4c4eb655758e555baf31993:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2OTFhMmY2ZDUxMzljZGVkYzg0ZDZhMzljZTk5NzU1Mzc3MWVhM2Y0ZjkwM2U2ZmNjYzMxMjFlNDBiMGMwYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmMWUxNjQ3ZTJkNmUyYjU4ZDViYjg1YjM2MDhkM2E0MGY4MzY0NzI2YjkwZDI5YzgwOGZkMzk2MDVlMzFiYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlZjM0NmRiOWYyOGIzMzIwMGVjNTkzMWQxMmMyNzBjMDViYTI1MDg5Mjg4NTZjYjY3NjM2NWJlMWZkYWU0MWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_42fa16a78dc9436289b12e99590ca44e",
+      "statement": "`pushChangesToBranch` returns `{ success: true, pushFailed: true }` when `git push` fails with `Permission` / `access_denied` / `403` in stderr, so the local commit is preserved while the caller learns the push did not land on the remote.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/git.ts#L5-L73",
+          "version": "repo-lines-v1:sha256:324d01663dafa201ebd67dc454f4f8293641f5af5ed895605781ab5e4f0e8364:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3NThjMGRiNDJkZjgzNDE4MTJmYTFhYzE1ODdlMTU2M2Q4N2I5MTFmOTkyMGE5YjA2YzRhYTFjZDkzYmE1NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4ZGE0ZTY1MDEwZjY2ZWUxYWNhZTkzYTEyMmU5MGI0OWFhMjI3ODdhZjZlMDY3NDM2ZjRkZTkxMDk3MGJjYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMDA1ZTlhNDQ0OWMwMmViNDM5ZDY5Y2Q2YjIyYzdjNTQzNzM1YjI0NWZiZmNjYzczNWMzODAzNjQzYmM5MDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ca4fb627693c4795b9e4581a7d8d7724",
+      "statement": "The dev server is launched in `detached: true` mode with two `Writable` streams that split each chunk on `\\n`, prefix `[SERVER]`, and forward each non-empty line to `TaskLogger.info`, giving the UI a live view of the dev server's output.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L253-L293",
+          "version": "repo-lines-v1:sha256:7049ed1ce1a02b00791c227c25e982b77325d87287e299eaee15f5654ac3ba11:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YWVjN2IzZTMzOTIwN2NlMTFmYmNjYjgxZDM1ODYzY2NhZGFhZTI0NjM2N2JhZDBhZDY2ZGZlYmViYmVkNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliOWQyZDU2YWYyMWM5NjVmNGU2MjAxM2FlOTJjODFmZjM1MDZmN2FmOTQ1MTY4MTRlYzg3NmY3N2M5MmM2MDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3YzY2ZDZhODMwNzMyMGY2YzViY2RhYjcyZTA4NDBhZWVhOWUzNDNhMWQ5NTRjZjg2MDdjYjhlYWQwODVkYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFmZGNhNDMyMmQ2ZGE2MWVlMWQyMTJlZTg1ZmJhYzZhNWU2OGE2NTY2NTRmYjZiMzljZWFjOTI1NTJmNGIyMmIifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L419-L462",
+          "version": "repo-lines-v1:sha256:134e5bcb73e84167e112daccdb5293df5da2f48ac5b8cf6e9ce4840ac301cc07:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZmMyNDhhNjFkMzRjMDA4MDk1NzMxZjE4YTU3YmE3NzZiNTk1ZGUxZTRmZjhiMDEzNTc2N2E0NzBkODgwNzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDA1ZDU3MTA2YTM2MmViMDAwZGFmM2RhNDY3NGM4MmI1MThmZjVhMmUyZjY3ZWU4ZTc1N2EzMzNjMmFmNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlMzU3ZDMyODBjNjRjZmUzZTNiYjEwYzdkZjE3NzJkZTIwNDA0MmQyNjgyNTgwZDUzMjA5YjcwNzg2NTI0ZGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNmY4YjMwZmVhMThlMWIzNTMxNzM4MTQ5ODY1MzU3YWM2Y2I2NDZkNzJlMmY5YjM2ZmQ4ZjcxM2I2NjAzYTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bf1ccc5054644d2aad95d487e9e2edf",
+      "statement": "Vite projects (detected via `dependencies.vite` or `devDependencies.vite`) auto-bind dev server port 5173 and receive a sed-based patch to `vite.config.js` that sets `server.host: true`; the patched file is added to `~/.gitignore_global` so the change never gets committed.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L340-L403",
+          "version": "repo-lines-v1:sha256:127ebe62961c7e977719368c962bcd7fbc99054e2bb58bee4ab10dc33cee1ac5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmOTdmMjUyY2M5NjlhMTQ1NDZlMGY5Y2E4YTJjMWE4NDE1NGJkMWU5ZmM2ZjNlMDQyYmQ2MjA4ODM2Y2UxOGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0YmFlNjFiNzhiNWQ1OTBiODgxOGE0Y2M5MWQxY2JkOGRhZjE2OTlmYmQwMGQzYjIwOGRhZTExZjI2ZTI5NDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM1OWMzNTI5MjAxMzc2ZWNiODM0OGJlOTczZmNjOWY4YzM3NTAwM2IwNGVlMThmZTBhMTExYTJlYzJkZGFjYjEifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/port-detection.ts#L11-L67",
+          "version": "repo-lines-v1:sha256:f3eb3882edaa2b10a81faad6328896c590210be224605c6532f97d1096f01092:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmOGFhYzQ2NWIwYmQ3ZGYxOGNlMjgzMWI5OGUzMWQ5NmMxYTUyOWRkZDlkYmYzMGM5NGU1ZWEzYTIzNjA2NjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkYmZjNWM2Y2VmNWE2YjE0ZmVhZWYxZTNkNmJkNGUwMDk0N2EzNDc3MDAzYmI1ZmJkMmE1MDJhMmJiOWVhN2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d08764447e5e49158a9b967ccd467def",
+      "statement": "`POST /api/tasks/:taskId/start-sandbox` rejects with `400 'Keep-alive is not enabled for this task'` when `task.keepAlive` is false; it probes any existing `sandboxId`/`sandboxUrl` with `Sandbox.get + echo test` and clears them from the DB if unreachable before creating a fresh sandbox.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L37-L72",
+          "version": "repo-lines-v1:sha256:388498dbd0218eaa360d923a1068af0bf81ce00fd8176eff89dfdeaea3f4a1a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4NWJiMTFkNmUwNWI4ZTRkMjE3MjMyNmQyOThjYWQxZTU2ZDQxYjA4MWQxOWNlYTY4OWJlYzdjYmMxMjY4MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmNDA0YWM1NzhhNzczZDlhYmUwNTVmYzFlMzVkYTMwYWYzY2NjMjU4MGE5YjY4MGJiM2YxMTIzNmRkZDUzYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyNWRjMDAxMTk1MjYwMmYxNzg2Y2ZjMTVkZmMwZDYzZTUzYTg2YjZjYjhmNzQ3ZDYwYzA0MjM1ZTljMWZiN2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_72dc97ed69d8412db238ed1411cf10d7",
+      "statement": "`shutdownSandbox(sandbox)` from `lib/sandbox/git.ts` does not invoke the SDK's `sandbox.stop()` — it is best-effort `pkill -f` of `node`/`python`/`npm`/`yarn`/`pnpm`, then returns success; actual sandbox garbage collection relies on the SDK timeout, per the function's own comment.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/git.ts#L75-L100",
+          "version": "repo-lines-v1:sha256:cffe7a31b654303c1a3e63ffa3c025ef92e755cb752dc1b15ece5e3042d36cff:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMDM1NzgxODhlZjg3ZDdlMjhkODFkNzhhNzlhOGM0MWZkNjQ4ZmFlMDFmNjkxMjBmMDMxYjdkZWVhOGRhZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

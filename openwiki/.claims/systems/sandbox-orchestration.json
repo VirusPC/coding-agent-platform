@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ab3a503e86c0a550facff3815172c70dccf18f73397be52ebd017a15f0499ecc",
+  "claims": [
+    {
+      "id": "claim_188c9ce424f246b098fa35e835edfa85",
+      "statement": "createSandbox(config, logger) in lib/sandbox/creation.ts is the only builder that creates a new Vercel Sandbox from a route handler; it is called from exactly two places — the new-task route (app/api/tasks/route.ts) and the continue route (app/api/tasks/[taskId]/continue/route.ts) when Sandbox.get() cannot reconnect — while the start-sandbox endpoint replicates the same SDK payload inline so it can pass source to Sandbox.create.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L192-L243",
+          "version": "repo-lines-v1:sha256:99613de12d95ec7ce2012691159891aa4daf8c21ebf78de3fa67c1ed633ec1b5:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmYzI5OWQ4ODFmZjJlZGVhMDlmNjA1MGIyYTgxMzFmZTYwNzMwZWM1MTUxZDE3NTBiNTdlMmRiMjZhNDdkZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0YjlhMGIxNmI5OTEwYmFhNWQwYTRkY2FmZjhhNjBjNDI5NjMzYmYyYWUzY2JhY2M4MjAyOTA3NTgwZDEwY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyYTJlMTI5MGU0Zjg2MmU5YmI3MDZlYjg1YzYzMDY4YjA1YjU2NTdkN2FmMTVmMmNhNWU3M2YyMjFmYWZhYTUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L448-L477",
+          "version": "repo-lines-v1:sha256:8734feca51b973eddd9f5bd495acde815799d82d7c48674a9fff88c52913f2cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MjIxYzIwZGI5MzEzOWQxNzU1MjYyMzE3YWFhMTQzMDcyNDRlMTJmMTU0ZjhhNTQxNmRmZTQ1YzE2YWJlYTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiY2YxZjBlYTFiOGE1YmFlYTYwMjlhODQyODYxM2QxMDM0OWRlMTUxNDE5Y2ZlZTVmOGU2YzNlMTE2YzU0N2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2OWJhMjc4ZDkyYmVkZTI2M2RhZTk2YmI3ZjYyN2MzYmMyMmJkMDUyYmZiZDNlNGVkOWJiNTk0Yjc2MTc2ZjMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L47-L52",
+          "version": "repo-lines-v1:sha256:d78680c3d5cef14ebf08cafbf9ef0926911da9aa107626041fd556cc73dd443b:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjMwZjE3YjlhZDQwZTNjOWNmOWQ3MDdkNGQ2MmU1Zjk3ZGU1MzAzMjFhM2FhMTk0OGQ4ZThkZDk2MjEwOWViNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU2NTBiNWFjZTRmYTVlZjFiNzIzODFlMDY2ZGM4ZmVjMzE0OWQyZmEzZjFmODA5NzYwZTE5MjBhMjg3MDAyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTZhNjdjY2Y4ZjBiNmE4NmUwN2YwZTIyNWQzNjc2OWZiM2I5YzY4YWYyMTIxMDBjODM4N2Q4YjkzYTA4NjAwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjQ5ODc1M2QxMjA4OTA5YWM4OTczMDE0NjIwMTAxY2ZmMzBkY2I2YTAxNmYyZTA3MGRiNmJkNTUxNmVmZDc4NyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

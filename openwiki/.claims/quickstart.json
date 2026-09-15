@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:639b58b3fc2d5d99d01a7352c6b36704a677037004e634308e6b7c7dcac9f0a0",
+  "claims": [
+    {
+      "id": "claim_b1d2a3a487df4496b915d5ce1a851bb8",
+      "statement": "The Coding Agent Template is a Next.js 15 (Next 16.0.10) and React 19 application whose end-to-end purpose is to turn a natural-language prompt into a real code change on a Git branch: the user signs in, picks a repository and an agent CLI, and a background worker creates a Vercel Sandbox, runs the agent, and pushes the resulting commits back to GitHub.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:0b1aaa147e8979c8fdfa04da717f682583d986769c6876d8fb617fb6883d6818"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9e2b8cb8bec1877969f078e56b0a7d90139e88c973d7cb52b56125460a416b69"
+        }
+      ]
+    },
+    {
+      "id": "claim_e57fe98917cd4156a013fd6b65c54e43",
+      "statement": "The HTTP response is returned to the client before the work begins; all long-running work (branch-name generation, title generation, sandbox creation, agent execution, push) is delegated to next/server after(...) callbacks inside the POST /api/tasks route handler, and the tasks row in Postgres is the durable contract that bridges the synchronous API response and the asynchronous worker.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts",
+          "version": "repo-file-v1:sha256:e770ae490c8f72e4e02098de51c73eb57f7e7c8f1b71e6c4d42531c95047b3ca"
+        }
+      ]
+    },
+    {
+      "id": "claim_13e0726ea2c14780b119e6251d9782ba",
+      "statement": "All routes require authentication; the supported providers are GitHub OAuth and Vercel OAuth (PKCE), and the enabled set is governed by the comma-separated NEXT_PUBLIC_AUTH_PROVIDERS env var parsed by getEnabledAuthProviders() in lib/auth/providers.ts, which defaults to GitHub-only when unset.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:0b1aaa147e8979c8fdfa04da717f682583d986769c6876d8fb617fb6883d6818"
+        },
+        {
+          "resource": "repo://lib/auth/providers.ts",
+          "version": "repo-file-v1:sha256:d02b82f090a72047946f6564eeb269967e47549bcc96ea3abe7420ede72ce812"
+        }
+      ]
+    },
+    {
+      "id": "claim_a6fefc607f284145be00a0abea2ce25c",
+      "statement": "Per-user credentials (OAuth access tokens, per-provider API keys, and MCP connector env blobs) are encrypted at rest using AES-256-CBC under ENCRYPTION_KEY (lib/crypto.ts), and the session cookie is a JWE (A256GCM, alg: dir) signed with JWE_SECRET (lib/jwe/encrypt.ts and lib/jwe/decrypt.ts); both secrets are required and are never exposed via NEXT_PUBLIC_.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:0b1aaa147e8979c8fdfa04da717f682583d986769c6876d8fb617fb6883d6818"
+        },
+        {
+          "resource": "repo://lib/crypto.ts",
+          "version": "repo-file-v1:sha256:f354cf9b293496f1f3cda82e75ca8b705a88260488908b013068f1ce4ce7f121"
+        },
+        {
+          "resource": "repo://lib/jwe/encrypt.ts",
+          "version": "repo-file-v1:sha256:329974e0cd3de563a53b1da6a822f5d3d00d813eff17fb5a55c2b98618f3fa87"
+        }
+      ]
+    },
+    {
+      "id": "claim_f390d069efe2422fa7127110be5f7f87",
+      "statement": "Six agent CLIs are supported — Claude Code, OpenAI Codex, GitHub Copilot, Cursor, Google Gemini, and opencode — each implemented as its own module under lib/sandbox/agents/ and dispatched by executeAgentInSandbox via a switch on the AgentType union 'claude' | 'codex' | 'copilot' | 'cursor' | 'gemini' | 'opencode'.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:0b1aaa147e8979c8fdfa04da717f682583d986769c6876d8fb617fb6883d6818"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts",
+          "version": "repo-file-v1:sha256:30d00d04801ca7c33721ffbf8e4717f7d8a32e029f57e4999272348121745929"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts",
+          "version": "repo-file-v1:sha256:fbaae5dbfc007685ce29e3fc112b266c83944e40fbc65085ae50948cab5e0937"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts",
+          "version": "repo-file-v1:sha256:0c3c2204116b07235468905deee2e271d6170434a7f1aa36ec0382c6ae9fc633"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts",
+          "version": "repo-file-v1:sha256:0fd6008c422d1a318434d3809a9f320d88ee04d545ee55a7f44fcf38b7bd258a"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts",
+          "version": "repo-file-v1:sha256:012a5ecb81ff118680c689d63009a34ab1b835b641d3117790985f5f601b32b0"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts",
+          "version": "repo-file-v1:sha256:3944c1fcd6f008e067481aef4d79ab060752ea4a188b1f91ee1fac8a696ceae4"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts",
+          "version": "repo-file-v1:sha256:bf90733d27f2892a738a716f2cf9e3650908e926f1ff92f53f465a6f6b279781"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfd8dfefd29743e89de95ec12e9d4df0",
+      "statement": "Per AGENTS.md, all logger.* and console.* log statements in user-facing paths must use static strings only — dynamic values via template literals are forbidden because the log surface is returned to the UI — and redactSensitiveInfo() in lib/utils/logging.ts is a backup that scrubs known credential patterns from any string that does reach a log entry.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md",
+          "version": "repo-file-v1:sha256:8d4c901cc5077769fe2ec6bf740b533eefa4eb650a12fe27a14db83807d26d16"
+        },
+        {
+          "resource": "repo://lib/utils/logging.ts",
+          "version": "repo-file-v1:sha256:2c272a7d0f5d4ff82d88bfff2b98af019198a9ee1e11ea5c886953059c2e9505"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f31d59c644f46fd8ab32400ddbd2491",
+      "statement": "Per AGENTS.md, AI agents must never run development servers (pnpm dev, next dev, etc.) because they block the terminal; the validation gates a coding agent should use instead are pnpm format, pnpm type-check, pnpm lint, and pnpm build, all declared in package.json.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md",
+          "version": "repo-file-v1:sha256:8d4c901cc5077769fe2ec6bf740b533eefa4eb650a12fe27a14db83807d26d16"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9e2b8cb8bec1877969f078e56b0a7d90139e88c973d7cb52b56125460a416b69"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

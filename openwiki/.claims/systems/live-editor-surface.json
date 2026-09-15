@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e8ac95bd4451a240b58dc4385575ddc42e0a4c9e440a97197a1511aec75b36f6",
+  "claims": [
+    {
+      "id": "claim_23332cccdeca4dd5b31531e06a52103d",
+      "statement": "The live editor surface is composed of three mounted React components (FileBrowser, FileEditor, FileDiffViewer) plus a standalone Terminal component, all of which call a dedicated set of server routes under app/api/tasks/[taskId]/. All twelve editor routes share the same preamble: getServerSession, ownership scoping by userId with isNull(deletedAt), require task.sandboxId, then look the sandbox up via getSandbox(taskId) ?? Sandbox.get({ sandboxId, teamId, projectId, token }).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/save-file/route.ts",
+          "version": "repo-file-v1:sha256:86f72d46159714733b80324fc3f2af4d3a1cf1e2741f8aa4ebec888f41fe4997"
+        },
+        {
+          "resource": "repo://components/file-browser.tsx",
+          "version": "repo-file-v1:sha256:6548b9cd2d21c0abb912f7f02a33e55beffda5b73a6e03bd8a6d8749417579d7"
+        },
+        {
+          "resource": "repo://components/file-diff-viewer.tsx",
+          "version": "repo-file-v1:sha256:ffb8f129003d9ce0a8b34cec20416952f3891580ad93f3219020cb3e7239e305"
+        },
+        {
+          "resource": "repo://components/file-editor.tsx",
+          "version": "repo-file-v1:sha256:97a6dac709d6a139bac92d134702b8b1ad9eb127e31eac28d44ed38962c92984"
+        },
+        {
+          "resource": "repo://components/terminal.tsx",
+          "version": "repo-file-v1:sha256:df4a698de7ab32d74cfe2fa1334af01f5087a3dcafacb223d0e61080bfcdfa64"
+        }
+      ]
+    },
+    {
+      "id": "claim_3877071d46d24e99a917413ec299f620",
+      "statement": "The editor surface exposes four view modes ('remote', 'local', 'all', 'all-local') that toggle between GitHub-sourced data and in-sandbox data; only 'remote' and 'local' produce a DiffFile rendered by DiffView, while 'all' and 'all-local' delegate to FileEditor for plain text render.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/diff/route.ts",
+          "version": "repo-file-v1:sha256:4b7f62261cecc422f62c37d08aa0ee407ff166ad6470b76ebaae9aa8c5490735"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/files/route.ts",
+          "version": "repo-file-v1:sha256:a0fe52a1dad46fc5c4f0e4b89dd01f4adcbd5e8d33e16b7f407fce3e433a15bb"
+        },
+        {
+          "resource": "repo://components/file-diff-viewer.tsx",
+          "version": "repo-file-v1:sha256:ffb8f129003d9ce0a8b34cec20416952f3891580ad93f3219020cb3e7239e305"
+        }
+      ]
+    },
+    {
+      "id": "claim_962fe50e2c0d4df8b55b4df3f710cbfd",
+      "statement": "FileBrowser state is held in a per-task Jotai atom (lib/atoms/file-browser.ts) with one ViewModeData slot per mode; the browser renders an AlertDialog with a Start Sandbox button when the server responds with a 410 Gone or 'Sandbox is not running' error.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/files/route.ts",
+          "version": "repo-file-v1:sha256:a0fe52a1dad46fc5c4f0e4b89dd01f4adcbd5e8d33e16b7f407fce3e433a15bb"
+        },
+        {
+          "resource": "repo://components/file-browser.tsx",
+          "version": "repo-file-v1:sha256:6548b9cd2d21c0abb912f7f02a33e55beffda5b73a6e03bd8a6d8749417579d7"
+        },
+        {
+          "resource": "repo://lib/atoms/file-browser.ts",
+          "version": "repo-file-v1:sha256:a2ef45d52389a1dce10d1d82faf66233bb9ce610c6ff4cf0aff0fdfea5805d4d"
+        }
+      ]
+    },
+    {
+      "id": "claim_a24464115c404eb1876ef875bf901f60",
+      "statement": "FileEditor wraps @monaco-editor/react with two Vercel/Geist themes, disables Monaco's TypeScript semantic diagnostics (noSemanticValidation: true) so the sandbox LSP remains authoritative, registers Cmd/Ctrl+S for save via /api/tasks/:taskId/save-file, and rewires F12 and Cmd/Ctrl+Click to call /api/tasks/:taskId/lsp for Go-to-Definition; cross-file results call onOpenFile(filePath, lineNumber).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/lsp/route.ts",
+          "version": "repo-file-v1:sha256:50816d61820d4b4b8e61a5d4c97fb86d687da21faf28a0aac95de13a49753998"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/save-file/route.ts",
+          "version": "repo-file-v1:sha256:86f72d46159714733b80324fc3f2af4d3a1cf1e2741f8aa4ebec888f41fe4997"
+        },
+        {
+          "resource": "repo://components/file-editor.tsx",
+          "version": "repo-file-v1:sha256:97a6dac709d6a139bac92d134702b8b1ad9eb127e31eac28d44ed38962c92984"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed2266e4ebcf41e997b160fe4e4500c0",
+      "statement": "The save-file route writes through a base64-encoded pipe (sh -c \"echo '<base64>' | base64 -d > '<escaped-filename>'\") with the filename shell-escaped, avoiding heredoc injection vulnerabilities from content containing sequences like 'EOF'; the autocomplete route shell-escapes the directory argument with the same '\\\\'' trick when running ls -1ap in the sandbox.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/autocomplete/route.ts",
+          "version": "repo-file-v1:sha256:9451c7a50fbe18438490d7b6e17d1c19140eda49451faed120c2c548a47b0a05"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/save-file/route.ts",
+          "version": "repo-file-v1:sha256:86f72d46159714733b80324fc3f2af4d3a1cf1e2741f8aa4ebec888f41fe4997"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebf03fa34fcc41c2b54dee6ededdb79e",
+      "statement": "The terminal component POSTs each user command to /api/tasks/:taskId/terminal (sh -c <command> in PROJECT_DIR) and POSTs pwd to the same endpoint after a successful cd to refresh its cached cwd; Tab calls /api/tasks/:taskId/autocomplete which runs ls -1ap in the sandbox and returns case-insensitive prefix matches with isDirectory derived from the trailing slash.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/autocomplete/route.ts",
+          "version": "repo-file-v1:sha256:9451c7a50fbe18438490d7b6e17d1c19140eda49451faed120c2c548a47b0a05"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/terminal/route.ts",
+          "version": "repo-file-v1:sha256:6eea30c1c53217426bbf2a4784a1e644966c62bac1cf75d1b889db0cc60eef6c"
+        },
+        {
+          "resource": "repo://components/terminal.tsx",
+          "version": "repo-file-v1:sha256:df4a698de7ab32d74cfe2fa1334af01f5087a3dcafacb223d0e61080bfcdfa64"
+        }
+      ]
+    },
+    {
+      "id": "claim_68931779fb4b4ea7a8f4c4f7a1c086db",
+      "statement": "The LSP route declares runtime='nodejs' and maxDuration=60; its textDocument/definition case writes a .lsp-helper.mjs into the sandbox that uses ts.createLanguageService with a ts.parseJsonConfigFileContent host (walking up from process.cwd() to find tsconfig.json), runs it with node, parses JSON.stringify from stdout, removes the helper, and returns definitions converted from 0-indexed LSP coordinates. The textDocument/hover and textDocument/completion cases are stubs returning empty results; the vscode-jsonrpc + typescript-language-server + ws dependencies are declared in package.json for the planned bridge.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/lsp/route.ts",
+          "version": "repo-file-v1:sha256:50816d61820d4b4b8e61a5d4c97fb86d687da21faf28a0aac95de13a49753998"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9e2b8cb8bec1877969f078e56b0a7d90139e88c973d7cb52b56125460a416b69"
+        }
+      ]
+    },
+    {
+      "id": "claim_45a51b0b24884b8daf3d0d1fde00f750",
+      "statement": "The diff route's default (PR) mode uses PR base.sha and head.sha when task.prNumber is set so the diff is anchored to PR creation time rather than current main; when the PR is merged, the route writes prMergeCommitSha back to the tasks row if it was empty. Files mode (mode=all) uses git.getTree recursive on task.branchName via Octokit, while files mode mode=all-local runs find inside the sandbox excluding .git, node_modules, .next, dist, build, and .vercel and joins the result with git status to color entries.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/diff/route.ts",
+          "version": "repo-file-v1:sha256:4b7f62261cecc422f62c37d08aa0ee407ff166ad6470b76ebaae9aa8c5490735"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/files/route.ts",
+          "version": "repo-file-v1:sha256:a0fe52a1dad46fc5c4f0e4b89dd01f4adcbd5e8d33e16b7f407fce3e433a15bb"
+        }
+      ]
+    },
+    {
+      "id": "claim_0930eac6222245219c0003f045faeebc",
+      "statement": "FileBrowser right-click actions funnel file-system mutations through dedicated routes: create-file (mkdir -p + touch), create-folder (mkdir -p), delete-file (rm), file-operation (cp -r or mv via the operation field), and discard-file-changes (git ls-files probe followed by git checkout HEAD -- <path> for tracked files or rm for untracked files).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/create-file/route.ts",
+          "version": "repo-file-v1:sha256:41f43e12952c6e43f0158044b9a94379daa56aaf84a3860d1d109e5b9d8bd295"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/create-folder/route.ts",
+          "version": "repo-file-v1:sha256:0aa2e1c459db22417853ec846203ae60814627b724c995943bf685ce4f3b8aff"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/delete-file/route.ts",
+          "version": "repo-file-v1:sha256:929dcc0066fdc567483f2e4e5f998c1ef3d45b824505cb7e8de3e2af2e66d98c"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/discard-file-changes/route.ts",
+          "version": "repo-file-v1:sha256:150c8c1f3e24072d389deb0c68fcd3a127a8a500903ae9004e9c2c81009f303a"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/file-operation/route.ts",
+          "version": "repo-file-v1:sha256:7845aacf5937d1a6b996e192fd0c4a210f6dd242538faa1587e921749cc6363a"
+        },
+        {
+          "resource": "repo://components/file-browser.tsx",
+          "version": "repo-file-v1:sha256:6548b9cd2d21c0abb912f7f02a33e55beffda5b73a6e03bd8a6d8749417579d7"
+        }
+      ]
+    },
+    {
+      "id": "claim_b289f62da37b4a94843d9d3c47872066",
+      "statement": "FileDiffViewer renders the unified DiffView from @git-diff-view/react with DiffModeEnum.Unified, using generateDiffFile from @git-diff-view/file; both file-content and diff routes return early with isBinary: true for non-image binaries, and image files come back with isBase64: true so the viewer can wrap them in a data:<mime>;base64,... URL whose mime is derived from the extension (including image/svg+xml and image/x-icon).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/diff/route.ts",
+          "version": "repo-file-v1:sha256:4b7f62261cecc422f62c37d08aa0ee407ff166ad6470b76ebaae9aa8c5490735"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/file-content/route.ts",
+          "version": "repo-file-v1:sha256:d1296cf88eddd83ac62bf66bfd0f28dec360174ea84641e844ade0a622c43d1f"
+        },
+        {
+          "resource": "repo://components/file-diff-viewer.tsx",
+          "version": "repo-file-v1:sha256:ffb8f129003d9ce0a8b34cec20416952f3891580ad93f3219020cb3e7239e305"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9e2b8cb8bec1877969f078e56b0a7d90139e88c973d7cb52b56125460a416b69"
+        }
+      ]
+    },
+    {
+      "id": "claim_c85743ac7ca34b2e98e724bd4e2eb300",
+      "statement": "All editor routes assume the task is in keepAlive mode because every route gates on task.sandboxId being non-null; when Sandbox.get throws (sandbox expired or never reachable), file routes return 500 to the client and the browser renders the 'Sandbox is not running' alert with a Start Sandbox button. Only the files route proactively clears tasks.sandboxId and tasks.sandboxUrl when the SDK reports a 410 Gone; the other editor routes leave cleanup to the next start-sandbox call.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/files/route.ts",
+          "version": "repo-file-v1:sha256:a0fe52a1dad46fc5c4f0e4b89dd01f4adcbd5e8d33e16b7f407fce3e433a15bb"
+        },
+        {
+          "resource": "repo://components/file-browser.tsx",
+          "version": "repo-file-v1:sha256:6548b9cd2d21c0abb912f7f02a33e55beffda5b73a6e03bd8a6d8749417579d7"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:faf31156147f95bd9ee8f568f54844d514694cf5bdcb5c4547f7205bec9bb8c2",
+  "claims": [
+    {
+      "id": "claim_4b1727afb345438598a5e17f2d173a04",
+      "statement": "The connectors table is the durable store for user-owned MCP server definitions, owned by the signed-in user via user_id with ON DELETE CASCADE, and is materialized by migrations 0006 through 0011 (most notably 0006 initial remote-only shape, 0007 adds local type/command/args/env, 0008 drops args, 0010 adds user_id FK, and 0011 retypes env from jsonb to text to hold an encrypted blob).",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/migrations/0006_nostalgic_skullbuster.sql",
+          "version": "repo-file-v1:sha256:bd145b67209da06ca549d66172f5d6c4280884bd6dbde92a2a9e4486357bc6c7"
+        },
+        {
+          "resource": "repo://lib/db/migrations/0007_lethal_hitman.sql",
+          "version": "repo-file-v1:sha256:aa3f21ca44a23561144d28d80366a9821d67c1a1b3c70115f9ca13559ab110b8"
+        },
+        {
+          "resource": "repo://lib/db/migrations/0008_last_adam_destine.sql",
+          "version": "repo-file-v1:sha256:475bc4f67e8b0f08777aacaf1ea2a177faddac7f9a04a705937071e254894d83"
+        },
+        {
+          "resource": "repo://lib/db/migrations/0010_concerned_exodus.sql",
+          "version": "repo-file-v1:sha256:58c5a1c4793c041506bc76f3d751b74fc45d28a5d5881f0ef0f8964404a2cf15"
+        },
+        {
+          "resource": "repo://lib/db/migrations/0011_outstanding_punisher.sql",
+          "version": "repo-file-v1:sha256:c6b5f23fd0e3b0bd06f8d1d69b5c293856f36402f4c1e1a1dabe50fd55b70dd9"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L184-L211",
+          "version": "repo-lines-v1:sha256:d87f9587d02bf096f6a58b06441e9682a13bcf384d6f87a7a5f3e7b6cfb83348:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZTQ3ZTEwOTkxZDgyYWQ2MWRiYmQ0N2VjOTVlYTE4ZDk2NmE2MTNmYzk0YTdlNTI5ODRlZTFjOTU2MTYzY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1ODBiNzY1MThkYWU5NzlmYWViZDAyMzY3YTI5MjkyYTUwZDk3NjA5MjI1MWEzOGE2Y2UzMDg4MGJhNDI4MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3YmZhYjRiZDhlOWQ3NGM1YjVlMmM0M2U2YWZjZWFhYzQ5MTIzODZiMGRlOTE3ZDdlYzRmMTA3ZWJjZDYyOWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjczYWE5YjdmZGZiOWFkNGI0YjI1YmUwMGFmN2QwNTFkZGE5MGQzNWE5MjUzYzkwZTU0MTBmOWMzNDJmMjFkYmIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

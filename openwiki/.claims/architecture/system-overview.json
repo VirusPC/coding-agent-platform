@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f0e9dedf114f69f18b74cdcca4e53ab3dec543e18e542784a86a873c10e2a2f8",
+  "claims": [
+    {
+      "id": "claim_00c34ec0ece94e93ae8dc8d988a28e85",
+      "statement": "POST /api/tasks returns the response with a pending task row before any long-running work begins; the worker pipeline runs inside an `after()` callback from `next/server` so the serverless function is not frozen after the response is flushed.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L220-L243",
+          "version": "repo-lines-v1:sha256:2bf6b51365c0062a705296fd2d9ffbee26e5082f428aaba20a69969efe55e3ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzZTEwNzI2NzQ2MzM4NWY3ODcxN2ZhZjE5NjQ3Mzg4YjY4YzVlMGQxMmIxN2EwZTRhMDY1MjQwNGZmYzIwNjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiOGU4MTYxZDY4NzRkNGFmOTljZDJlODQ1MzE1YjU3NmI1Y2NhNmU5ZjlhMTIxNzJmOGY0NTQzODkwNjhhYjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4YzgwMDhlYzYxM2Q1MDc0YzMzNmI2MGVmNzgxMDVjZWY0ZDNkMzlmOGUzZDJhMzM3YTE2MTIxOTY5OThjZDkifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L48-L250",
+          "version": "repo-lines-v1:sha256:9b2fb4b782672ab88d391ebfc135434322ca038a1b81b42c8faebf94c9de4873:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI4Y2U4ZDRhMTFjMTc3MDljZmMwZTIyZTIxNjRiOWJhYWIyMzgxNmMyNWFmNWQ5MjI4MzdlMDliMDI4NTc3OTk5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmYjU4MGU5NjRmODNhNDczZjQzZDQ0Mzg0NjI5NDlkNjhiNTYwMGZkYTc4N2YxNjM3NDVkMDBkZTg5Y2JmMzZhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhMjllNzBmOGVkNDdkYWIyOTIyOGI2M2Y2ZDM0ZjViYzU1ZjU1ODdjNWViODg3MDdlYjgzY2RjOWJkMTEzNDM4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_52b2f76efd1a423993aec61a438c5005",
+      "statement": "The `tasks` Postgres row is the contract between the synchronous API and the asynchronous worker: the worker mutates `status`, `progress`, `logs`, `sandboxId`, `sandboxUrl`, `branchName`, `agentSessionId`, `mcpServerIds`, and `completedAt` as the lifecycle progresses, and every UI surface polls the row for live state.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L394-L518",
+          "version": "repo-lines-v1:sha256:5040cb0660ee887acc04ef66a5e70e00060450b389b0684924e34c46dba51d83:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwNjU5NWY0ZWU1ZmY2M2Q1MDk1MDQxOWRjMzQ0MTQ1MTM4NTFkYzk3MzZmZDE3YTRmN2JmYTkzMGIyNjFiNmYyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5NDM2YTQ1YzFjMjlkODE3MjZlZmVmYWQzNDFkNWNjZTIwNWNmOTk3ZTY5ZDg1NDllOTA1YzIyMmQ2MjljMTRiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1NjI2NDFmNGRkMDFkMDlhYTU1MzM0NzQ0ODhhZjdhZGI0NzZlNDNlNjhmZmQ5M2Q5YWFiNTY3ZTc2ZWY4ZjQ5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxZTJiMDk2NzQyYjlhMzE2MjE0OWM3YzY4ZmI3NGEwNjVhNWY2YzQ1OGYwMGZiMzVmMzE3YzA2MTk5MjBkZTUyIn0"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L76-L114",
+          "version": "repo-lines-v1:sha256:f6502d8761128d54c5f16af37178feb49bab743ecf51abceb61e7fee3a9c383e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2YzllMzM4MTIyYzQ2MDYxOTdmN2U2MWY4MDJkYmVlNThmZjM0MzAwYzE1Yjk1ZjZhMDYyZTRhZmE2OWNhZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1ODBiNzY1MThkYWU5NzlmYWViZDAyMzY3YTI5MjkyYTUwZDk3NjA5MjI1MWEzOGE2Y2UzMDg4MGJhNDI4MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2ZTgyNmU2Y2YwNjQ1MmNlMGJiN2FkNGJiMzQyM2ZlMDJhMGExZjQ5Njg4YmRmNGZhMzdkNDgyN2M5ZmU1YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQyNGY0ZTc4ZTA3MTkwN2VjNDEzYTUzNjc4ZTZkYTA4NzYzZDI0MmFmNTZkZjUzNWJhYTRjODUwZmI0NTBmMGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_916ecd76ff4f44cb90cf1b8985bd8a01",
+      "statement": "Live sandbox handles are held in a process-local `Map<taskId, Sandbox>` in `lib/sandbox/sandbox-registry.ts`; cross-request reconnection uses `Sandbox.get(sandboxId)` against the persisted `tasks.sandboxId`, not the in-memory map.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L8-L23",
+          "version": "repo-lines-v1:sha256:b2b33d9625af9083423598c8c606f3a1002d50e1b07cead716dc126d415ed1aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkZTZjMDBiZWNkZGYzZjRlY2VhMzVkZWU0MDBmOTRkOGFiZmRlMjQ2ZTlmNDgxNjkyZmIzNDBjYzlhNWZmNTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0N2VhZDQyM2QzZjIzZGE3NDMxMTkxNjQ2NzFiZWViZjhjNzEwNjMyMTE1MDViOTJjMmQwM2U2OTMzY2FmYjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1ZWRlOGE3OWFkNTA5ZWUzZjZkMmNiNzhhMmI2YmQwZjVhZmFlZGFhZWVkZmUxNDg0OWQ4NGUwYzlkMzUwMDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a349af595cd248d38002be80d91cc1cf",
+      "statement": "OAuth tokens, API keys, and MCP connector `env`/`oauthClientSecret` are stored at rest as `aes-256-cbc` ciphertext via `lib/crypto.ts`; they are decrypted only on the server, immediately before being passed to a sandbox or applied to `process.env` for an agent invocation.",
+      "evidence": [
+        {
+          "resource": "repo://lib/api-keys/user-keys.ts#L37-L60",
+          "version": "repo-lines-v1:sha256:6f68aa5d06ae0ed1bdb89a09bf67f266f17fe401ed3c03b5c7310bf1307f73d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NTk1ZjRlZTVmZjYzZDUwOTUwNDE5ZGMzNDQxNDUxMzg1MWRjOTczNmZkMTdhNGY3YmZhOTMwYjI2MWI2ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0Nzg0OGIyN2U5NzM4YzgxN2JjNzRjM2IyNzcyOGFjZGFjODRjNTc5MzJlNjJkZTdlODhiMDg2MDYzOGU3Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhYjc3NTc3YWI4ODhjN2IwMzhlZWJiNTM2MzViZTI4NzdjNmM4NDA0NzEzNjU5OWViYmVhZDZiY2ViN2E4M2EifQ"
+        },
+        {
+          "resource": "repo://lib/crypto.ts#L1-L63",
+          "version": "repo-lines-v1:sha256:f354cf9b293496f1f3cda82e75ca8b705a88260488908b013068f1ce4ce7f121:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5ZWZhNTUxZjk2NGQyNjc5MmViNDViNDA0OWJkN2M5MDg3MmU2OTA1NTUyNTM0ZGZlODMzMzdlNzFhYWExNTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L56-L75",
+          "version": "repo-lines-v1:sha256:bbdcfdecdc2a4e6f12f1b86dc7153f9ef4f4fe21785a828f25bc58b4935131ae:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0YmM5MzJkMWEwZTI2MTUxZjI4OTNkYjVkOWY3ZmQyNTkzZjFjMzc4MTI0YzA2OGJmODA5Y2FmNjllMDYzMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyNjNjNDk3YjRiOTYxZWI3ZDkzNjllMDcxNzkyYzA0ZTgzN2NlZmMyNmY5OTIzYzhiNTgwYTEwMDE4ZjMzMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyYmE3NTU3MWNhM2I1ZmQ4OGQyYTU3NjA1NDY0MGYxYWUwYzI2YjA0OTg5Y2ZjMjM2MzI1ODA2YjJjYTViMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a140d06d1a77409fb447ec5babfd192a",
+      "statement": "The agent dispatcher snapshots `OPENAI_API_KEY`, `GEMINI_API_KEY`, `CURSOR_API_KEY`, `ANTHROPIC_API_KEY`, `AI_GATEWAY_API_KEY`, `GH_TOKEN`, and `GITHUB_TOKEN` from `process.env`, overlays per-user keys, and restores the originals in a `finally` block so the worker process cannot leak one user's credentials to the next user.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L149-L158",
+          "version": "repo-lines-v1:sha256:d3c69f6a9bb5cd8ad4a923b4a9911624a2ded3cc79c662918ff5a384d13cac8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2YjlhYmYwYmEyZTFiOTFjN2Q4N2EyODM2NDE3MTU1NzU2NjIyYjBlZjljYzEzNmFlYTY4NWU3NGIzYjE4MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmZjBkNGVkYjg2MTQ3NDYxYWE4ZjcyYjU4MDdkMmJkODY4YjVhNzcyOGViOTA2NGM1OWIxM2ZiOTgwMzFmY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L57-L75",
+          "version": "repo-lines-v1:sha256:72817eae14977954c546e5693850d51e1173b7efbccb171e6852761ed0e8104f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2YjBlMjBkMDcxNGQzZjY2MjZhMDE1MTcxYTQ4ZTVlYTEyYjIwYjIwMzY5OTJmODc1YmQ1OWRjNjNiZjdhYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJkNWQ1MmU4ZGY4NWFiYjI5YjhjZDFmYzkxMzQ4ZDJmZmE3NDA1YmE5YjUyM2Q5ZjUyYzMwNzEzMzk4NTk2OTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyYmE3NTU3MWNhM2I1ZmQ4OGQyYTU3NjA1NDY0MGYxYWUwYzI2YjA0OTg5Y2ZjMjM2MzI1ODA2YjJjYTViMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_29dae31e8db74ecf87adae48a401c12d",
+      "statement": "Cancellation is cooperative: `PATCH /api/tasks/[taskId]` with `action: 'stop'` flips `status` to `'stopped'` and calls `killSandbox(taskId)`, and the worker discovers the change at one of five `isTaskStopped` checkpoints in `processTask` (plus four more inside `createSandbox` and one at the entry of `executeAgentInSandbox`).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L62-L110",
+          "version": "repo-lines-v1:sha256:9f1ed284289220e1fbdc20d1540a6388da77ea46e4f13d714ee900155ec9fd21:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MTYyZDE4NGI0MjRhYzM4OTg3YjdlMmU2ODljYjFmZjQ5OGEzYjI5Yjg2ZmIxMDZjODY1MDkwMDYzMDljZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhY2ExODMxMzg2ZjJlNWRlMGMxN2U3YzU3ZTdjY2UyZmZlZDVkZmY1YmIxZGZmNjBkYzJjZWU1OGI3MTAxYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNkMGMyZGU0YzEzZjcxNDY3MjI5NDdmODEzODI1NzllOWJjNjRlYzY0NjljOTU2OTk3MDYxMjI4MTkxYTMxNTgifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L420-L521",
+          "version": "repo-lines-v1:sha256:6fac47315436a430be27b8e1c6bcf873983d22af035c0e52d093e188c99ad861:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjNzM4YWVhMDkyYzM5Y2YxZWE1OWE4YzVjNjYzNGM1OWM5NDczZDUzMmJhMTJiMDFiZjgwNzljYjkyZDk4NjkwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjNzM4YWVhMDkyYzM5Y2YxZWE1OWE4YzVjNjYzNGM1OWM5NDczZDUzMmJhMTJiMDFiZjgwNzljYjkyZDk4NjkwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmNzFiOGE3NDYzODk1ZTBiYmIxMzUyZTk2MGI0MTgwN2QyMjBmY2U2ZDYwZTk2ZGM0Zjk0MzU0YTE4YTI3NjcyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyZTJhOTU4ZTFlNWQ1YTVjNmEwMGI1NWU5OGViMzQ3OGI3MDA4YmI2NmZmNThlNjJhNzM3ZGZkZWU4MTk4NDJhIn0"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L38-L47",
+          "version": "repo-lines-v1:sha256:fd7e82fffab9c18959106a9645cc44c65869c97c2877a587762200fa3ca8f652:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhMDFjMDc1YzRhZWM3NTM5MzMxM2ZkNzFhYzc2YmFmMWM5MTE1MGMwOGNlM2YwODQ3NTZiZjYwODA4N2ZhMTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5YTU4MTczYmIwZGUwOGY3YTRmZjYwNGQ5ODdlMDI1M2Y3YzFiNjhiNmI0Njc0NDlmZTY0YWQyNjBmNDJhYWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwNWY1MTM4NDNjOGFhNmQxYzdhNDRjYzk0Mjg2M2I3MGU0NjM2MDgzZTNiYTUwOGZkNThkNDZiYjJmMDgzMDQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L52-L233",
+          "version": "repo-lines-v1:sha256:0b65339131d7c111df8d21693bc26d2d29cdfb34ba78e8d2771c3fb9f9b61d31:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3NTY1MGI1YWNlNGZhNWVmMWI3MjM4MWUwNjZkYzhmZWMzMTQ5ZDJmYTNmMWY4MDk3NjBlMTkyMGEyODcwMDIyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJlNmIwNDQ5MTQ2OTcyMmU4MzYzYTk0ZTQwNDQ1MzhlMDEzYTJhMjE3ZTM2YjFlNTY4YmE2MGFjYjdiNGM4ZjJlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI4NDY2ZmRlMmRlZDU3MzQ2MDQxMDlkMjZkNDYyMzM3M2ZmODZiOGYwMzM3Zjc2ZjI3YWMzNWI1N2VlZGFhODU0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmN2UyNzY1MTM3YzA2NzNmYThlMTM4ZTdlYzQ0MzAyOWFlYjMzNTlmNzg3YzliOTg4Y2E4MzYxMTU0ZmQ5ZjM2In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_12d350d68caa49fd98216acc7ac8b027",
+      "statement": "`stopped` and `error` are both terminal task statuses but carry distinct meaning: `stopped` is a clean user-initiated cancellation recorded with `error='Task was stopped by user'`, while `error` is any failure surfaced from the worker; the stop endpoint rejects with 400 unless the current status is `processing`.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L62-L99",
+          "version": "repo-lines-v1:sha256:01ab8901bf4b4fc808b538ccc11e945650407948273a1f0d8cac2ba308b6723e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0MTYyZDE4NGI0MjRhYzM4OTg3YjdlMmU2ODljYjFmZjQ5OGEzYjI5Yjg2ZmIxMDZjODY1MDkwMDYzMDljZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhZDc2ZmM4OThjMDQyY2YzZmY2ZWZmN2UwNjgwODZjMjA1NmVhMmQyYjIyMjU0MWRlZGMwYTc2MDVjM2EyZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhY2ExODMxMzg2ZjJlNWRlMGMxN2U3YzU3ZTdjY2UyZmZlZDVkZmY1YmIxZGZmNjBkYzJjZWU1OGI3MTAxYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzYjlmZWZmYzJkMTgyYzZkZTEwYjc5M2U1M2M2MDY2NzQ5Yjg4NTQ3OGVlNmJkZWY4YTYyN2I2MDY4NjZmNTcifQ"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L90-L94",
+          "version": "repo-lines-v1:sha256:34f1c784149e31ae355384510315e56bb32373b6479e4fa0d90bdf331562537f:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDk1Yzc4MDhmZTc0NWJkZDA3Mzk5NTljNjIyNzU0NzE0ZDQ2NmViMWZjNGNlMjBhMTg2MzNmOWQ1NmU3YTIxNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGJiZGQ4MGJiMzhjMTE1MDM0YmZjYzlkNGE3N2ViZmNiMjllODAxYWI3OTQwNzc0YzJjMjc4ZjI1YWRjMGZlNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGU1NWU5MTU0YmM4NGQxYWYyZGUyNzhjMGFlYTgwODE4MDc5NzRmYjA3NTFjYWYxNjliNzE2YzI0OTI3Njk0NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiZjQwMjMxZmY4MTVlM2VhNjExNzQ2Yzc0NDA5OWIyNTBjZmM4NWYyMDhiMmM0YzU1Y2NmNDIwOTdjMTRhNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_607c2333caed45aca0c96e7d57cb43f5",
+      "statement": "Authentication supports two OAuth providers, gated by `NEXT_PUBLIC_AUTH_PROVIDERS`: Vercel as a first-class primary sign-in, and GitHub as either a primary sign-in or a linked account recorded in the `accounts` table on top of an existing Vercel user; the session is a JWE-signed cookie with a one-year TTL.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts#L1-L69",
+          "version": "repo-lines-v1:sha256:919e4da7503546c99bd817c20b2a820c301524e8ebc9f3668a4b1d95a2c9e416:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlZWFhMWQ5Yzc1MTdkMDM4OWY0MTQwMmExYzQxZjIwMDA5OWZkOWVmYzJhMmVjZTA5NzA1NGNlYTVkNWEwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MTZlMWQxMWQ3YzFlZmQ4ZTc0MWFmNTBmNmQwYmJlMjI4ZDZhMjJiNWJlMDAxOGE0MGFmZDBkMTc5NDczMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts#L1-L54",
+          "version": "repo-lines-v1:sha256:3acff112e94fa49757cdf228c9511da67f115e4c5b12440b1ef8eaf37bd2c1e3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlZWFhMWQ5Yzc1MTdkMDM4OWY0MTQwMmExYzQxZjIwMDA5OWZkOWVmYzJhMmVjZTA5NzA1NGNlYTVkNWEwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5MTkxMjhjZTAzMGFiNDI1NjE0NTU2ZDg0Nzg5YTRlMTU4MGFhNGZmYzBmODM1MzFmZTE0NTFiMWNlMmEwOWMifQ"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L258-L283",
+          "version": "repo-lines-v1:sha256:3560e0b5be165dddea7997114b6db0cf6ac0fc9714a87d5c7ebd17d960c2c6c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMGU5M2Q3ZmYwNDY1NGU4MzhmYWExNzI4MDU4NmU2MmY1NmJiNGEyZGU1NTBlYzc4YTdiNTBiZDQ3YjEzNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1OGFkYTIyMGE3NmMyZDVlOTE4YTRlNTFiYTM3M2FiOGM3OWMyNmU3YThmYjQyOTQ4MDUzNDA5NWYwN2I1NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1MWU5OTAwMTE0ZGZhMjVlYmJhNDI4YzAxZTRiNjVkY2IzNjVhOWMzZTYzNzVkYmU2NDAyM2VjYzhiMzZhNDMifQ"
+        },
+        {
+          "resource": "repo://lib/session/create-github.ts#L18-L100",
+          "version": "repo-lines-v1:sha256:c4b20a7602a217cdcc6eaa8b5b81e41c197e94b1f3f491bb2a51792b1222c284:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwZWFjOWNiYjhlMTc0MDUxMmE3NDU4ZTcwN2NmZWEzMDczMjY1NTMxZjZmY2Q4ODc0NzkxOGNkODgyNDcxMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNGI2NjQ3ZWVmYzVkYzQyM2U5MDk1ZDBlNDE5ODRmN2M0ZDQyZDdhNDkwOWYzZTExOTc4NDY4MjBmNWRiZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5MGJiNmFmZTk0M2U4MDYwN2RiYWQxZGRkYWQ4NjJkN2UzODMyZjc4NGRmY2JjN2IyZWJjYzQxNzc5YThiYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/session/create.ts#L11-L66",
+          "version": "repo-lines-v1:sha256:4f2187a1dc751ee5df8716388bb64bfe5ed0a51f009a07068f7c1bdf870f7fb0:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmYzA4ZDE2M2NjYzNlODZiNjc5YTkxZDlkMGEyOTYyYzkxMDM3OTI3NDZkYThkMzczY2ZkMjNiNDJmMjRmOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNGI2NjQ3ZWVmYzVkYzQyM2U5MDk1ZDBlNDE5ODRmN2M0ZDQyZDdhNDkwOWYzZTExOTc4NDY4MjBmNWRiZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2Nzc0ZTgxZDgxMDk3YmMyZmFmYjc1M2YxODM1ODQzNzVhYjc4NmVmYjNkNTM5ZDgyN2E4ZjY4OTRlYmZlMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_917c1dee204e49e0bca1b90001373eb2",
+      "statement": "Rate limiting (`checkRateLimit`) counts both tasks created today and user-role messages sent today across all of the user's tasks in a UTC day; the cap is `MAX_MESSAGES_PER_DAY` from `lib/constants.ts` (default 5), overridable per user via the `settings` table; the POST handler returns 429 with the remaining count and reset time when exceeded.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L56-L69",
+          "version": "repo-lines-v1:sha256:9377d2a133ba7cf6583065dafa8e96844b809cb7bb28e9b22e08306d98304e05:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhYWFmOTY3NDY3ZDFjMTA5NDNjZmMzNDNjYTY0NTY4ZmM0ZTExN2RkZTEwZTk5MWEzZWY4OTQ0NmVjYWZlYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1MjhjZTQxMTYyZTFhYzI1MGRjMWM5NjkzYzIzY2JhNzRlYjM2NTVjYTI0YjQwMzU0MjEzMmZlZTIyMWQ0M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFjMTI3Y2U1NDk3MmQ0MjM3MTZkYjc2Nzg3MGRlYWM5Y2YwOGUwMTM2ZmRkNWExMWMxMTY0ZGM0YWIwMjEyZTQifQ"
+        },
+        {
+          "resource": "repo://lib/constants.ts#L1-L5",
+          "version": "repo-lines-v1:sha256:e2602fb42541ea041e298b287848eee1e0891d0f597e98037d58597d781b2127:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzVlMjdmNjhkY2UyMGVmYjRiZmI3MGU5YTBiOTAwMGJmODQyZTdmMjkwZGY5ZjhjMGYyMDU2NmUwMGNmMTMzZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTI3NDk2MTdlZGJhZTlmNWRjYjdjMDA1M2Q4NGM2MDIyMTAxOGUxMjZiODYzZWQ4ODM3ODdhZmExZWEyZGQzNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzU2ZTZmZTU0NGQyNjYzNmQxNjhlMzYwZmJmNjcwOWMwMDk4ZDc5NTliNmJiNmU1MDVkYTY5OTY0N2FlZDE2OSJ9"
+        },
+        {
+          "resource": "repo://lib/utils/rate-limit.ts#L6-L51",
+          "version": "repo-lines-v1:sha256:2332b5f3716313e38f42c9aee88909d4cdcfe8d8f55b9f3f026d2cc20383edc4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3MjllMTk0MTllZWJiNjk5MzVkZTJmYWYyYmMzMTNkZGQyMDI2ODliMjhiZmFkMWJmMTZkNWM5Y2Q1YWU5MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2ZTQ3NWQyNTJiOTJjYjUwNTBlZmFmODc5ZjEwMzkxYTcyODM1NTRmMjJmYzYzMWVhMWM5MzI2ODI2ZmVkYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9da269fb25a64b58913874f6e1a65ad3",
+      "statement": "Sandbox creation runs in a strict sequence: validate per-agent env requirements and `SANDBOX_VERCEL_*` credentials, build an authenticated repo URL (`createAuthenticatedRepoUrl` embeds the GitHub token as username / `x-oauth-basic` as password for github.com), `Sandbox.create`, immediate `registerSandbox`, shallow `git clone` to `/vercel/sandbox/project`, optional `package.json`/`requirements.txt` dependency install with package-manager detection, optional dev-server auto-start (Next.js 16 gets a `--webpack` flag, Vite gets a host-allow patch), optional `agent-browser` install with an agent-specific skill file, git config, and branch resolution (AI branch → local → remote → new).",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/config.ts#L1-L86",
+          "version": "repo-lines-v1:sha256:75db7c37f8c0db23e8a0dafd6e0306f8d74ea137f2f945efab8adeaa7a92ac25:eyJzZWxlY3RlZExpbmVDb3VudCI6ODYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3ODI1N2IzY2FmMDk1ZDZkZGU3OTFmODZkZDg0MTg1ZDI4NDU3ZWFlOGM3YzljZTNhM2QzZWVlOWIwNzI2MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzOTQ0ZjhkZjU2YmNlMWU2YzU0ZTM3MGVjNGIzNzA5MmVkNGMxMmM1OTMwYjYwYTlmYTUyNjlkZDgwZGEzNGUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L326-L470",
+          "version": "repo-lines-v1:sha256:818b88b96f2f02779aa5d36496f632286cbcb84ebfccf5ab111262b6137b0bfb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmMjhhMGQwODIyM2JjYmM5YjE1NDcyMGEzOTQxY2QxYjllM2I0NzdmMmVjNTRjYTc5ODY0ZjQyNDkxOTQzZjg5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI4ZGIyZGE0YjI1YTEwMWM0ZmQ0OGIxYzM4N2ZjOGY2ZjU4NGQ2NTg1ZTFhOGViMDcxNWUxMDYzYzk3YmVmNGM1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmZDhhMTExZWIxMGRhMGYwZGM5OGNkMDJkYTQwZGRhM2JjODBjZThmMTdiN2YwMDFhMWU4ZDU3MDE3NjQyMjFhIn0"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L47-L233",
+          "version": "repo-lines-v1:sha256:acdb14376adb0cfba5ee0e7a8a57f005c2e665bb312377347823a3bc41461e31:eyJzZWxlY3RlZExpbmVDb3VudCI6MTg3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMzBmMTdiOWFkNDBlM2M5Y2Y5ZDcwN2Q0ZDYyZTVmOTdkZTUzMDMyMWEzYWExOTQ4ZDhlOGRkOTYyMTA5ZWI3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJlNmIwNDQ5MTQ2OTcyMmU4MzYzYTk0ZTQwNDQ1MzhlMDEzYTJhMjE3ZTM2YjFlNTY4YmE2MGFjYjdiNGM4ZjJlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1NmE2N2NjZjhmMGI2YTg2ZTA3ZjBlMjI1ZDM2NzY5ZmIzYjljNjhhZjIxMjEwMGM4Mzg3ZDhiOTNhMDg2MDBlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJmN2UyNzY1MTM3YzA2NzNmYThlMTM4ZTdlYzQ0MzAyOWFlYjMzNTlmNzg3YzliOTg4Y2E4MzYxMTU0ZmQ5ZjM2In0"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L505-L772",
+          "version": "repo-lines-v1:sha256:bec30022c8b158549ca0e19fc026aaf97b79e5d6b44a7655eafa75f13faef3c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzMjZjYzRmOWNiMTFjMTkxZDg1YjU2ZTg0ZDg2OWI4YmFmNmUzZmQyNDcxN2RmZDhmNDRhYTVlMmUwYTFmNmUwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiNWNlMzM1YTllNTBhOWY0OGU5YWM4OWE1NmY1OWJhYzgyZDhkMmRlYzBjZDRmOWUwMjJkMjJjYTM4ODA0M2FlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0ODRhYjYxMTM4OTIyODRmMjRlMTQzNWQ4NGEyMWRhMmY2Yjg3ZTM0NTY3YWMyMjlmMDU0NWJkNGY0ZWQ2ZGU2In0"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L774-L978",
+          "version": "repo-lines-v1:sha256:0b613d094be823384ccb61d6032b65a0b0cf326a7edd2a5aa6166bc4b4665680:eyJzZWxlY3RlZExpbmVDb3VudCI6MjA1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzYzkzMThlNjc5MGY0MTUwY2NjYTY2MzU0ZDQ4MGE0MjRjZjljZWQ0OTc5YmVmNjc3NTU1ZjVlNzk0ZWVjZDU4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIwNGI5YTBiMTZiOTkxMGJhYTVkMGE0ZGNhZmY4YTYwYzQyOTYzM2JmMmFlM2NiYWNjODIwMjkwNzU4MGQxMGNhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJjOGEzOWQzZGVlZWUwZjg4ZTA5MDhiNTljOWMzZTc0NzVhNDU2MDFjN2RmMDUyNWY0NGNlNGFlYjI1MGFmMWMwIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0492efc7922243caa6a5843f11c5067b",
+      "statement": "Execution logs live as a JSONB column on `tasks` (`tasks.logs`), written by `TaskLogger` which reads the row, appends a `LogEntry`, and writes it back; the user/agent conversation is kept in a separate `task_messages` table so streaming agents can update a single message row in place via `agentMessageId` instead of appending one log entry per token.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts#L360-L370",
+          "version": "repo-lines-v1:sha256:56bc18a04ad964ff3efeffab1d32a7a8cc4af6ba9fd21b20c36f2b760269ebb5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjZGIwNzY1N2EzNzRjYjY0MWRhM2UwNWFhYjA0MzY0MWFiYjg0NGE2M2QzZDU4MDkxMzk1ODYwNjE4ODE2NWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1ODBiNzY1MThkYWU5NzlmYWViZDAyMzY3YTI5MjkyYTUwZDk3NjA5MjI1MWEzOGE2Y2UzMDg4MGJhNDI4MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzOGQzNDQ5M2M3YWE4N2FlZjRiOWQ5Nzg1ZWExNjNmY2IwMjAzMmNiZGYzY2VhZDdiODk0ZjNhZWMxMWZlMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMzMDYyNzc0YjlhOGU2ZjY1ODVlYmU1YTBkNTI0MzVhZjc1MTA4NDFhZTJiYWQzOWU0MzlkNGNiMjZmMzY3NjAifQ"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L96-L96",
+          "version": "repo-lines-v1:sha256:20fa305a913d7bbc886ab07b6b58f678665be9f226e02e54c0f8db60f36ec4e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjBmYTMwNWE5MTNkN2JiYzg4NmFiMDdiNmI1OGY2Nzg2NjViZTlmMjI2ZTAyZTU0YzBmOGRiNjBmMzZlYzRlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjBmYTMwNWE5MTNkN2JiYzg4NmFiMDdiNmI1OGY2Nzg2NjViZTlmMjI2ZTAyZTU0YzBmOGRiNjBmMzZlYzRlMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDc3NTg2NDk2OTFlNzUxNGQwMWFkM2U3NGU1ZGRjMDExZWUxZTAzYzg0ZjFkZmE4ZDNhY2IxMDYwNDUxMjFlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2JhNTRlODM4MjI4NjNjMDkxZTNlMGU4M2EwYjcyNmMxNzllOGE0ZTUwMTNmNjJlMTg0ZTg1Mjg4ODI5ZWNlOCJ9"
+        },
+        {
+          "resource": "repo://lib/utils/task-logger.ts#L6-L101",
+          "version": "repo-lines-v1:sha256:7c3f99e8d9eae09f7cab09c7d1372483275d325af7c2c678cc2f7bbbbcd2f25b:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxN2IxMTE4ZWU5YWEzYmY1ZjI0YWM1Y2ZkYzllMWE1YWFkMmMzMTQ4YjllODI0NzRkMGU2ZjBmODVlNzJjZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAyMmUwN2VlNTZiYzk1ZDAxYjU3YzU1OGU0MzhiODc5YWJjYTBiMjAyNGRhMTdiNTFmM2E5ZmYxNjQ2ZWM5MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFjYTViZDU4OGNjMTlmNzk5ZjBiMzgwNWY4NGYwZTYwNTg3NDYwM2FlYzEwZGE3NTM4ODQzYmE4NzdlMmE1MjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de6a79b9ade1439fa359b130a1164ddc",
+      "statement": "A single dispatcher `executeAgentInSandbox` in `lib/sandbox/agents/index.ts` switches on the six agent types (`claude`, `codex`, `copilot`, `cursor`, `gemini`, `opencode`) and delegates to per-agent modules that handle CLI install, auth, MCP wiring, and streaming output capture; `copilot` is the only one that lazy-imports the GitHub token resolver at call time.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L12-L158",
+          "version": "repo-lines-v1:sha256:04015a66b62a6abe24e11745c851351a22b7f48ad03026f58bb516181a454057:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwNjA1ZWNmNDQxNDZiYTkxYTY4YjBiMjUwMzY3ZWFlMTA3YmFmOTFmNjVmNzQ2ZDRmMDE4NmJkNWJjZjg5YTBhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyN2U1Nzg4ZDVkOWQ3M2QyNGE4MWRiYzBhNWE3NGJmYTgyYzljM2IzYWY5OWU1MmFmNzk2ZTkwYjQ2OGE4YTNkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJkMTk1MTMwNjJkZDhmYjQ3ZWFlNzQ0MzEyNWQxNGM3MTQ0NmFhZmQzNjNkZDQyMTkxZTVlYmFmODc4M2UyNjRhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c5843c172f9c45078aafa44448fb8280",
+      "statement": "Task deletion is soft-delete via the `deletedAt` column: single-task `DELETE /api/tasks/[taskId]` sets `deletedAt` on that row, and `DELETE /api/tasks?action=completed,failed,stopped` bulk-soft-deletes by terminal status; list/read queries filter on `isNull(tasks.deletedAt)` so deleted rows are hidden from the UI.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L119-L150",
+          "version": "repo-lines-v1:sha256:124190173b85f50d040f72c45f4350946df26c0b2bdde030f1eb201c33794cb9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkYTM0ODg3NDFiNDcyMDg2NDNmYjU3MTEwODM4NDZjMWM3NmY5NjU0NDVkNzQwYmRjMjEyODRmNTJlMjYwMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L34-L45",
+          "version": "repo-lines-v1:sha256:e10d8af967f33ef5d5eec293c3558994c0ed68df460caa87aa856974fb5417a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiM2RiOTZiMjM4YWEzODBhNmQwZTBkYjA5NWFjMzY5N2FmM2M5OGI1NDJjMmVkYmE4YmEzYzI5MzhmODRhYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1MjhjZTQxMTYyZTFhYzI1MGRjMWM5NjkzYzIzY2JhNzRlYjM2NTVjYTI0YjQwMzU0MjEzMmZlZTIyMWQ0M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlYmZhMzRmZDc3MTQ5NWEzMmY3NmU3NGZlODY5NDkzMWU0NjNiYjMyMDk3YWVmZDVjMzZmMTYwMGIzN2NhY2QifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L738-L800",
+          "version": "repo-lines-v1:sha256:9ae0c85677f7ecd4f39961627b6f8dbc57a5547226a23ba4ef76b67659b79045:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzODNmN2RhOGE0NDQ4ODJiYjc4OTMzYzMxZDc4YTY3N2U5ZDM4Y2ZkYzkwZTE2Y2EzYzI3ZTk0ZGUyZmYxOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjZjI1NzAzOTljZGU3YWE0ZWExYjUwMzcwNjgxMjhkOWVjNGY0YWU1YThiMTEyODA5YzY5OWM2NjIxZmU5ODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2388b60bbfc44a38b328f3a04fa55bc6",
+      "statement": "The DB lazy-connection client in `lib/db/client.ts` is a Proxy that opens a single `postgres-js` connection on first property access, requiring `POSTGRES_URL` and throwing if it is unset; every query goes through this single shared handle wrapped by Drizzle.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/client.ts#L1-L17",
+          "version": "repo-lines-v1:sha256:ccedb1b3179c734ac3227e9fa10a73e7633f59a69c1d11658aea699033e9db8c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3NmUyYjUwMWZhMDkwNTk0NzIxYTcyMDMyZTExMDI4ZGZhNzc0ZjM3YzAzOTM0MjQzNjEwNGYyY2M3YjQ2MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNWNkMmZiNGYzZGY4ODQ1MTUyNTViMzk1MjNmMmY4YjU0NzJiZWVhOWY1NjZmZmNhMjA0ZGI4MDI1NjEwNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1ODBiNzY1MThkYWU5NzlmYWViZDAyMzY3YTI5MjkyYTUwZDk3NjA5MjI1MWEzOGE2Y2UzMDg4MGJhNDI4MjUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

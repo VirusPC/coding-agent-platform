@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f5f6a569fc32649d3d981f500475478f357fb768a3d35e72fc88c2282b33cf3a",
+  "claims": [
+    {
+      "id": "claim_63d99265bf7144c08789ff7f530cde68",
+      "statement": "drizzle.config.ts is the single source of truth for migration generation: it points drizzle-kit at schema source `./lib/db/schema.ts`, output directory `./lib/db/migrations`, dialect `postgresql`, and the connection URL `process.env.POSTGRES_URL` (a non-null assertion).",
+      "evidence": [
+        {
+          "resource": "repo://drizzle.config.ts",
+          "version": "repo-file-v1:sha256:9af84cbb31426f554f8b3bfd98cf6765c7d4bbdbd27be2524402dd8cdaf10cc7"
+        }
+      ]
+    },
+    {
+      "id": "claim_33d0d0a0383c4ddb83aec13bbde578b6",
+      "statement": "lib/db/migrations is committed to the repository and currently contains 22 ordered SQL migrations numbered 0000 through 0021, plus a `meta/` directory whose `_journal.json` declares `version: \"7\"` and `dialect: \"postgresql\"` and lists one entry per migration with its index, slug tag, and creation timestamp; alongside the journal sits one `NNNN_snapshot.json` per migration.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/migrations/meta/_journal.json",
+          "version": "repo-file-v1:sha256:acc0c90b767ae9e05c7f0d6a7ce176f68b2c9feafe50a29644141d76d5feb1fe"
+        }
+      ]
+    },
+    {
+      "id": "claim_a4cd06b133074006b06cca973b147e46",
+      "statement": "Drizzle-generated migration SQL files separate statements with the standard `---> statement-breakpoint` marker (for example, in 0010_concerned_exodus.sql, which adds users/accounts/keys tables, foreign keys, and unique indexes in a single migration).",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/migrations/0010_concerned_exodus.sql",
+          "version": "repo-file-v1:sha256:58c5a1c4793c041506bc76f3d751b74fc45d28a5d5881f0ef0f8964404a2cf15"
+        }
+      ]
+    },
+    {
+      "id": "claim_49f7828991bd4350985f845441168d79",
+      "statement": "package.json exposes four migration scripts that map one-to-one to drizzle-kit subcommands: `db:generate` -> `drizzle-kit generate`, `db:migrate` -> `drizzle-kit migrate`, `db:push` -> `drizzle-kit push`, and `db:studio` -> `drizzle-kit studio`.",
+      "evidence": [
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9e2b8cb8bec1877969f078e56b0a7d90139e88c973d7cb52b56125460a416b69"
+        }
+      ]
+    },
+    {
+      "id": "claim_27f613ec586043e386fbc9a4dfca9a0d",
+      "statement": "scripts/migrate-production.ts gates migration execution on `process.env.VERCEL_ENV === 'production'`. When the check fails the script logs a skip message, prints the current environment (defaulting to `local`), and `process.exit(0)`, so it is a safe no-op on local developer machines, Vercel preview deployments (VERCEL_ENV=preview), Vercel development deployments (VERCEL_ENV=development), and any CI runner that does not explicitly set `VERCEL_ENV=production`.",
+      "evidence": [
+        {
+          "resource": "repo://scripts/migrate-production.ts",
+          "version": "repo-file-v1:sha256:6302684f157e05ef972b5e8011e8039c480f840763dde0b19be7dc1eecdd4b65"
+        }
+      ]
+    },
+    {
+      "id": "claim_e3c4bc2c81114d4e856700891b042611",
+      "statement": "Inside the production branch, scripts/migrate-production.ts re-verifies that `POSTGRES_URL` is set (throwing `Error: POSTGRES_URL environment variable is required` otherwise) and then runs `npx drizzle-kit migrate` via `child_process.execSync` with `stdio: 'inherit'` and the current `process.env` forwarded. On success it logs a completion message and exits 0; any thrown error from execSync is caught, logged with `console.error`, and converted to `process.exit(1)` so the surrounding build pipeline fails the deploy.",
+      "evidence": [
+        {
+          "resource": "repo://scripts/migrate-production.ts",
+          "version": "repo-file-v1:sha256:6302684f157e05ef972b5e8011e8039c480f840763dde0b19be7dc1eecdd4b65"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc8343e826f74ff6bc4df75209688f41",
+      "statement": "The same `POSTGRES_URL` connection string is consumed by three call sites: drizzle-kit via `drizzle.config.ts`, the production migration runner scripts/migrate-production.ts (which forwards `process.env` to the child process), and the runtime database proxy in lib/db/client.ts which lazily opens a `postgres-js` connection and throws if POSTGRES_URL is missing. POSTGRES_URL is provisioned automatically on Vercel via the Neon integration declared in vercel-template.json.",
+      "evidence": [
+        {
+          "resource": "repo://drizzle.config.ts",
+          "version": "repo-file-v1:sha256:9af84cbb31426f554f8b3bfd98cf6765c7d4bbdbd27be2524402dd8cdaf10cc7"
+        },
+        {
+          "resource": "repo://lib/db/client.ts",
+          "version": "repo-file-v1:sha256:480acbac99eef445592dfecf6980cd611b2d370aae03d7309ab16a5c98bfe3a4"
+        },
+        {
+          "resource": "repo://scripts/migrate-production.ts",
+          "version": "repo-file-v1:sha256:6302684f157e05ef972b5e8011e8039c480f840763dde0b19be7dc1eecdd4b65"
+        },
+        {
+          "resource": "repo://vercel-template.json",
+          "version": "repo-file-v1:sha256:54db1e76515923e9fcf8235664dc4ba60e1e34dc7c81ff114f310df7a7389008"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

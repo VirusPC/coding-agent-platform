@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:92dcab93ca6de7383c3ba466cc81b5f468db7f0c27e1b626d832e53b1cd8ae41",
+  "claims": [
+    {
+      "id": "claim_be12bbd589d540b9b4760f2920c9c47a",
+      "statement": "The /api/tasks namespace is split into four logical groups anchored off /api/tasks (collection: GET, POST, bulk DELETE) and /api/tasks/:taskId (per-task: GET, PATCH, DELETE; lifecycle helpers messages, clear-logs, continue; execution-control helpers start-sandbox, stop-sandbox, sandbox-health, restart-dev; GitHub PR and deployment helpers pr, merge-pr, close-pr, reopen-pr, sync-pr, sync-changes, reset-changes, check-runs, pr-comments, deployment; live-editor helpers files, file-content, diff, save-file, terminal, lsp, autocomplete, file-operation, create-file, create-folder, delete-file, discard-file-changes, project-files).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts",
+          "version": "repo-file-v1:sha256:5b88fb40755ae3889c9c3188d4bdeccce666a177051c5c06a17dda5c916b1a83"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts",
+          "version": "repo-file-v1:sha256:45494fcccd19dc2130161f14866e03e5927ebf0098dcb80506ca94f785376bc8"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/terminal/route.ts",
+          "version": "repo-file-v1:sha256:6eea30c1c53217426bbf2a4784a1e644966c62bac1cf75d1b889db0cc60eef6c"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts",
+          "version": "repo-file-v1:sha256:e770ae490c8f72e4e02098de51c73eb57f7e7c8f1b71e6c4d42531c95047b3ca"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

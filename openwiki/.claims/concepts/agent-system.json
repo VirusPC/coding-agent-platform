@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cad075a5240b89e73b57bc7f295e3b5fc5a88c17582da964f0030e674638b09f",
+  "claims": [
+    {
+      "id": "claim_287240dbbb8d4b3a907959ddb613da78",
+      "statement": "executeAgentInSandbox in lib/sandbox/agents/index.ts is the single dispatcher that the task worker uses to run an agent; it is the only place that knows about the full set of supported CLIs and is called by POST /api/tasks and PATCH /api/tasks/:taskId/continue with the already-decrypted user MCP connectors.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L324-L337",
+          "version": "repo-lines-v1:sha256:9fff3399ca93f121d7d12da1292ef835a990653c387e0240f753f0aa51967623:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzMzg5ZTQwZDgzNjExZDc5ZjJmN2M2NGM2NDQ4ZmI0N2EyODY5MTNmMmYwMTVjMjMyZmI1YzdjMTUzZDk4OGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwYWFhMDcyYWJjYWMzZmZlYmJhYTQxNzFiOGU0MWY2ZmQyNjE2NGJhZTgwMTQ0YjJkYmMwMzFiZTdiODhmYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkNGYyN2FkMWRjNTJhYjFjMWExYmI4ODM0OWEwMTkwNGQ5MjNjNWNkZDE0N2Q3NWFmMjc5MDZjYzM0ZTYxYTYifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L590-L600",
+          "version": "repo-lines-v1:sha256:d56a44da76b399e103df486b88778a0894219cbcf39babf680f5ef2a74b8e0bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzMzg5ZTQwZDgzNjExZDc5ZjJmN2M2NGM2NDQ4ZmI0N2EyODY5MTNmMmYwMTVjMjMyZmI1YzdjMTUzZDk4OGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmODg4MWMxOTQ5NGQ0N2Y5OWM0ODBiOTQxZjk2ZDhkYzdhYTJkOThjODgyYWMxZmIxNGM1NWFhY2UxZjQyNjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwYWFhMDcyYWJjYWMzZmZlYmJhYTQxNzFiOGU0MWY2ZmQyNjE2NGJhZTgwMTQ0YjJkYmMwMzFiZTdiODhmYjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhMjU0ZmRhMTY2MDUzZjQ4NmIzZjEzOTVjODRlNjE3ZjEzNmIyN2MzZWExOTVhNTAxNWExZWJjNzliYTdkODQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L18-L37",
+          "version": "repo-lines-v1:sha256:50dcd94960af5b33673f93f9d22c6845559089ed26794efe7298a64b293f8f6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0MWIxZjg0NGNhODQ5MzczM2UyODdjN2NkNjI2OGFlYzBlODU1OTYzNDQ0MmJiNzM1MDlhMDRmZGU2MmExNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5Y2U3OWFjNWFmMTdhMzM3NGZkMjg5N2IxNWY0ODA2ZWE5ZjhjZTU3Y2Q0NmIzM2E0NWFhNjcwNGYwOGM5YWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1MDM0ODczODJmNDcxZDBjYzA4ZTk2M2UzMjJjOGQyNjQ2OWVlODU4MWJlYmZkZTlkZmEwYzgxZDM4NDc2M2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiOGMyMWUwODI0YjdlNDBjYzA4NTg3YWViNWNhYjhmN2FmMWVmYTdhNzhlZGQyNTFjOTdmMmQwYjFhM2VhMTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3e78e2f57db04d4abe916e4583c21dfd",
+      "statement": "The AgentType union declared in lib/sandbox/agents/index.ts is 'claude' | 'codex' | 'copilot' | 'cursor' | 'gemini' | 'opencode', and the dispatcher routes to a per-CLI wrapper through a single switch with a default branch that returns a structured failure for an unrecognized value.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L12-L12",
+          "version": "repo-lines-v1:sha256:0605ecf44146ba91a68b0b250367eae107baf91f65f746d4f0186bd5bcf89a0a:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDYwNWVjZjQ0MTQ2YmE5MWE2OGIwYjI1MDM2N2VhZTEwN2JhZjkxZjY1Zjc0NmQ0ZjAxODZiZDViY2Y4OWEwYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDYwNWVjZjQ0MTQ2YmE5MWE2OGIwYjI1MDM2N2VhZTEwN2JhZjkxZjY1Zjc0NmQ0ZjAxODZiZDViY2Y4OWEwYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDE5NTEzMDYyZGQ4ZmI0N2VhZTc0NDMxMjVkMTRjNzE0NDZhYWZkMzYzZGQ0MjE5MWU1ZWJhZjg3ODNlMjY0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjc3ZWEwMzZjMTJlZGExZGNhM2U5MTIyMjc0NzE3ZjI0MTQwMjVjNmEwNTcwNWFmMTk4MjFkZTczMDljOTMyYSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L78-L148",
+          "version": "repo-lines-v1:sha256:30eecfd3eb1c68109bcd9e3a6d58860fcccaa58e7ebca7f99879e852b9ab070e:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1M2ZiNTZiYzllZTMwZTU2YWRjNGJiZDQ5YWNkNzJmMjFiZjY4ZWFkM2FkZWU4N2FiNTI1ODI3NWE3MTk3ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzMDY3M2ZhMDYzYjhhM2M1ZTM1YjU3MmRmYmVmOThhYzc1NDkzMzU5YjMxYjdiMThmOWIxZGYyZjM4MWIzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjMTkyNGRiYmI5MjJlNzE3YWUzNDM5YzI1MTEzMzA0Y2NiMTg0ZDkzM2I1MGQ0NWY5NzlmYzdiMmM5OGMzZTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a42a02efa26b4677aa15e81f65d2bd7a",
+      "statement": "The dispatcher calls the optional onCancellationCheck callback before any per-CLI work; if it resolves to true the dispatcher logs 'Task was cancelled before agent execution' and returns a failed AgentExecutionResult with cliName set to agentType and changesDetected false.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L38-L47",
+          "version": "repo-lines-v1:sha256:fd7e82fffab9c18959106a9645cc44c65869c97c2877a587762200fa3ca8f652:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhMDFjMDc1YzRhZWM3NTM5MzMxM2ZkNzFhYzc2YmFmMWM5MTE1MGMwOGNlM2YwODQ3NTZiZjYwODA4N2ZhMTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5YTU4MTczYmIwZGUwOGY3YTRmZjYwNGQ5ODdlMDI1M2Y3YzFiNjhiNmI0Njc0NDlmZTY0YWQyNjBmNDJhYWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwNWY1MTM4NDNjOGFhNmQxYzdhNDRjYzk0Mjg2M2I3MGU0NjM2MDgzZTNiYTUwOGZkNThkNDZiYjJmMDgzMDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2653da0c1783458097b93eba8506b42a",
+      "statement": "The dispatcher implements a temp-env-var pattern: it snapshots OPENAI_API_KEY, GEMINI_API_KEY, CURSOR_API_KEY, ANTHROPIC_API_KEY, AI_GATEWAY_API_KEY, GH_TOKEN, and GITHUB_TOKEN into originalEnv before any override, applies user-supplied apiKeys (and the GitHub token for the Copilot agent to both GH_TOKEN and GITHUB_TOKEN), then restores all seven in a finally block regardless of which switch branch ran.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L149-L158",
+          "version": "repo-lines-v1:sha256:d3c69f6a9bb5cd8ad4a923b4a9911624a2ded3cc79c662918ff5a384d13cac8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2YjlhYmYwYmEyZTFiOTFjN2Q4N2EyODM2NDE3MTU1NzU2NjIyYjBlZjljYzEzNmFlYTY4NWU3NGIzYjE4MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmZjBkNGVkYjg2MTQ3NDYxYWE4ZjcyYjU4MDdkMmJkODY4YjVhNzcyOGViOTA2NGM1OWIxM2ZiOTgwMzFmY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L57-L75",
+          "version": "repo-lines-v1:sha256:72817eae14977954c546e5693850d51e1173b7efbccb171e6852761ed0e8104f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2YjBlMjBkMDcxNGQzZjY2MjZhMDE1MTcxYTQ4ZTVlYTEyYjIwYjIwMzY5OTJmODc1YmQ1OWRjNjNiZjdhYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJkNWQ1MmU4ZGY4NWFiYjI5YjhjZDFmYzkxMzQ4ZDJmZmE3NDA1YmE5YjUyM2Q5ZjUyYzMwNzEzMzk4NTk2OTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyYmE3NTU3MWNhM2I1ZmQ4OGQyYTU3NjA1NDY0MGYxYWUwYzI2YjA0OTg5Y2ZjMjM2MzI1ODA2YjJjYTViMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cecec162362543988577dc3687a873f0",
+      "statement": "When agentType is 'copilot', the dispatcher dynamically imports getUserGitHubToken from @/lib/github/user-token and, if it returns a value, assigns it to both process.env.GH_TOKEN and process.env.GITHUB_TOKEN; the restore block writes both back.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L156-L157",
+          "version": "repo-lines-v1:sha256:472136af2decca4c7c327673d0fd2b5678219dc80c41bb61b1e073ea5ca49c47:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdkMDE1MDNjNzE2ZjY3MDgxY2IyZDAzMzE1NTUwMWEyM2E2MDU5ZWUyNGIyMGVkMWY5MGVmNWYwMjFhZjI2MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIyOGY3NmZhZWM0OWI0M2UzYzZkZDNhNDdmYjNmMjljOTUzMTI4ZTBhZjZjYWYwZDdlNDVhNzQ3NDJiYjNkNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQ5MDQ0NjkyYzI3YTg0ZDkwNmY4ZGEyZDNjOGQ2MjE5N2E2MTZmMTc5MzIxMGJjNDVjM2RjOTEyNDEzNDcxZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGY3MzlhMDZjMWNiYjEyNDRlMzM2M2QzOGJjZjlmYTUwY2U4NGZlZDM5OWMyMTkzYTNjN2YwOGQ1OTkxOGIyYSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L49-L54",
+          "version": "repo-lines-v1:sha256:f81aa33c17741138802c3a105e7f30e2d26a92256e182a679a502b2a8bc36370:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjExZWY0NTY5ZGE0NGI5ZDJjMmVkNTc0ZTNiZWFhNWNjYTgxNGJhY2U3ZjI0MDRhNDI3MWZkYzFjZWY0MTQxYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTdkODYzMmU1NGU5Mjk4YWJiOTU4NzI3ZTJkNTE0MDhhYmFmMTM2NjAzNTM3OTEwMTQwYWJmNjViMzBhYjYxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWQ3ZWUyYWYwZWM4NDNmZGFlMmRhYTkzOWM4NjUzZGQzOWEzMThkZTNjZWMzMTFkY2U5YzE5YzczNWFjZWNlNiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L72-L75",
+          "version": "repo-lines-v1:sha256:670aad9fe3491da901a9f2cde1f12e2bbfe735500e50f6a96faafbcd7ce7411f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2QyYmVlMjllYTkzMjVhMjcyMmI5ZmQ5MjNkYjIyOTRhNDYxMWY3NzM5YzI0MDY5MzVkYTc0NzQ3ODdmZTI3YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQ1MTc5OWE3MmNkNTVmZWZjMmRjZDNjMDRlZTY1Y2I0MzhjNjI2NTUzYTc4OWExYmNmNGQxZjNjNWE1Mjk0MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjJiYTc1NTcxY2EzYjVmZDg4ZDJhNTc2MDU0NjQwZjFhZTBjMjZiMDQ5ODljZmMyMzYzMjU4MDZiMmNhNWIwMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ab09979789e4d0a8454460a24673c28",
+      "statement": "The connectors table in lib/db/schema.ts stores MCP server definitions with type in {'local','remote'}, optional baseUrl and oauthClientId, an oauthClientSecret column, an optional command string for local STDIO servers, and an env column holding an encrypted JSON object of key-value pairs; the dispatcher's Connector type is the inferred select type of that table.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts#L184-L211",
+          "version": "repo-lines-v1:sha256:d87f9587d02bf096f6a58b06441e9682a13bcf384d6f87a7a5f3e7b6cfb83348:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZTQ3ZTEwOTkxZDgyYWQ2MWRiYmQ0N2VjOTVlYTE4ZDk2NmE2MTNmYzk0YTdlNTI5ODRlZTFjOTU2MTYzY2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1ODBiNzY1MThkYWU5NzlmYWViZDAyMzY3YTI5MjkyYTUwZDk3NjA5MjI1MWEzOGE2Y2UzMDg4MGJhNDI4MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3YmZhYjRiZDhlOWQ3NGM1YjVlMmM0M2U2YWZjZWFhYzQ5MTIzODZiMGRlOTE3ZDdlYzRmMTA3ZWJjZDYyOWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjczYWE5YjdmZGZiOWFkNGI0YjI1YmUwMGFmN2QwNTFkZGE5MGQzNWE5MjUzYzkwZTU0MTBmOWMzNDJmMjFkYmIifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L10-L10",
+          "version": "repo-lines-v1:sha256:8108c47396019df7eabbc8c7161dbcebcd24fe3f7a0154bc091a18c00d9a4985:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODEwOGM0NzM5NjAxOWRmN2VhYmJjOGM3MTYxZGJjZWJjZDI0ZmUzZjdhMDE1NGJjMDkxYTE4YzAwZDlhNDk4NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODEwOGM0NzM5NjAxOWRmN2VhYmJjOGM3MTYxZGJjZWJjZDI0ZmUzZjdhMDE1NGJjMDkxYTE4YzAwZDlhNDk4NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmM1MmVjOWIxZWMwMmNjZmZkNzgyOWQ2OWIwOWEyNTA1YWVkYzI4ZGE0ZWIyOGZmYTAwNzBhYzlkM2M4YTZiZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDIwODRhMzI1OTczYTI4NzU4Nzc4NzRlM2U3YmQxNjk4ZmFmYzRkNmQ0Y2Y2YTkwMDg2ZGJmMDIwZTI3N2NhYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ba478a5c33a044118f83cb3dc70544ba",
+      "statement": "The dispatcher does not decrypt MCP secrets itself; decryption is performed by the task worker in app/api/tasks/route.ts and app/api/tasks/[taskId]/continue/route.ts, which filters connectors by userId and status='connected' and calls lib/crypto.ts decrypt on each row's oauthClientSecret and env before passing the result as mcpServers.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L288-L315",
+          "version": "repo-lines-v1:sha256:48933b9fd758c8d8e3f907f743718bf7a2179e6ec5f1375137fe80e5b911c190:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4YzE1MzA3YjhjMTE1MWVmMjBmN2EzZTc1ZjNjMGI4ZTNhZmYyZDVmYjVlNDQ4ZjJiYzYzYmNkNmYyMDUxMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOTQzMTI2MDlhNGQ0N2Y1NTAyZjExZTllNDQ5Mjg5ZjRlZmUyOTIzZmYyM2NkZDU0YWZmMDlmMWE5NWNkN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1ZTNlN2I0YmVjN2FlZjM3MDYwOWFmMTRjNTA2YTJhZTRiYWZlOTViYTJlYWI5MmViMTFjYTk4MWYzODZjYTIifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L536-L578",
+          "version": "repo-lines-v1:sha256:c5832a1ace39cdb9d74c21d2956065c697aae1b79f3edddc123acbc01e3bb701:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4YzE1MzA3YjhjMTE1MWVmMjBmN2EzZTc1ZjNjMGI4ZTNhZmYyZDVmYjVlNDQ4ZjJiYzYzYmNkNmYyMDUxMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmOTQzMTI2MDlhNGQ0N2Y1NTAyZjExZTllNDQ5Mjg5ZjRlZmUyOTIzZmYyM2NkZDU0YWZmMDlmMWE5NWNkN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhOTVmOTkwYjRkYzc3Mjg5MTNlMzE2NDgzYTgwZWMyYjYyYTI1ODc1M2NhZTYxNTUyNGVjMTFkZGM5MDM2MjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8fafa5b60a1c4abb829d3d262b2f21ff",
+      "statement": "The connector management UI path in lib/actions/connectors.ts decrypts oauthClientSecret and env (parsing the env as JSON) in getConnectors before returning rows to the client, and re-encrypts both fields on create and update.",
+      "evidence": [
+        {
+          "resource": "repo://lib/actions/connectors.ts#L188-L192",
+          "version": "repo-lines-v1:sha256:c6e20cf28c535665e5fbef9b312ab6bd9a4a0ea7f48f99d73049f56daa1b6cc9:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmI3NTZmODc4OWU0NzNhMjQ0NjIxNjg1MjQyNDE1ZmMyMjlmOGRjZjJhNGQxMzRjODQwODliZDY5ZDk0ZjZiMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU5ZDkzZWVmMGRjY2YyZWFiYTA2YjA5YzIwM2Q4NTZjZmU3ZjBlYzcwY2VmMDhiMzE0OTc0NTkwOTcxN2EwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGZmZmEwNmZkMzk5YzYwM2Q0NTA3YmIzYTBhYWZiMDU4YTU2OWM5N2QwOTI1YjQxNzViNmY0NjE1M2I2OTc0ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjc3ODEzMmNkYzE1MjFiZGI1MDZhZGZiMmUyYmMyMzNmYWYxYjQxYzliZGI4ZmUwNWI3MzQ0MjFkMjdiN2Y2NyJ9"
+        },
+        {
+          "resource": "repo://lib/actions/connectors.ts#L262-L296",
+          "version": "repo-lines-v1:sha256:33d2b58ad8d1a7d964c9abc7b26c4842f723c0b08eddf63898e139cfd69e40f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwZTEyY2Q3OGNjMjQ4ZDNiYzM0ZDcwZmNkY2I5ZDhlOGNkMzQ0MThjMWIzNzk1ZTlkZjExNDk4YjU1ZWNjMzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/actions/connectors.ts#L63-L66",
+          "version": "repo-lines-v1:sha256:81a8171243b5747ba3bf38edcdd2abe532ed3aa2d946ccda192c5e6a489a427e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ3NjIwOTY2NDQ0YzU4NjNlZjk2ZDM2YTk2MjUwNWIyY2ZlYWU0Njk0ZDQ2M2ViMWE1YjcyY2U1MGU3NDY0YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTI1NmJkYjhhNzk0YTkxNjZiNTAzYTUxYzYzYmI3OGJmN2EwNTU0MjhmODhlNzNkN2U0M2M2NWNlNDgzZmIyZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQyMjQ2NWRiNzI0MmQ5YjA5NGIzZmFjOTllZTE1OWZlM2EzMjE0NzI2MTZlYTc3MGY4ZDM4MGNhMjk3N2I1YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjlhZDJjNjBlODFjOWQxY2UzNTZiMjQzZjdlZjhkMTg4ZjJlNjk2NjBkMjU3NzY2MjJlNTA1NDUxMDI1ZTg0NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_14b2707882954cfe81127f89adf6e9d4",
+      "statement": "The task worker persists only the ids of the attached MCP servers into tasks.mcpServerIds so the UI can render which MCP servers were attached, while the decrypted env and oauthClientSecret live only for the duration of the single agent invocation.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L558-L571",
+          "version": "repo-lines-v1:sha256:5bf4698e2a0c5782e812b326c2d22e5502ad3c6d8745065329e4ac4491426af8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyYzAzNjc1YWM1MDc2MDhjYzc1MzU0ZDRjOTVhMTRkN2Q1Mjk2NmVkZTZiZjBmNzE5NDg5ZDg0MjMxMzc2NGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkNzQ2OWYwZmI2ODYxNTA2ZGE5Njk5NTQ4OTczODhmYTFmYWZmZTlkMWU0ZWI4NDIwMGMxZTgwYmU4YjlmNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3YmJmMGQ4OTZiMGI4MjM3ZDk5YzUyZTRjMGNiYWU0MTA4ODI0MjJiMTRmZGJjNWZhY2IyOTY4MjczMzUxNzUifQ"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L109-L109",
+          "version": "repo-lines-v1:sha256:310e7f1db889f64fdc2d4fd30ddf2c4a8132fc6ae3cd7b9aca7baf024d0e6a96:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzEwZTdmMWRiODg5ZjY0ZmRjMmQ0ZmQzMGRkZjJjNGE4MTMyZmM2YWUzY2Q3YjlhY2E3YmFmMDI0ZDBlNmE5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzEwZTdmMWRiODg5ZjY0ZmRjMmQ0ZmQzMGRkZjJjNGE4MTMyZmM2YWUzY2Q3YjlhY2E3YmFmMDI0ZDBlNmE5NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTkyMjlhNzBhYjdjYWZhOGZlNjkyYmJhMGM1MGRjOTk3Yzc5YTU5MDk1MmE5YThiMTk2YjdjMmFkOTliNTMyNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGU1MzNlMGQ5YWQ0Zjg1NmJhMTAzNTVkYmEyMzU4Yzc2M2I5MzdhNWUwOWViODM5NDc4YjhhZjQ1ODEyY2Q1YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4c2816b1d51b45f5af53ef3f3dd2e5b9",
+      "statement": "Each per-CLI wrapper translates the shared Connector shape into its own CLI dialect: claude uses `claude mcp add` with --env flags for local and --transport http with --header flags for remote; codex writes [mcp_servers.<name>] blocks (and prepends experimental_use_rmcp_client = true if any remote) into ~/.codex/config.toml; copilot writes a JSON file at ~/.copilot/mcp-config.json and passes it via --additional-mcp-config @<path>; cursor writes ~/.cursor/mcp.json; gemini writes ~/.gemini/settings.json with httpUrl for remote; opencode writes ~/.opencode/config.json with typed 'local'/'remote' discriminators and command as string[].",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L99-L148",
+          "version": "repo-lines-v1:sha256:03b914cb944786d552d99f2e96834dee3736831bb1bbf2388d2839429dfd2853:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZTcwODFhZGU4NWM4YzFkOGVmM2U4NGE1OTYyMmRkNmNmODliMjYyMDI4MGYwMWYzNTNmYzhmYTEwNmUzY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjQ5M2I5MGYyY2QwNzcxNGE5ZGVkNGVmOTQyYTJlZDZmMzcxYzU3N2I5ZTQ3ZTE4ZmMwNGY5MTQ3MjZkNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjZWFlZDVjMmU2NmI3ZTE1YTAzODNjNjE3Y2IyNGI3Zjk1MGJiMDNkN2NkMTk5MmVhYjgxYTRiNjQyZTM0MWQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L186-L235",
+          "version": "repo-lines-v1:sha256:a92a6a84b461f1e7641f5943e664594cfd5adbcde3af32774cef5218bc6dbfc6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMWVmNTlkNWZiMTI5NGI1ZGEzY2FkYWIwMTk4ZjkzMDM4NTliNGRiNzdhODhjZDYzMzg3OTA2OWZiNDZkNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlMjU2M2YzOTM2N2M5NDc4ZGYxMjJjODZkYmJlZDJlYWM1YzE3NjJjNGQxOGIyNDRkYTVhYzdiMjQwYmY0ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhMzcwNTlkYWYzNDBmMGQ3MmEzMjdjZGQ0ODA2ZWVmN2QzZTYwOTI0MjMyNmE2MWQzMWYyOTYwOWZlMDBjODgifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L103-L184",
+          "version": "repo-lines-v1:sha256:5203fee5f600ac5d2279f6bd0893c3744a492fd1bf54227351c7340d618ee532:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMWVmNTlkNWZiMTI5NGI1ZGEzY2FkYWIwMTk4ZjkzMDM4NTliNGRiNzdhODhjZDYzMzg3OTA2OWZiNDZkNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MmU0ZWU1ZDdhMjgyZmM0MzhiOTgxMzAxODhmMGIyMjM1MDc5Yzk5M2RjNGY5YmNkMzk2NDRlMTBiZDkxZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5MzRjMjllMjI0Y2YyNzQ1ZWE5NjQwNTlhMGMxZDc3MmI4ZDkzYTY0OTVlMDMyNTE3Y2Q3YmU2M2Y5NTRmNzcifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L278-L289",
+          "version": "repo-lines-v1:sha256:c9e0a12572e4015f710c27ffc95077849da495deb315083c39ac16cc9719a69c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmZDhhNjA3NzU3MWY0ZTAzMWJmNzhkOGQ3ZTU0ODI4ZWMzNWU4MGYwZTIwNTExMzI0OTFiY2Q4MTI5NjVmNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzYThkNjE3NzllZTVmNTMxMTI4MDJmZjg4Njc3MmFiMzkyODM2ZGFkNWU3NTFiMzVmZjY4YmU0MzI5MjFkN2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjE5YmRkNGZlOWI3MTA0YWYyZDBhY2MyYTg2MzM0NzNkNTVlZjA5YzRiYWZiYjA0ZDU2YmE1YmUzNjA0MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmZmM3NjkwMWY0OTI2YjY1NzY3MWQ5MjVhYTNhMGVlZTk5ZWFhNDIxYzU5MTZlYzc0MTczZTEzZWI5Njc2MTQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L180-L261",
+          "version": "repo-lines-v1:sha256:87ca7bc2735049e28eda87e19882c125bf526c0d38aaa9ecee0a5ed0a8dc1100:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMWVmNTlkNWZiMTI5NGI1ZGEzY2FkYWIwMTk4ZjkzMDM4NTliNGRiNzdhODhjZDYzMzg3OTA2OWZiNDZkNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MmU0ZWU1ZDdhMjgyZmM0MzhiOTgxMzAxODhmMGIyMjM1MDc5Yzk5M2RjNGY5YmNkMzk2NDRlMTBiZDkxZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4MjI1MzllNjNkNGMxMTM5ZDBhNWIyN2UxNTlkMGYyZWI4OTYxZGEyMjc4OWE1ZjdkYjIzMGIzNjE3ZjE5ZWEifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L89-L171",
+          "version": "repo-lines-v1:sha256:6d3690ed7816776f01737606e7c7242adf7ad0e81b0ce39a9f9b499bdec4f6cb:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzZjBjMWE4MTM0YWYwOGIzNjJlOTQ5YjUxZWIzYjM4ZGNjYmVkYmIyZTYyNGE0Y2YwOThiZTQ0YWMwZDU1YmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0YjlhMGIxNmI5OTEwYmFhNWQwYTRkY2FmZjhhNjBjNDI5NjMzYmYyYWUzY2JhY2M4MjAyOTA3NTgwZDEwY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxYjYyYmM1ZGI2YmViNmY5ODc4NmQwMDI4MDk5OGJjNjY0NWQ3ZTNlN2UxNGM2NmMyNzZiNTNlNmVjNTUzZTMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L149-L235",
+          "version": "repo-lines-v1:sha256:4fe87e5b1a83dcdb5266043fd8224b917a87cc746d0c97c4bcc53af073b636e2:eyJzZWxlY3RlZExpbmVDb3VudCI6ODcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzZjBjMWE4MTM0YWYwOGIzNjJlOTQ5YjUxZWIzYjM4ZGNjYmVkYmIyZTYyNGE0Y2YwOThiZTQ0YWMwZDU1YmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0MGJmYzg4ZmQ0OWE4YzcwOTI0MzAxMGRmNmQyZWZkOGNiNjYwN2EzMzA4MDg4MzE5NmJmZmM0MzdkMDVkMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcwZWZiMmRlNThjMWM4ZDc1ZjlkMGViOGQ2Yjg5YzlkYmI1NjgyOGY0MDdhNmQ3ZjY1OGI2MzY1N2U1ODAxMWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e9132507c1de4fdcbead4bec9419300e",
+      "statement": "Every per-CLI wrapper normalizes connector names by lowercasing and replacing non-alphanumeric runs with a single dash, so the same Connector can produce a stable key across all CLI dialects.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L103-L103",
+          "version": "repo-lines-v1:sha256:03d57f3e83f90dd73f45ea31f294d8ede3cf7e975199fe671e48b360fdbfc34e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDNkNTdmM2U4M2Y5MGRkNzNmNDVlYTMxZjI5NGQ4ZWRlM2NmN2U5NzUxOTlmZTY3MWU0OGIzNjBmZGJmYzM0ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDNkNTdmM2U4M2Y5MGRkNzNmNDVlYTMxZjI5NGQ4ZWRlM2NmN2U5NzUxOTlmZTY3MWU0OGIzNjBmZGJmYzM0ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQyMGY2ODAxZjEzZDQ4NTBjOWE4MTFjNmE0ODUyNDQwN2MzYzg1MDU5MGU3MmZhMmE4NjYwYzE3MjQ0NTlhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2I5OWI1YmJmYjkzMDJjNzAxZTVmZWMxODg2YWE0MWM1ZDA4YmYwZTlhMWE4NzlhZTZjNGEwNGY0MWI2MWY2MyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L196-L196",
+          "version": "repo-lines-v1:sha256:5fdaa398af902a6d9a0f015e31d9ff1f5a9cd8a57840c6555f5910c1070b5886:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTA4OGY2ZTY5ZDNiMzIwMTQ1N2IzOWU0MGVkNWFhMWI1OWQ1NDRhMjgyMWRmY2EwYWI3MWZmNDRjNzc3ZDhmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZiNjRmZDNmNGRiOWE0YTk4ZGJmNTU4ZTI0ZGJmZGFkYjYyYzc2NDU2MTJiMjViNjYyZmJlYjE0NjE2NTRkZCJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L118-L118",
+          "version": "repo-lines-v1:sha256:5fdaa398af902a6d9a0f015e31d9ff1f5a9cd8a57840c6555f5910c1070b5886:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTA4OGY2ZTY5ZDNiMzIwMTQ1N2IzOWU0MGVkNWFhMWI1OWQ1NDRhMjgyMWRmY2EwYWI3MWZmNDRjNzc3ZDhmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZiNjRmZDNmNGRiOWE0YTk4ZGJmNTU4ZTI0ZGJmZGFkYjYyYzc2NDU2MTJiMjViNjYyZmJlYjE0NjE2NTRkZCJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L195-L195",
+          "version": "repo-lines-v1:sha256:5fdaa398af902a6d9a0f015e31d9ff1f5a9cd8a57840c6555f5910c1070b5886:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTA4OGY2ZTY5ZDNiMzIwMTQ1N2IzOWU0MGVkNWFhMWI1OWQ1NDRhMjgyMWRmY2EwYWI3MWZmNDRjNzc3ZDhmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZiNjRmZDNmNGRiOWE0YTk4ZGJmNTU4ZTI0ZGJmZGFkYjYyYzc2NDU2MTJiMjViNjYyZmJlYjE0NjE2NTRkZCJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L105-L105",
+          "version": "repo-lines-v1:sha256:5fdaa398af902a6d9a0f015e31d9ff1f5a9cd8a57840c6555f5910c1070b5886:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTA4OGY2ZTY5ZDNiMzIwMTQ1N2IzOWU0MGVkNWFhMWI1OWQ1NDRhMjgyMWRmY2EwYWI3MWZmNDRjNzc3ZDhmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZiNjRmZDNmNGRiOWE0YTk4ZGJmNTU4ZTI0ZGJmZGFkYjYyYzc2NDU2MTJiMjViNjYyZmJlYjE0NjE2NTRkZCJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L167-L167",
+          "version": "repo-lines-v1:sha256:5fdaa398af902a6d9a0f015e31d9ff1f5a9cd8a57840c6555f5910c1070b5886:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWZkYWEzOThhZjkwMmE2ZDlhMGYwMTVlMzFkOWZmMWY1YTljZDhhNTc4NDBjNjU1NWY1OTEwYzEwNzBiNTg4NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTA4OGY2ZTY5ZDNiMzIwMTQ1N2IzOWU0MGVkNWFhMWI1OWQ1NDRhMjgyMWRmY2EwYWI3MWZmNDRjNzc3ZDhmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDQxZTEyNjFhODlkZmVkNWUxMWY1Y2VkYWU5MmNjOGIzNGQzZGY4ZmVmYTkzYmY0OTYwYjZiNmJhMWNlNTZjNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7507e4c104634ac285d7fc83b90ad8ea",
+      "statement": "For remote (HTTP/SSE) connectors, every per-CLI wrapper maps oauthClientSecret to an Authorization: Bearer header and oauthClientId to an X-Client-ID header on the outgoing request, with the wrapper deciding whether to omit the headers object when empty.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L131-L137",
+          "version": "repo-lines-v1:sha256:88e727457545890d28b5ae2f8b8412293cf1370d83a66935d26264d5d24c1b6c:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM1NDExYmU5ZGFlNWU0ZDMyMmNkMDZhYjBmOWExZDQ4ZjdmZWRlYmEzNTgwNmYwOGVkZGY2MjczZjRiMDIxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUyMmM0MmNkMTljNmQwM2Q4MDhjNDUyNzIwNTUyODI1YjdlYTFjNWI0OTFiMjE4NTExY2FjNzQxNWNmOWQ5YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjAwMjYzMjRiYTY4NDkyZjdiOWFhNGI3NjBkOGY1YWZhYTU2YjBkMzJmOTdmNTcyZTcyNzg0NWU2MjRiYjI3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmViZDM2YWNhM2JhYjk5ZmI2NzM0Y2RmNWZlYWMxZjQ0MTRjZTZmZTc0NGMzZjg1MDMxYzBiYTY0ZDg2YTM2ZCJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L146-L162",
+          "version": "repo-lines-v1:sha256:5df57ab10a7d40c04b500ca05bb0171771f3aa30d1e92b8f88c4009d1079e9c8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0OTdhZTNmZjU4NDNkZWY3ZDMyMTU0NzA2MzcxYjc3N2U3NGM2YzZkNjAzOWVkYmFiZjg3NTk1ZWNmMzI5M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDA1ZDU3MTA2YTM2MmViMDAwZGFmM2RhNDY3NGM4MmI1MThmZjVhMmUyZjY3ZWU4ZTc1N2EzMzNjMmFmNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwNTYwNjAzZDFlMzRmMGJjZmQwYTY4ZGEyMzk2MTkyNTZhNzFjNmFkOTM2MmZjMzQwNjE1MGQ0MmY5OTZmNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyNzVlZmQzNGFiNGU2MWNkMTZiYTdkMWFjY2VkMWQ1MjM3MjI1MDBmYzY5YWQwOTJiMzAyNTUwNmNmNzczMTkifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L226-L235",
+          "version": "repo-lines-v1:sha256:c53dabcb88d4a51af1078980717c84556067f826d8698d66736da6be93cc840e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0OTdhZTNmZjU4NDNkZWY3ZDMyMTU0NzA2MzcxYjc3N2U3NGM2YzZkNjAzOWVkYmFiZjg3NTk1ZWNmMzI5M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDA1ZDU3MTA2YTM2MmViMDAwZGFmM2RhNDY3NGM4MmI1MThmZjVhMmUyZjY3ZWU4ZTc1N2EzMzNjMmFmNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2YmUwMDNjYzI4YWUzMDJjZDYzMDliYzNlYWJiNzU3NWFlZWUxODZhYjRiNjkwZmY4MTQ2NmQzZGMyZTBkNTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0MDBiOWNiZTA0MDAyNWEwZjdlZjc1MzljYmE3NjY0OTNkMTFkZmQ2ZDJmMjJiNGJiYjU5Njg3NWNiYzgzMmMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L136-L144",
+          "version": "repo-lines-v1:sha256:34f98fec61c5282d9e8e0a071fbb68d5c6460bbaca2a13ae62deb92c47526158:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQ5N2FlM2ZmNTg0M2RlZjdkMzIxNTQ3MDYzNzFiNzc3ZTc0YzZjNmQ2MDM5ZWRiYWJmODc1OTVlY2YzMjkzZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmJiYTc4YzhiYWRhNDc1ODQ5YzUyZThjY2FkMmM3NmI2YWFiNGY2ODI2YzM2ODAxMDA2MWJiMGU1N2RkOWMwNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzJiODlhMTBlNTkwZWRhMjExMDkxOTRiNWE1NGFhMTQ3YzhlYjI0NTY2ZGU5ZDA4NGUzNDU0NWY1MzBmNTY4NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDcxMTNjYzA4OGJkY2JmZDFjN2U1YjE2ZjRiNDQ2MTk5ZmI5MDgxOTRkZjJmZmQ0YmQ4MmUwOGQ5ZGQ1NDY2ZSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L200-L209",
+          "version": "repo-lines-v1:sha256:68cea3a086a8508232f5b1bec937ae346dde5c16ea329d6943cb438eba6187c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0OTdhZTNmZjU4NDNkZWY3ZDMyMTU0NzA2MzcxYjc3N2U3NGM2YzZkNjAzOWVkYmFiZjg3NTk1ZWNmMzI5M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDA1ZDU3MTA2YTM2MmViMDAwZGFmM2RhNDY3NGM4MmI1MThmZjVhMmUyZjY3ZWU4ZTc1N2EzMzNjMmFmNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyYjg5YTEwZTU5MGVkYTIxMTA5MTk0YjVhNTRhYTE0N2M4ZWIyNDU2NmRlOWQwODRlMzQ1NDVmNTMwZjU2ODUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0MDBiOWNiZTA0MDAyNWEwZjdlZjc1MzljYmE3NjY0OTNkMTFkZmQ2ZDJmMjJiNGJiYjU5Njg3NWNiYzgzMmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_15d2e5bf40724f88a807fa46c0882af7",
+      "statement": "An empty mcpServers array is a valid input: each per-CLI wrapper guards its MCP configuration block with `if (mcpServers && mcpServers.length > 0)`, so a missing or empty connector list simply skips config-file generation and the CLI runs without MCP tools.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L99-L99",
+          "version": "repo-lines-v1:sha256:c5e7081ade85c8c1d8ef3e84a59622dd6cf89b2620280f01f353fc8fa106e3cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzVlNzA4MWFkZTg1YzhjMWQ4ZWYzZTg0YTU5NjIyZGQ2Y2Y4OWIyNjIwMjgwZjAxZjM1M2ZjOGZhMTA2ZTNjYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzVlNzA4MWFkZTg1YzhjMWQ4ZWYzZTg0YTU5NjIyZGQ2Y2Y4OWIyNjIwMjgwZjAxZjM1M2ZjOGZhMTA2ZTNjYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmRiNDkzYjkwZjJjZDA3NzE0YTlkZWQ0ZWY5NDJhMmVkNmYzNzFjNTc3YjllNDdlMThmYzA0ZjkxNDcyNmQ3NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGQyMGY2ODAxZjEzZDQ4NTBjOWE4MTFjNmE0ODUyNDQwN2MzYzg1MDU5MGU3MmZhMmE4NjYwYzE3MjQ0NTlhYiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L186-L186",
+          "version": "repo-lines-v1:sha256:5b1ef59d5fb1294b5da3cadab0198f9303859b4db77a88cd633879069fb46d6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2UyNTYzZjM5MzY3Yzk0NzhkZjEyMmM4NmRiYmVkMmVhYzVjMTc2MmM0ZDE4YjI0NGRhNWFjN2IyNDBiZjQ4NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDMxMmVmNTVkMmY3YjdhYjUzZThhNDI3ZTVlOWYxNWUzYjExNDZkZjgwYmJkYWIyYTE5ZWQxMjRmM2JjZDA1YSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L103-L103",
+          "version": "repo-lines-v1:sha256:5b1ef59d5fb1294b5da3cadab0198f9303859b4db77a88cd633879069fb46d6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDQyZTRlZTVkN2EyODJmYzQzOGI5ODEzMDE4OGYwYjIyMzUwNzljOTkzZGM0ZjliY2QzOTY0NGUxMGJkOTFkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGE1MzFiZGY0YTE2NTIxMjYzMTk5YThkZDhkY2Q1MDA5MGU5ZTZjNDUzYzU1ZTMzMjlhNjE1M2Q1NTg5M2FiNiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L180-L180",
+          "version": "repo-lines-v1:sha256:5b1ef59d5fb1294b5da3cadab0198f9303859b4db77a88cd633879069fb46d6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDQyZTRlZTVkN2EyODJmYzQzOGI5ODEzMDE4OGYwYjIyMzUwNzljOTkzZGM0ZjliY2QzOTY0NGUxMGJkOTFkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjEzNWZiOTUxMWRkNjY5Zjg0YmZhODFkMWE4ZmNiZmQ4YjZlYmRkMjkyOWIyMjYwNzg4MzJjYTQzNmYxMWZmNSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L90-L90",
+          "version": "repo-lines-v1:sha256:5b1ef59d5fb1294b5da3cadab0198f9303859b4db77a88cd633879069fb46d6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDQyZTRlZTVkN2EyODJmYzQzOGI5ODEzMDE4OGYwYjIyMzUwNzljOTkzZGM0ZjliY2QzOTY0NGUxMGJkOTFkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTIwOGQyYjU0MGM3OWQ3YjBiYTYxOGE2NjI3NTFlOGU2NGM5ZjAzMGMzZjg0NmY4MWUzNmQyNjhiMTE1OTg5NCJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L150-L150",
+          "version": "repo-lines-v1:sha256:5b1ef59d5fb1294b5da3cadab0198f9303859b4db77a88cd633879069fb46d6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWIxZWY1OWQ1ZmIxMjk0YjVkYTNjYWRhYjAxOThmOTMwMzg1OWI0ZGI3N2E4OGNkNjMzODc5MDY5ZmI0NmQ2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDQyZTRlZTVkN2EyODJmYzQzOGI5ODEzMDE4OGYwYjIyMzUwNzljOTkzZGM0ZjliY2QzOTY0NGUxMGJkOTFkYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTdkODc5NWUxZTAzZTIwZDVjNDkyY2Q5OTJkOWJkYTA2OTQ2MjMwMTNmMDU0N2JjMmFhNDQ0MDUzMjgwODFmYiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

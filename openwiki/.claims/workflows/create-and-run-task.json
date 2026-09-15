@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:af8f25664f1d5fa9b180aa086655af462b82703b2ce6ffa2e86df7fc1c0acaaf",
+  "claims": [
+    {
+      "id": "claim_ba1f094eca0e43cba99ea73d3347454a",
+      "statement": "POST /api/tasks authenticates the caller with getServerSession (401 if no session), enforces a per-user daily cap via checkRateLimit (429 with remaining/total/resetAt), validates the body with insertTaskSchema, and inserts a tasks row at status='pending', progress=0, logs=[] before any work is scheduled.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L48-L97",
+          "version": "repo-lines-v1:sha256:d1c00a0d9ea38d95b8a01faa82e6fbb2538ec7e3b5ec6524106d30d3d8a20f88:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjZThkNGExMWMxNzcwOWNmYzBlMjJlMjE2NGI5YmFhYjIzODE2YzI1YWY1ZDkyMjgzN2UwOWIwMjg1Nzc5OTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3NWQ3ZGZjYzU0YjliOGRmYmFjMWNhMzBiYTM1ZGJiZTZlMjI5NjlhYjIwODYwODM2Y2IwN2FmYTBjNTI0NWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyNzM5MmQ5ZmQyMDUwZjMyYWU1NTk3ZGQ3NDBhZTAwZmQ4Njc4M2M5ODA4NjU4YmM5M2I1OGVhNWZmNjg5OGMifQ"
+        },
+        {
+          "resource": "repo://lib/utils/rate-limit.ts#L6-L51",
+          "version": "repo-lines-v1:sha256:2332b5f3716313e38f42c9aee88909d4cdcfe8d8f55b9f3f026d2cc20383edc4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3MjllMTk0MTllZWJiNjk5MzVkZTJmYWYyYmMzMTNkZGQyMDI2ODliMjhiZmFkMWJmMTZkNWM5Y2Q1YWU5MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2ZTQ3NWQyNTJiOTJjYjUwNTBlZmFmODc5ZjEwMzkxYTcyODM1NTRmMjJmYzYzMWVhMWM5MzI2ODI2ZmVkYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3371adc7ce204e318eaedef4fd032760",
+      "statement": "POST /api/tasks schedules three next/server after() callbacks before returning 200 { task: newTask }: the two AI-enrichment callbacks (generateBranchName via lib/utils/branch-name-generator.ts and generateTaskTitle via lib/utils/title-generator.ts, each writing its column back via UPDATE) and the worker callback that drives processTaskWithTimeout; the third after() is the only one that runs the actual sandbox/agent/push pipeline.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L94-L243",
+          "version": "repo-lines-v1:sha256:bb3c3cd7c2e5e18677441d92788a1218254c06a32aca2ec9fae9304ede4e29d9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3MTgxNTJmNWQyOGUyNzAwZDdmODMyZTA5YTZkNmIwYzQ5NGQ3YTc1MjczMWYyNzQwYTNhNGEzZDZmYTkzZDk5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2NDc1ZTk0YTkwNGFjNDliMzE1NGQ0NjcyYTY2ZTg2MjliODZkYWM3NGUzZTI5MzdiZTY5MjdhZTNkYTExYzUzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0NDRlZDQ3YThhMzQyYTBjODNlN2MwYjlkNWE3MzQ5ZmU0MjI4N2U1MWQ5NDY5NDY4YTJjYTg1NmU1NjYwZGJkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIwOGM4MDA4ZWM2MTNkNTA3NGMzMzZiNjBlZjc4MTA1Y2VmNGQzZDM5ZjhlM2QyYTMzN2ExNjEyMTk2OTk4Y2Q5In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_430511cacd0e4d209735f36c263d21f3",
+      "statement": "Because next/server after() runs after the request scope is gone, all session-bound reads — getUserApiKeys, getUserGitHubToken, getGitHubUser, and getMaxSandboxDuration — must be resolved synchronously above the after() block; processTaskWithTimeout then receives the resolved values as arguments.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L213-L243",
+          "version": "repo-lines-v1:sha256:fdd0e3f10e12f2d58226d788cf01c2f6bfae27b5e042e07b52c9a354a06c7e51:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlZDI2OTUyNzBkNGY2ZjZmZTE5ODQ0NGUyODhlZDU1ZjQ1OTc2OGE5NjhjMGMzOWZjZDNmMzYzMTM5YjBmNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0YWIxZTRiOGEyNzg1MWUxNzAzYjE5ZTMxZjA5NWQ2ZWU4ZTZjODA3OWViYTYzNzkwMDg2NmQ5MzUzOTVmOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4YzgwMDhlYzYxM2Q1MDc0YzMzNmI2MGVmNzgxMDVjZWY0ZDNkMzlmOGUzZDJhMzM3YTE2MTIxOTY5OThjZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b5c3a45465346faa5c854a5a616350d",
+      "statement": "The generateBranchName and generateTaskTitle after() callbacks each early-return when AI_GATEWAY_API_KEY is unset, and otherwise call generateText via the ai SDK with model 'openai/gpt-5-nano' through Vercel AI Gateway; on failure each writes a deterministic fallback to the row (createFallbackBranchName produces 'agent/<iso-timestamp>-<id8>' and createFallbackTitle returns the trimmed prompt).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L94-L211",
+          "version": "repo-lines-v1:sha256:d9e390d9be8d782e5604c055849e98161f0679e19d9d40ffe57358790c66433e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3MTgxNTJmNWQyOGUyNzAwZDdmODMyZTA5YTZkNmIwYzQ5NGQ3YTc1MjczMWYyNzQwYTNhNGEzZDZmYTkzZDk5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2NDc1ZTk0YTkwNGFjNDliMzE1NGQ0NjcyYTY2ZTg2MjliODZkYWM3NGUzZTI5MzdiZTY5MjdhZTNkYTExYzUzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0NDRlZDQ3YThhMzQyYTBjODNlN2MwYjlkNWE3MzQ5ZmU0MjI4N2U1MWQ5NDY5NDY4YTJjYTg1NmU1NjYwZGJkIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIyMDhlYjQ4MDMyOGFlMjMxZmQwN2ViNjBkODc5NGYwNjQ5YTFiNDBkYTE0ZjRiNjM1M2FjY2NkMmQ5ZDQ1NjM1In0"
+        },
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts#L10-L76",
+          "version": "repo-lines-v1:sha256:7896779119d5a44b62eee534652ab8668887bd3cb1fb6078d355fd12f71b173d:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExNTM0MmM2YTdkOTg2NzNhOGM4YWVlYzY5YTkwOWFkMTY2ODllOTY4YzVmZjU3OTIyZDdjMzA1NmVhMjU3ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzZWU5YTg4NWY0ZDIwMDM0YjhkNmZmYTliYTBkZTc1NDg4N2I1MjI3NDJiMzA5NzUyMjU4YTIzYTM2Yjg5MmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/utils/title-generator.ts#L9-L70",
+          "version": "repo-lines-v1:sha256:c7e5e9a9a3582feddf139da0657ce25866d72e9d932d735f6993f832e571148e:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwNGQyMTBlZTA0NmFiM2E5ODljNzMxNzQ0NDJmY2FiNThmYTBkNDZlZmIxYTkzNWI4MDE3NWQ2NjY2ZDMwOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzZWU5YTg4NWY0ZDIwMDM0YjhkNmZmYTliYTBkZTc1NDg4N2I1MjI3NDJiMzA5NzUyMjU4YTIzYTM2Yjg5MmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cab34e24acba4821889f9ec38ff8a9d0",
+      "statement": "processTaskWithTimeout enforces the task-level deadline with a Promise.race between processTask and a setTimeout(maxDuration minutes) reject; it also schedules a one-minute-before-deadline warning log that is cleared in both the success and failure branches.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L252-L332",
+          "version": "repo-lines-v1:sha256:09ebd3fba65ce10d1756612f961d77ca4fb263f1357518ba4123ae7c8d906541:eyJzZWxlY3RlZExpbmVDb3VudCI6ODEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2ZWQ1MzIxYzU0ODNjNzJiYTNhZTFkMTRkODQ0ZWFiMTNiMzJkYzk5MDIwYzI3MjhlMjViZjI1NzFiNTYzMTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1YjRjYjRkYjJmNzI2NDdhYjhkYmU4YWMxYmJiZWQ4Mjk1ZWQ3Y2MxYzk5NTEzNzljOWJjMGQ4MTNlODQ3ZTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b84e41af30814e939f69fc151c9efa3b",
+      "statement": "processTask runs in this order: updateStatus('processing') with progress=10; insert the user's prompt into taskMessages (role='user'); first isTaskStopped checkpoint; waitForBranchName with a 10-second ceiling (so the AI branch from after() #1 has a chance to land); second isTaskStopped checkpoint; createSandbox with a preDeterminedBranchName so the AI branch is honored if ready; UPDATE the row with sandboxId + sandboxUrl (and branchName only if no AI branch existed); third isTaskStopped checkpoint; load and decrypt connected MCP connectors; sanitize the prompt for CLI safety; executeAgentInSandbox with taskId and a generated agentMessageId for streaming updates; persist agentSessionId and the agent's response message; generate an AI commit message (or fallback); pushChangesToBranch; branch on keepAlive.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L366-L736",
+          "version": "repo-lines-v1:sha256:4bdbac6a8b957420258e96d169ede463c011385fd529e7208e5cc1a8334b236d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzNzNiMDAyZTM0MTk2MGQ0MmIxNWI2OGQ3M2U4MGMwZTJhYTFlOWIwNGIwZDE4MjVkMzk2YTYxYjkyYzM3YjZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJmYjU4MGU5NjRmODNhNDczZjQzZDQ0Mzg0NjI5NDlkNjhiNTYwMGZkYTc4N2YxNjM3NDVkMDBkZTg5Y2JmMzZhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJkOWJmOTVjNGJkM2QyMDFkNjcxNDlhZWZkZGI1YzYyZWQzYjlkOTEyNDhkYTYzYzZmMTQwYjUxNzQ4Y2ZhYzA4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_45b2477ce7004c61bb7a463b47232f87",
+      "statement": "executeAgentInSandbox applies a temp-env-var pattern: it snapshots OPENAI_API_KEY, GEMINI_API_KEY, CURSOR_API_KEY, ANTHROPIC_API_KEY, AI_GATEWAY_API_KEY, GH_TOKEN, and GITHUB_TOKEN into originalEnv, writes the per-user keys into process.env, dispatches to the per-agent module, and restores the originals in a finally block so one user's keys cannot leak into the next user's run.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L18-L159",
+          "version": "repo-lines-v1:sha256:1beb5805187f7e26c660210742f3d306fee5a038564efeaa51d573b05e8dc70b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2NDFiMWY4NDRjYTg0OTM3MzNlMjg3YzdjZDYyNjhhZWMwZTg1NTk2MzQ0NDJiYjczNTA5YTA0ZmRlNjJhMTc1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3NTAzNDg3MzgyZjQ3MWQwY2MwOGU5NjNlMzIyYzhkMjY0NjllZTg1ODFiZWJmZGU5ZGZhMGM4MWQzODQ3NjNiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_4a9a37756de64d8ca893801cef830eb7",
+      "statement": "executeAgentInSandbox lazy-loads the user's GitHub token via await import('@/lib/github/user-token') when agentType === 'copilot' because Copilot authenticates with the user's GitHub account rather than an API key, and then sets GH_TOKEN and GITHUB_TOKEN for that run only.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L49-L75",
+          "version": "repo-lines-v1:sha256:a718ba575c087242867c5709618409c6aee14f8b881b0b299c25e73f30437080:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMWVmNDU2OWRhNDRiOWQyYzJlZDU3NGUzYmVhYTVjY2E4MTRiYWNlN2YyNDA0YTQyNzFmZGMxY2VmNDE0MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3ZDg2MzJlNTRlOTI5OGFiYjk1ODcyN2UyZDUxNDA4YWJhZjEzNjYwMzUzNzkxMDE0MGFiZjY1YjMwYWI2MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyYmE3NTU3MWNhM2I1ZmQ4OGQyYTU3NjA1NDY0MGYxYWUwYzI2YjA0OTg5Y2ZjMjM2MzI1ODA2YjJjYTViMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1e6a4627bacb49d486b01768ac631390",
+      "statement": "pushChangesToBranch is the only post-agent git step: it runs git status --porcelain (returns success early if empty), then git add ., git commit -m <message>, and git push origin <branch>; a push failure whose stderr contains 'Permission', 'access_denied', or '403' is reported as { success: true, pushFailed: true } so the local commit is preserved and the caller decides the task outcome.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/git.ts#L5-L73",
+          "version": "repo-lines-v1:sha256:324d01663dafa201ebd67dc454f4f8293641f5af5ed895605781ab5e4f0e8364:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3NThjMGRiNDJkZjgzNDE4MTJmYTFhYzE1ODdlMTU2M2Q4N2I5MTFmOTkyMGE5YjA2YzRhYTFjZDkzYmE1NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4ZGE0ZTY1MDEwZjY2ZWUxYWNhZTkzYTEyMmU5MGI0OWFhMjI3ODdhZjZlMDY3NDM2ZjRkZTkxMDk3MGJjYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMDA1ZTlhNDQ0OWMwMmViNDM5ZDY5Y2Q2YjIyYzdjNTQzNzM1YjI0NWZiZmNjYzczNWMzODAzNjQzYmM5MDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9c70065479f43cdb968a118ad79f5c3",
+      "statement": "The keepAlive flag has exactly one effect on the worker: when true, processTask skips the unregisterSandbox + shutdownSandbox pair after pushChangesToBranch (and after a failed processTask), leaving sandboxId and sandboxUrl on the row for a later Sandbox.get reconnect; it does not affect the SDK timeout that bounds the sandbox lifetime.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L666-L728",
+          "version": "repo-lines-v1:sha256:681912284a27efb254d1b59f4220bfb52e2c7df4f4da893d5b7a2a98990d6661:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWMxZTI3OWNjNDNjNWY1YjQyMWY0NzQ3ODA0OWFmY2Y3MmVkMTRmNTRkNjg5ZmVmYzRkYTA5MWNjM2FjMjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhMTkxOWRlMGM1ZDc5MzM2YjljZThmYzIxZmI5YWQ3MWU3YjFkOGM3ZTAwMzgyYTZkYjRkNDEyOGRmZTM1NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlNDBmYjhkMDA1ZTVmZDM4YjdkNzg3ZTFjZjc5YTk3YjQyOTZmMGQ2ZmY0NWE2MTQxMDgwN2Y3YjhhMjYyOTAifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L73-L75",
+          "version": "repo-lines-v1:sha256:ee788b85362109ad2e95434abc8ea87659292e48299cd80c42ac848541c7001b:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJmN2YxNTRkNmE0OGZjZDk0ZGQ1ODk5NTQ5NGE2NjRlY2ZlYjU1YjY0YzQyOWNlMWRmOTk2ZTI3ZWJiNTE1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGI4NGQ0MWQ4ZjBhMzZmN2UyNzNkOTg3YjQxMGFkOTNlYWFlN2MxMDE2YWFkODkyNDRhNGE0MmM4MWM3NjM4MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmIxZGI4OTIwMTE0MjlmNmVlNTM1ZWI1YzM4MGNmODlkYmQzODBiZTVlYjc4YWZmMzUyZWExODYyNjNiZGFjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODMyZmI5YjE3ZTBmN2ZiMTIwYzk2MjRkZDA5YWZiNTcyNDBkZTM0YjQ0YjYxZDFlZjk3NTI3YmI1NWRkOTNhOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b1d5c62cae94476792dddad024c387de",
+      "statement": "The home-page task submission flow is optimistic: addTaskOptimistically in app-layout.tsx generates a nanoid and inserts a tasks row with status='pending' into the sidebar list, router.push('/tasks/<id>') runs immediately, and the same id is sent in the POST body so the server's INSERT lands on the identical row once the response returns.",
+      "evidence": [
+        {
+          "resource": "repo://components/app-layout.tsx#L210-L255",
+          "version": "repo-lines-v1:sha256:09712716ac9a74e2225350665fa2a0eaf0592a12d9cec0d26be0a23143179d8c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1MjI2Mzk5NWY2ZDIyY2Y1NDZmNzM3OGQ4YWEyODczNzk4ZjA5M2U1YjQwZjg4ZDRhMmNjZDMwYTViM2FlZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3ZDg2MzJlNTRlOTI5OGFiYjk1ODcyN2UyZDUxNDA4YWJhZjEzNjYwMzUzNzkxMDE0MGFiZjY1YjMwYWI2MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2Njc0NmFjMzAyOWYyZGZjOTZjYTgwMDA2NTkyOWNhYzg0MjI1NTRmNGY1NzBhNjI4MzIwZGM4ZWJhZTJiOTcifQ"
+        },
+        {
+          "resource": "repo://components/home-page-content.tsx#L329-L543",
+          "version": "repo-lines-v1:sha256:58d65ba6ee2c7678cf13fdc9ffa17677257faaed5a1794705e02e0ea9a706e74:eyJzZWxlY3RlZExpbmVDb3VudCI6MjE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkZWE0NTk1MzM3MGMyZTU4NDgzNGZjZDZkZDY1ZjlkM2QxYmE5N2QwY2I0ZTlhZTgyYzFmYTU3ZDBiY2ExMDliIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyN2U1Nzg4ZDVkOWQ3M2QyNGE4MWRiYzBhNWE3NGJmYTgyYzljM2IzYWY5OWU1MmFmNzk2ZTkwYjQ2OGE4YTNkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzNjJiZWUxYzBkOTNmNzJjMjc5MzgwOWMyZDZlZGFkZDYyNGUwNWRhMzhmNGI4ZjRiYzA0MGI3YTIyNDkwYjA5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI3ODQwOGZjZTE4MDFmMzM2NDllM2IzMDI5MmQyMTBlOTBkYzJhZjc1ZjEyNjVlNGFjOTNjYmU0ZjRhZTU0NGY3In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_2db2593c65ca4674b71c1796e5f6e763",
+      "statement": "useTask has a three-layer polling state machine: an initial fetch followed by up to three retries every 2 seconds (to absorb the create-then-navigate race); a steady-state poll every 5 seconds; and an accelerated 500 ms refetch when the task's logs contain 'Development server is running' or 'Development server started' but sandboxUrl is still null, so the preview iframe renders as soon as the VM exposes the dev server.",
+      "evidence": [
+        {
+          "resource": "repo://lib/hooks/use-task.ts#L6-L105",
+          "version": "repo-lines-v1:sha256:09852aece1234e16d16f303802348b2f015ffe0520b76ea05f33f712e72c503d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2MTQxYmY2N2NhMjI5ZjVmOTJkNGFjMjUyNjVkZWMxMmQwODFmMTE1MzI0MTM0MWUzMWVlMzNmNzVhZTMyMmY0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmODU2ZTJkMTY0ZTM1NzhhOThiNjEyYzZhMGYyMGFhOWYxYjYwNTVkZjM3MDAyYzIwZTRhYTBjZjU1YzVhNTkyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3NDRjMDI3OGNkMGI4ZjA5ZWEwNDMzNDM3YmUxNjZlMGEwOTRmNzFkZjQ1YmUzY2E3ZGI5NDlmMjE3N2IwOTM5IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_63d96d9e22174fe69b5e6ef1d2cf59e9",
+      "statement": "The tasks row is the only durable source of truth for live task state — status, progress, logs, branchName, sandboxId, sandboxUrl, agentSessionId, mcpServerIds, and completedAt are all written to that row, and useTask reads from the same row via GET /api/tasks/:taskId; there is no websocket, SSE, or LISTEN/NOTIFY channel between the worker and the polling client.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/route.ts#L15-L38",
+          "version": "repo-lines-v1:sha256:9e47e4f4b617c76e20b8a1123a99685bbdde7b28358ade9e5f0f569368941389:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2YWViOGZiZGMxMTVmNDI1NTBhZmJiYjRkNzdkODE2Yjg5MDJkZjkyYjkwMDdjNjU4MTQxZGE5MzdjZDZhNDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3YTJiNGM4NmQ0ZTRhYzZiMzRlMzM0Y2NlNWM1MzYzZjFjMGVmNThhZDk5N2Y4MzlmMWVmODQ1YjAxN2UyM2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkOTZmMTY1MDNlOGY3YjA5MDQwMDNhZGVjZmZiMWJhMDNjMzUwZjRlZjhlNDViOGJjYTJmYmVmNDUwMGE3N2IifQ"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L76-L114",
+          "version": "repo-lines-v1:sha256:f6502d8761128d54c5f16af37178feb49bab743ecf51abceb61e7fee3a9c383e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2YzllMzM4MTIyYzQ2MDYxOTdmN2U2MWY4MDJkYmVlNThmZjM0MzAwYzE1Yjk1ZjZhMDYyZTRhZmE2OWNhZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1ODBiNzY1MThkYWU5NzlmYWViZDAyMzY3YTI5MjkyYTUwZDk3NjA5MjI1MWEzOGE2Y2UzMDg4MGJhNDI4MjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2ZTgyNmU2Y2YwNjQ1MmNlMGJiN2FkNGJiMzQyM2ZlMDJhMGExZjQ5Njg4YmRmNGZhMzdkNDgyN2M5ZmU1YWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQyNGY0ZTc4ZTA3MTkwN2VjNDEzYTUzNjc4ZTZkYTA4NzYzZDI0MmFmNTZkZjUzNWJhYTRjODUwZmI0NTBmMGIifQ"
+        },
+        {
+          "resource": "repo://lib/hooks/use-task.ts",
+          "version": "repo-file-v1:sha256:cd3cb42e57c003a15d45d33d0971336854e232ad6b0d082f562594c511f5ec79"
+        }
+      ]
+    },
+    {
+      "id": "claim_212d8433558b4362885f8dcac5f18b66",
+      "statement": "The submit button in TaskForm is wired through a controlled form whose handleSubmit guards against three failure modes before delegating to the parent's onSubmit: empty prompt, multi-agent mode with no models selected, and missing provider API key (detected via /api/api-keys/check before the POST /api/tasks request fires).",
+      "evidence": [
+        {
+          "resource": "repo://components/task-form.tsx#L325-L396",
+          "version": "repo-lines-v1:sha256:edb78783b5d6dc11fc51cf8628312c55085007a2db8f343eced515d36aa8aaa3:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5NTVlNzE3NDIwMTEyZjUwYmU2YjA1M2U0YjYyM2VmOTMxZmUwZDhlODc3ZTJlZmU4Y2JiNzY4NmQ3NDIwY2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMwNzU5NjM4MWZlNjk4NzQ0ZjE1MmY4OTE0MTE1YjFiMWY3Y2Y2NDliMjY5OWRlODI0ZDQxOTEzZmQxZDVmMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmMmNkNTEwMTEwNDYwN2Y3MWRjNjg0NzAyYTMxMmYxZGFiODM1MWFlZmM0OTk1ZjBkZTUzNTNhYWNlOGU4MDEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

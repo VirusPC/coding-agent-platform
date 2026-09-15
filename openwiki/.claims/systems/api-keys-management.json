@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f817abd58e27260404f79b777975406e4affbcba46c1e3509062e1441155db21",
+  "claims": [
+    {
+      "id": "claim_afa817b7af4a4dbbb5b1708e27d18a3f",
+      "statement": "The `keys` table (defined in `lib/db/schema.ts` and materialized in migration `0010_concerned_exodus.sql`) stores one encrypted API key per user per provider; the unique index `keys_user_id_provider_idx` enforces one row per `(user_id, provider)` pair, the provider column is a five-value text enum (`anthropic | openai | cursor | gemini | aigateway`), and the `value` column is the AES-256-CBC ciphertext of the plaintext key produced by `lib/crypto.ts:encrypt`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/migrations/0010_concerned_exodus.sql#L15-L22",
+          "version": "repo-lines-v1:sha256:6824b791fb7f73472d3f3773748faed158771a17bc307d32b39f1abcc9d9fe3c:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGQ3ZjRmMDRmZDhkNzdhYjI5ZmEwMzdjNDhjMWU3MzFiNjAwZmIwMjczMzQzMDdlM2ZjMzcwNWUwNjczNWVmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDk5NjdlYzFlZDM4MzZmOGViMTdhZmYxNzJiNWJmZWY3ZGU2MDQ4NWE0MzljNmNhMTFjNTkxZTE3NTU3MzlhZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTBiOGE0NGRjYTFlM2IyZWY0NDg3M2EwNTQ2MWQyZTNjYTlmOTZmOGZhNTFkMDZlMGYyOTFmNzdmMDE2ZDI0NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2ZjNjUyM2MwYjk5MmIxNTRmYzczMTc3NzYwYzk2YTNmMGMxMzNiOGY5ZmM4ZTIxNTk0OWZjOTQ1OTc3YzYxMyJ9"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L318-L336",
+          "version": "repo-lines-v1:sha256:81926c03f39aa8d81fe10e6018ec50618fd4ac567b84ba11c421d8a2c5bf5b50:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViOTdlNjBiMjZlYjliZjhiNGRhZGRjODY5MzIxNjY4MjQ4ODg3YTVjMDMwNjdmMjdjYjlkMmRjZjU4MzM1ODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4MzMxZWYyNzBhOWJlMDhlZjQ2ZDAzM2UwOTZlYTE3ZjAwYmEwODUzZGM4M2ZiMmUyZDE2NzliNjU1MjZkZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1ZDJhN2VlYTNhOGI0ZWMwOTg1Mzk3OGE4NmY4NTE1Nzc0Y2UxOWQ4ZmNkZmI3NjEwNjU3NjgyNTJiYWU5NTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_05a4271012174f8b8faa0ce11695b4f0",
+      "statement": "`/api/api-keys` exposes GET/POST/DELETE; all three require a signed-in session (returning `401 Unauthorized` otherwise), POST is the only handler that calls `encrypt(...)`, and none of the three ever return a decrypted `value` to the client — GET returns only `(provider, createdAt)` pairs.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/api-keys/route.ts#L11-L113",
+          "version": "repo-lines-v1:sha256:01d7cc5c3d50139cdcb643f57c2aac6e827f18403effa51875f63b2c46cb055c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxNWUwOTY4NGUxYjRhNDJlNDg0NjJhZjY1NjBiZTM2N2E3NmRkZjJjYTYzNWRhMWQ5ZWJlZGNiMWI4ZTA4NjhmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2MjZiOWJhZDk0NmMzNmI0NGE1MjdlZTQ4NzgxZTYyZjFiZjIyYTM0ZDMyYTI4OGVlYzIyMmI5YjM2ZWVlZjJmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed96d82149f34307903681199310183d",
+      "statement": "POST `/api/api-keys` implements the upsert as a JavaScript-level read-then-update-or-insert (not a single SQL `ON CONFLICT` statement) and assigns a fresh `nanoid()` to the `id` column only on insert; the dialog's loading-state disable is what closes the race window in practice.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/api-keys/route.ts#L57-L82",
+          "version": "repo-lines-v1:sha256:1be186d67e53dd8cceda2b4daaf72dbd9c9c988b4c05f10f01dbce0998086b95:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2OTE3YTI3MTk1MDMzMGU3NjI3YWI3Y2JmNTM4NzUxMWMyNDMwM2NjM2Q1ZmYxYTVhMzc5NWQ4NTIxM2Q2YWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI3OGFhNDQ5NmFiNjI4ZDI3ZGVmMzA3NGYxZDM1YTMxZjI4ZDE3ZmNkYTY4ZjljYzE2ZjFmZjc4OTJjYjgxOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMxMDc5ZDQxMjAwZjNmY2EwNTk5OTc5ZDliNmFlYzU5MDk5ODk1ODM0MDJlYzc2YWRiYTYyNjlmMzkyNWQ0ZmIifQ"
+        },
+        {
+          "resource": "repo://components/api-keys-dialog.tsx#L75-L107",
+          "version": "repo-lines-v1:sha256:4d8e71d9526f1fd40832ad1766d22cf2a3af134dad75ad87c5f822224eab346d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NTRjM2Q3NWQ3MmM5NzVhOWQ1ZDllNGZkOWRhMGQ4Y2M3NmI3ODUxYjE5ZTFlYThiNGZmYWIxMmRmZTQ1MDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkOTdmZmEwN2I3MDkxYzkxODdkZWI0MTAyY2JhMmNkOTIzZWI1MGI2ODA0OTQ3NzExN2Q5NzFjOGJjYTE5ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmZDEzZWExNDM4NzMzODM4OTRlNmVkNDRjNWFhNzU2M2E5M2Y3ZmQyYjIxMmY0Nzg1YmJmZGVjZjZkMDY5NWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d63753155eeb4182a5f390516f15bdfa",
+      "statement": "`GET /api/api-keys/check?agent=…&model=…` is unauthenticated (no `getSessionFromReq` call); it always calls `getUserApiKey(provider)`, which itself falls back to `process.env.*` when there is no session, so an anonymous caller sees the system-env reachability for the requested agent/model combination.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/api-keys/check/route.ts#L37-L92",
+          "version": "repo-lines-v1:sha256:0a296e23616e6c19cbfd2c3ebe71a41c6b05c400844bdefd147c07354b7e80e7:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1ZTA5Njg0ZTFiNGE0MmU0ODQ2MmFmNjU2MGJlMzY3YTc2ZGRmMmNhNjM1ZGExZDllYmVkY2IxYjhlMDg2OGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5NTU3NWJiZjM0NTNmMGYxOGQyZTRjYzFjMjlkNzI2Nzc2MWU3NDFjMjE5NGM0OGU5MmJiYWI2YmY4NzQ5YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/api-keys/user-keys.ts#L73-L103",
+          "version": "repo-lines-v1:sha256:6f8da8cdebb5f6c7bf9e4a3fdc5c30925b74e7c053e43c1148ae3d99c74d4d64:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3ODU5NDBhN2I5NzBlYjQ3ZjAwMzkwYzM5NTI5NzY3NDZmMzA1NTFjMmVjNDJiYTBkOThkNDg0ZDA1YTAwMDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNTIzOTU1MWRkZWJlNmZkMTA0YmUyNDkyOTI4YzQ5YTA5YmMxMjA2YzA4MDgxYTE1ODk0ZDY4OTZkMjgwNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljZDYzODdiNjFiMDg1ZGJiNGJkZTdhODZmZjQxNTNjNDU5Y2QzNzA4Y2IxMDMwYTZhZjFiNGQ2ZDJiZWU0ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f3b7c54005984bbabbf45cd17a6e0ca2",
+      "statement": "/api/api-keys/check encodes a fixed agent-to-provider default map (`claude → aigateway`, `codex → aigateway`, `cursor → cursor`, `gemini → gemini`, `opencode → openai`) and a model-name override for cursor/opencode that switches the resolved provider to `anthropic` when the lowercase model contains `claude`/`sonnet`/`opus`, to `gemini` when it contains `gemini`, and to `aigateway` when it contains `gpt`/`openai`; copilot is special-cased to read the GitHub token and reports `provider: 'github'`.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/api-keys/check/route.ts#L7-L77",
+          "version": "repo-lines-v1:sha256:6f9971a395afb62aa29535018aaea3f7ec9a8653aec25a704c9a3807ba9590d0:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiM2Y3NTQ1ZjQyYjkwNWQ3M2Q5YmNiNTI3Y2YzZTZhYzg3MmY3ODQ2ZmM0NmFmMzIwNzNmZTFhMjI4NTkwOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBlOWVkM2M3NDhiNzAzZjgwN2UyZmZiMmI5Yzk5NmQ5YzY5MGNlMDRhMWM3OTU2ZTFhOTFlZTYxMjhmMTAxYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiZjMwMDEwNDViMmYxMGNhMmE3NjVjNDJlMDgwYWVlZDNkZDMwOTU4YjVjMzBjMDhhODg3MmJiNDczZTRhODYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a602602a6284ed2b61864a00aa72016",
+      "statement": "`getUserApiKeys()` and `getUserApiKey(provider)` implement a three-step precedence: initialize the result object from `process.env.*`; if there is a session, select all matching `keys` rows, `decrypt` each `value`, and overwrite the matching provider field; any DB or decryption error is caught, logged with `console.error('Error fetching user API keys', error)`, and the function returns the env-initialized object — a user key therefore always wins over the system env for the provider it is set on, and partial user configuration (some providers overridden, others not) is the default.",
+      "evidence": [
+        {
+          "resource": "repo://lib/api-keys/user-keys.ts#L15-L103",
+          "version": "repo-lines-v1:sha256:a5119d2117f1392d26e4e32caa1118fcfb88cffeb09e76781636180458c53718:eyJzZWxlY3RlZExpbmVDb3VudCI6ODksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyNDk1NjFlYWU1N2U5YmM1Mzc2Y2QzODYxY2Y2NzkzOTM2Y2Y2OTg0MDFiMzUwNGE1NmU5NTg2YTgxOGYzNmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNTIzOTU1MWRkZWJlNmZkMTA0YmUyNDkyOTI4YzQ5YTA5YmMxMjA2YzA4MDgxYTE1ODk0ZDY4OTZkMjgwNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzYjRjNGZkNzAyOTJhNDM1YTNkYmY4OWM3NTczZTdlNjkzNTIxY2NmODQ3OGY4ZWFiMmM2MjE3YWNiMWRhZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4ac1d6a182d94c909e604043a44018d0",
+      "statement": "`executeAgentInSandbox` in `lib/sandbox/agents/index.ts` snapshots the original `process.env.*` values for all five provider keys plus `GH_TOKEN`/`GITHUB_TOKEN`, assigns the user-supplied values from the `apiKeys` argument onto `process.env` for the duration of the per-agent `try` block, and always restores the snapshot in a `finally` block — this is what lets per-agent wrappers (`lib/sandbox/agents/{claude,codex,cursor,gemini,opencode}.ts`) read `process.env.*` directly without accepting the key as a parameter.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L149-L158",
+          "version": "repo-lines-v1:sha256:d3c69f6a9bb5cd8ad4a923b4a9911624a2ded3cc79c662918ff5a384d13cac8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2YjlhYmYwYmEyZTFiOTFjN2Q4N2EyODM2NDE3MTU1NzU2NjIyYjBlZjljYzEzNmFlYTY4NWU3NGIzYjE4MjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmZjBkNGVkYjg2MTQ3NDYxYWE4ZjcyYjU4MDdkMmJkODY4YjVhNzcyOGViOTA2NGM1OWIxM2ZiOTgwMzFmY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L57-L75",
+          "version": "repo-lines-v1:sha256:72817eae14977954c546e5693850d51e1173b7efbccb171e6852761ed0e8104f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2YjBlMjBkMDcxNGQzZjY2MjZhMDE1MTcxYTQ4ZTVlYTEyYjIwYjIwMzY5OTJmODc1YmQ1OWRjNjNiZjdhYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJkNWQ1MmU4ZGY4NWFiYjI5YjhjZDFmYzkxMzQ4ZDJmZmE3NDA1YmE5YjUyM2Q5ZjUyYzMwNzEzMzk4NTk2OTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYyYmE3NTU3MWNhM2I1ZmQ4OGQyYTU3NjA1NDY0MGYxYWUwYzI2YjA0OTg5Y2ZjMjM2MzI1ODA2YjJjYTViMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9729b30dba824cd996842dcbb2786693",
+      "statement": "The task creation and continuation routes (`app/api/tasks/route.ts`, `app/api/tasks/[taskId]/continue/route.ts`) call `getUserApiKeys()` *before* entering the Next.js `after(...)` callback and thread the resulting object through `processTaskWithTimeout` → `processTask` → `createSandbox` → `executeAgentInSandbox`, because `getServerSession()` inside `after` can race with the request lifecycle and return `undefined` — the user keys therefore persist across the `after` boundary as a plain parameter rather than being re-resolved on the worker path.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L87-L115",
+          "version": "repo-lines-v1:sha256:bcec3171a805a0561f95a5ca79a3342f23ef9fafd88501d88e6c20bff84d7bb7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYjg5M2MyMTYxMGMwMmE3ZmJhZGQ4N2M2MTdkMmQ5NzA3MGIyZmMxM2Y3ZDNiOTZmNzFjOWY2NDNmNDRhYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzOGEwMWY0ZjUyODdjYzVlODk5MmFkZmE4NzU2OWJlMzAyOWFkZGVkYzIyN2MwMzJhZDg0YTBiZGMwNTUzNzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ1Yjg1YjkxMTcxYWZkNGU2YTQyZmQwYzI5NzMxM2Q0ZTFhYmVlNDVjODg1YzNjYzU0N2I3ZTUzZDNlODBjNjgifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L213-L243",
+          "version": "repo-lines-v1:sha256:fdd0e3f10e12f2d58226d788cf01c2f6bfae27b5e042e07b52c9a354a06c7e51:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlZDI2OTUyNzBkNGY2ZjZmZTE5ODQ0NGUyODhlZDU1ZjQ1OTc2OGE5NjhjMGMzOWZjZDNmMzYzMTM5YjBmNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0YWIxZTRiOGEyNzg1MWUxNzAzYjE5ZTMxZjA5NWQ2ZWU4ZTZjODA3OWViYTYzNzkwMDg2NmQ5MzUzOTVmOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4YzgwMDhlYzYxM2Q1MDc0YzMzNmI2MGVmNzgxMDVjZWY0ZDNkMzlmOGUzZDJhMzM3YTE2MTIxOTY5OThjZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8b9f6de49846421bb4fa734f899484ce",
+      "statement": "The five DB-side provider enum values (`anthropic`, `openai`, `cursor`, `gemini`, `aigateway`) map to the seven env vars that the agent CLIs actually read (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `CURSOR_API_KEY`, `GEMINI_API_KEY`, `AI_GATEWAY_API_KEY`); `AI_GATEWAY_API_KEY` drives both the Claude and Codex wrappers (and is also accepted by opencode as a fallback to `ANTHROPIC_API_KEY`), and Copilot is the one agent whose credential does not flow through this table at all — it reads `process.env.GH_TOKEN`/`GITHUB_TOKEN` from `getUserGitHubToken()`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L87-L178",
+          "version": "repo-lines-v1:sha256:1ca5926eb58ce6a89ebb8353dd1b98d40de3c845ff40acb99f236ac411235c49:eyJzZWxlY3RlZExpbmVDb3VudCI6OTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNGVhZjQ0NjhhMTg3NzA1ZGE1MTQ4ZDJmZjRiOWQyYWVmOGE0NDUyMmZhYzkxMDcyYmJlYjk5NzljNzI4MWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjNiMzcxNDAzZWUwMWYzNTU1OGE1Y2YxMzU4NDUzMmZlYzliNWRhYjUwMjg3YTMzNjk2MDZjNWI3MzI1N2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlOWZlMTBiZjBiYzcwYjU1MjY4NTIyNDc1YjMzZTU1NWM2YmQ2NjE4ZTQ4ZmFmZWRjZWI3ODlmZDgyMjIzMjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmZDFhNjhlNTVmZWNjNmQzN2JmZmRiYjE4NmEyYTUxNDkzMjVkZTBiNWQ3YjA0ZTk1YjZlYzgzYzdkNjQ2MmMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L79-L105",
+          "version": "repo-lines-v1:sha256:52e01d882e0a511cb2a4ff0dd4db536fd1651aeb10bb06ce83e761b226ac07f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3OThlNWUyMDJlM2I2NGM0NWQ5MTZiNzE3YWI2MjBkMmIyMTAwZjAwNTMyMzIyM2YxNGY1MWMwZjI3NzYxODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5OGJmZGM2ODUwYWNhNTVmYjU0MjNkYWZiYWE3YWJjNWFkY2VmNzdiNWVkOGM3MjVlZjY5YzVhYjg3NTVhODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFkYzNkZTNhY2Y3YzBjZGRiMjJjMTE5MGZkNmI3NGNlMmE4NTdiMTY5N2Q3NWE4ZTIwNDUxNTYyNTlhYWQ5NTcifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L170-L177",
+          "version": "repo-lines-v1:sha256:dd99b9858860ba5a57b1ccaa6b11ec01c12a64e7f82c87f822c0dfeba19e55b0:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjYxZGVkYjZiZDk5NGM5OTRiYzUxMTlmMjg0NDYwMTFhMzcyZTU5Mjc0ZjU3ZDFiMGYzNmRhMTQwZWZlNGYyOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmYxZGUzM2Q1YTk5Nzc2MWZlZWZjZDhkMTcwMjYxMzg5YjIzNjhjNTI1NTY3MDM3NDFlZGQyYWEzYWNiZTU0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWJiMWFkMGVlZGZkNmVkNmE5NTAxZTI4MDUzMjc1ODAzYTEyZTU3NmNkNGRjM2UzMjkxMmNlYzE2ODU2ZjlmMiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L178-L189",
+          "version": "repo-lines-v1:sha256:2b59e566aa9b843d509914dec41edb56a6089746edff8a4d58f6ab7222cf63b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZWM0YmRiMzZiZmM4MGM5MDY3NjFkM2RiZjM3MGJkMDk4NGQzNDJiZDJlNTU1NjBlZWE1ZmI2M2E0Y2YzOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyODcyZTI0Y2ZkZDU1NDc0MTJiOGZhODU4NDJiYjMxNWIyMzVjOGFiYjFiMTMwMGMwNTI3N2RlMWRkZjAwZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1MmIwOGZjMWUyNTE1ZGM1MWQ0M2NlNjhlM2ExMWVkN2ZkZDkxZjFjMTUyMmFlZGQ0NDNiYmQ5NTk1YzQyY2YifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L60-L310",
+          "version": "repo-lines-v1:sha256:d190701092f5a19a2b573ca5add033b93cc55246fdc04cf56dae7af678bc1d67:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlOGYyZWE2NzgzODMwZWRlMmRhMTFkNzViNGNlODA3OWZhMjhmZTdhYTQyYmE2ZWJkZjcxN2RlYjZlNTM5ZThhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0ODkzZjQwZTM3ODFlYjg5NmM4MmQwNDZhMDgwNjdhMTFlMzVjZGYyZjFkZmFmMjZmZWE5MGI4ZGI2Njc2NDEzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzNDRlOTFkYzRjNDc5N2NhNWZhY2YxMTRkZTY1YjNmNmYyYWUwYWFhMmZjZTA1MTE3NGU1ODJiODQ4NDQzZGNlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJhODVmYzYzOTQzYTk1YjliOGQ2YTFmMDIzOGI0NmQxODdkYzM5NDdjNWU1ZTE4ZWZmN2Y3NGMxODQzYWQ2NWEwIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_e569b1bf871547f784cbcc4cfcf4e3b1",
+      "statement": "Decryption failures inside `getUserApiKeys`/`getUserApiKey` (e.g. `ENCRYPTION_KEY` rotated and old rows are unreadable) are caught, logged, and silently degraded to the env-initialized fallback — there is no retry, no surface error to the caller, and no signal in the response shape; a rotation of `ENCRYPTION_KEY` therefore requires every user to re-save their API key for the user-key path to become reachable again.",
+      "evidence": [
+        {
+          "resource": "repo://lib/api-keys/user-keys.ts#L37-L66",
+          "version": "repo-lines-v1:sha256:43cbd751dbec977438fb1c72dac86b9fa2a822f460b1807e1bbbf6ad257c3e6a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NTk1ZjRlZTVmZjYzZDUwOTUwNDE5ZGMzNDQxNDUxMzg1MWRjOTczNmZkMTdhNGY3YmZhOTMwYjI2MWI2ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxMjg1N2YyMTQzMGNiZjYzYjhjNzgxNzMyNTUyNzNmZGU1MjFkM2ZmZTUwOGRhOGEzMGFjYjRjNjRmYzFjOGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0Nzg0OGIyN2U5NzM4YzgxN2JjNzRjM2IyNzcyOGFjZGFjODRjNTc5MzJlNjJkZTdlODhiMDg2MDYzOGU3Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTI5ZTkxZTBmOTljM2U4MjVkZTY5YjQzNWZiNjQ4NGQxYjBhMWRmMmY0NjU2MWFiZjFhMjlmMDQxODhiODgifQ"
+        },
+        {
+          "resource": "repo://lib/api-keys/user-keys.ts#L89-L103",
+          "version": "repo-lines-v1:sha256:a5b5fa63d450e37da4fe976cb06a836b30a2d8ccd5bf119558fdd7b3972d99aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NTk1ZjRlZTVmZjYzZDUwOTUwNDE5ZGMzNDQxNDUxMzg1MWRjOTczNmZkMTdhNGY3YmZhOTMwYjI2MWI2ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNTIzOTU1MWRkZWJlNmZkMTA0YmUyNDkyOTI4YzQ5YTA5YmMxMjA2YzA4MDgxYTE1ODk0ZDY4OTZkMjgwNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlZTU4MGNjYWRiMDM2YWYyNzQ5ZmQ1ZmFmMTEwODRhNWFmOWY5YWJlMGJiNjJmMzNkZmI0YWYyYzA2Zjk1ZDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_256cef09ef86452691b981cbf4fe1502",
+      "statement": "`validateEnvironmentVariables(selectedAgent, githubToken, apiKeys)` in `lib/sandbox/config.ts` accepts either a value in the `apiKeys` argument or the corresponding `process.env.*` variable as satisfying the per-agent key requirement, which is what allows a user with their own `AI_GATEWAY_API_KEY` row to pass the Claude/Codex gate on a deploy without `AI_GATEWAY_API_KEY` set globally — the gate runs before sandbox creation and accumulates errors into a single combined message.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/config.ts#L1-L67",
+          "version": "repo-lines-v1:sha256:e55f5aa69a193e445dd30384ab70bc70a1f5834c89cb9dc87c24921fd6555707:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3ODI1N2IzY2FmMDk1ZDZkZGU3OTFmODZkZDg0MTg1ZDI4NDU3ZWFlOGM3YzljZTNhM2QzZWVlOWIwNzI2MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2YzU3MWI0ODkzODNlYTRmYjQ3NmExMjZjZDRjM2IxNjk5NzIxNjc1YmQzOTRlMGJhNjRhZTc0OGZjMmVkN2EifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

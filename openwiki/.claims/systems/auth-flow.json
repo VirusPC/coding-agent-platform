@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1069d898eb87bc9d1c1ac267941990bde98d643542523804ecfcfb32e4956486",
+  "claims": [
+    {
+      "id": "claim_764d41cee0c645e5a87fa5e06950f022",
+      "statement": "The auth API surface lives under app/api/auth/ as Next.js App Router handlers and consists of exactly ten routes: signin/vercel (POST), signin/github (GET, unified), github/signin (GET and POST, legacy), callback/vercel (GET), github/callback (GET), info (GET), rate-limit (GET), github/status (GET), github/disconnect (POST), and signout (GET). Each route exports only the HTTP methods listed.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts",
+          "version": "repo-file-v1:sha256:0a2cab4e7de19e6aa25dbbbdae030b635416fc9f7452f5f0dde79ba80235b5a3"
+        },
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://app/api/auth/github/disconnect/route.ts",
+          "version": "repo-file-v1:sha256:078673db4d1935cc4f18cfcf95891d18981ae3311ac7f4ab70b05d9447df79f5"
+        },
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts",
+          "version": "repo-file-v1:sha256:e173fc757fb6cfed49e0bb53ab09d9b8ccc70af2383da83d39c40358111d2762"
+        },
+        {
+          "resource": "repo://app/api/auth/github/status/route.ts",
+          "version": "repo-file-v1:sha256:109e46c2321e125abaf3da255de3750899111455a6ce4ad0e58b9b49db073681"
+        },
+        {
+          "resource": "repo://app/api/auth/info/route.ts",
+          "version": "repo-file-v1:sha256:7da4fc0fb284ad2a49259126fac2ca3d69428e7f709f5ebf4c3ae8e87c4684e0"
+        },
+        {
+          "resource": "repo://app/api/auth/rate-limit/route.ts",
+          "version": "repo-file-v1:sha256:dc9766de5d567605bf2e84bc7bf01404d82afb046550d8b05feb5dda48eda591"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts",
+          "version": "repo-file-v1:sha256:5a676a0636c8600ec2d4eba4d207be2e273656e0f5cc40161ae8ba994852a92c"
+        },
+        {
+          "resource": "repo://app/api/auth/signout/route.ts",
+          "version": "repo-file-v1:sha256:8b2f549f52309be596b9af0ff7d81a52908473b0f6f08d80d68a8d7f88972d07"
+        }
+      ]
+    },
+    {
+      "id": "claim_b4ffa0bb45264e33ad11dea6f1015007",
+      "statement": "The Vercel sign-in route uses the arctic library's OAuth2Client with createAuthorizationURLWithPKCE (CodeChallengeMethod.S256), generateState, and generateCodeVerifier; the callback exchanges the code by calling validateAuthorizationCode against Vercel's bespoke token endpoint at https://vercel.com/api/login/oauth/token because arctic ships no Vercel adapter, and it writes the short-lived vercel_oauth_state, vercel_oauth_code_verifier, and vercel_oauth_redirect_to cookies (HttpOnly, SameSite=Lax, Secure in production, 10-minute maxAge) before returning JSON { url }.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts",
+          "version": "repo-file-v1:sha256:0a2cab4e7de19e6aa25dbbbdae030b635416fc9f7452f5f0dde79ba80235b5a3"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts",
+          "version": "repo-file-v1:sha256:5a676a0636c8600ec2d4eba4d207be2e273656e0f5cc40161ae8ba994852a92c"
+        }
+      ]
+    },
+    {
+      "id": "claim_ef063b3ae7f84f718d84b54236c573f0",
+      "statement": "The GitHub flow uses three coexisting cookie sets that the callback disambiguates by the presence of github_auth_mode: the unified signin/connect set (github_auth_state, github_auth_redirect_to, github_auth_mode) optionally with github_oauth_user_id for connect, the legacy connect-only set (github_oauth_state, github_oauth_redirect_to, github_oauth_user_id) written by /api/auth/github/signin, and the connecting-user-id cookie github_oauth_user_id that both flows share; all are HttpOnly, SameSite=Lax, Secure in production, with a 10-minute TTL, and the legacy branch exists only so a deploy does not break browsers mid-OAuth.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        },
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts",
+          "version": "repo-file-v1:sha256:e173fc757fb6cfed49e0bb53ab09d9b8ccc70af2383da83d39c40358111d2762"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        }
+      ]
+    },
+    {
+      "id": "claim_682b89c1bd40413b9af1416046ac5e26",
+      "statement": "The GitHub callback dispatches on github_auth_mode: in signin mode it calls createGitHubSession (which upserts a users row with encrypted accessToken and writes the JWE session cookie), and in connect mode it encrypts the new token and branches on three sub-cases against the accounts table — same-user update, conflict where the GitHub identity belongs to another internal user (reparent tasks/connectors/accounts/keys and delete the old users row), or fresh INSERT — with the legacy no-auth-mode path treated as implicit connect.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts",
+          "version": "repo-file-v1:sha256:8101a3615a6107f20ab0b7a11822265ba6c9c08497c4f760293e24706c2b7a3f"
+        }
+      ]
+    },
+    {
+      "id": "claim_fa3914dc9cc543c5bc82a7623f0b2c07",
+      "statement": "The legacy /api/auth/github/signin route exposes both GET and POST for browser versus fetch callers: GET redirects directly to https://github.com/login/oauth/authorize with the github_oauth_* cookies set, while POST returns { url } as JSON for programmatic callers like redirectToSignIn-style helpers, and both require an existing session (GET redirects to / for unauthenticated users; POST returns 401 JSON).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts",
+          "version": "repo-file-v1:sha256:e173fc757fb6cfed49e0bb53ab09d9b8ccc70af2383da83d39c40358111d2762"
+        }
+      ]
+    },
+    {
+      "id": "claim_8828b3c58dd449b7ba793b9c5679ff37",
+      "statement": "/api/auth/info is provider-aware: for a GitHub-primary session it returns the existing session verbatim, for a Vercel-primary session it rehydrates by reading the encrypted token through getOAuthToken(userId, 'vercel') and re-running createSession (refreshing profile data on every page load), and for no session it returns { user: undefined } while emitting the immediate-expiry Set-Cookie via saveSession(response, undefined); the route picks saveSession vs. saveGitHubSession based on session.authProvider.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/info/route.ts",
+          "version": "repo-file-v1:sha256:7da4fc0fb284ad2a49259126fac2ca3d69428e7f709f5ebf4c3ae8e87c4684e0"
+        }
+      ]
+    },
+    {
+      "id": "claim_ec41dd3b27414d008a112be1a33022f8",
+      "statement": "/api/auth/signout walks four steps: read the session via getSessionFromReq, fetch the upstream token via getOAuthToken keyed by session.authProvider, revoke the token at the provider (DELETE https://api.github.com/applications/{client_id}/token with HTTP Basic auth for GitHub, or POST https://vercel.com/api/login/oauth/token/revoke with form-urlencoded body for Vercel, both using client credentials as Basic auth), then return { url } and call saveSession(response, undefined) to emit the immediate-expiry cookie — revoke failures are logged but the local cookie is always cleared.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/signout/route.ts",
+          "version": "repo-file-v1:sha256:8b2f549f52309be596b9af0ff7d81a52908473b0f6f08d80d68a8d7f88972d07"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebe29b5fa7d3479fa1fce05bdfcc1d80",
+      "statement": "POST /api/auth/github/disconnect refuses with 400 'Cannot disconnect primary authentication method' when session.authProvider === 'github', because deleting the only account row would leave a session whose underlying users.accessToken is gone; the component layer in components/auth/sign-out.tsx only renders the Disconnect menu item for Vercel users, so the route handler's guard is a second line of defense rather than the user-facing rule.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/disconnect/route.ts",
+          "version": "repo-file-v1:sha256:078673db4d1935cc4f18cfcf95891d18981ae3311ac7f4ab70b05d9447df79f5"
+        },
+        {
+          "resource": "repo://components/auth/sign-out.tsx",
+          "version": "repo-file-v1:sha256:b3ffebe49b9b934efbfacdef0fd01e9b7134f179158b8d812602d1a43882c059"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a3ba38bb23e4766b6d2407c91b8d2cc",
+      "statement": "/api/auth/rate-limit delegates to checkRateLimit in lib/utils/rate-limit.ts, which sums today's non-soft-deleted tasks and taskMessages.role = 'user' rows and returns { allowed, remaining, total, resetAt } where resetAt is the next UTC midnight; the dropdown in components/auth/sign-out.tsx renders this as '{remaining}/{total} messages remaining today' on every open.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/rate-limit/route.ts",
+          "version": "repo-file-v1:sha256:dc9766de5d567605bf2e84bc7bf01404d82afb046550d8b05feb5dda48eda591"
+        },
+        {
+          "resource": "repo://components/auth/sign-out.tsx",
+          "version": "repo-file-v1:sha256:b3ffebe49b9b934efbfacdef0fd01e9b7134f179158b8d812602d1a43882c059"
+        },
+        {
+          "resource": "repo://lib/utils/rate-limit.ts",
+          "version": "repo-file-v1:sha256:7d7b9ba8bfb4b4ae5c85eb26a47e68e78ce77c8ebc2343d3bfc8eff322bd58bf"
+        }
+      ]
+    },
+    {
+      "id": "claim_2da49acda48c4705b89d1b0198228fc5",
+      "statement": "GET /api/auth/github/status returns one of three shapes by checking both storage buckets for the current session: { connected: false } when no session or no GitHub identity, { connected: true, username, connectedAt } when an accounts row exists with provider='github' (linked), or the same shape when the user's users row has provider='github' (primary), so the UI can render a single Connected badge for either bucket.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/status/route.ts",
+          "version": "repo-file-v1:sha256:109e46c2321e125abaf3da255de3750899111455a6ce4ad0e58b9b49db073681"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5c74a19c0f245f9b5b0ec711b74a75f",
+      "statement": "components/auth/session-provider.tsx is the polling loop that keeps the Jotai sessionAtom and githubConnectionAtom warm: on mount it fetches /api/auth/info and /api/auth/github/status in parallel, then re-fetches both every 60 seconds and on every window.focus event; the auth UI split between SignIn and SignOut is decided by the session atom with a SSR-friendly prop fallback while the atom initializes.",
+      "evidence": [
+        {
+          "resource": "repo://components/auth/session-provider.tsx",
+          "version": "repo-file-v1:sha256:06f0bdf894f79a968890bcfa4904baf5d216608e7c7e76dd13ec3289513b2ff0"
+        },
+        {
+          "resource": "repo://components/auth/user.tsx",
+          "version": "repo-file-v1:sha256:02dfe880fa4ae76d38403ffcb9b5307cae7df6960ae39cf9ca54af0b9f274994"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd8ad9b2c70941ec99002b00070c05c9",
+      "statement": "The unified GitHub connect entrypoint appends ?github_connected=true to the post-auth URL, which components/home-page-content.tsx reads on mount via useSearchParams, surfaces as a success toast, then strips from the URL with window.history.replaceState so a page refresh does not re-trigger the toast; this is the only signal the connect flow has to confirm to the user that the link succeeded.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts",
+          "version": "repo-file-v1:sha256:ced79faa446a998718911e048d14d2e037dc37ed01391c0548f8580f11e1e15e"
+        },
+        {
+          "resource": "repo://components/home-page-content.tsx",
+          "version": "repo-file-v1:sha256:c86340135baf386012c17cb076615b70b1d94c30fbe7487fe716338ad9bcfe78"
+        }
+      ]
+    },
+    {
+      "id": "claim_082b7cde548247b1a9a348da4d8f8372",
+      "statement": "getEnabledAuthProviders in lib/auth/providers.ts reads NEXT_PUBLIC_AUTH_PROVIDERS (a comma-separated list defaulting to 'github') and exposes { github, vercel } booleans that both sign-in dialogs and the connect menu use to decide which buttons render; routes exist and respond regardless of which providers are enabled — there is no per-route allow-list, only a UI-level filter.",
+      "evidence": [
+        {
+          "resource": "repo://components/auth/sign-in.tsx",
+          "version": "repo-file-v1:sha256:0ba5df39eb876a34419bfb52ffda40e1d5d4250648c0a7891725858c7a926cea"
+        },
+        {
+          "resource": "repo://components/auth/sign-out.tsx",
+          "version": "repo-file-v1:sha256:b3ffebe49b9b934efbfacdef0fd01e9b7134f179158b8d812602d1a43882c059"
+        },
+        {
+          "resource": "repo://lib/auth/providers.ts",
+          "version": "repo-file-v1:sha256:d02b82f090a72047946f6564eeb269967e47549bcc96ea3abe7420ede72ce812"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8e3320bfabb4379af36cdc3c05d191d",
+      "statement": "components/repo-selector.tsx is a secondary consumer that POSTs to /api/auth/github/disconnect whenever /api/github/user or /api/github/orgs returns 401 or 403, providing a self-healing branch that drops a stale GitHub link without waiting for user interaction; this is the only call site outside the auth UI that triggers disconnect.",
+      "evidence": [
+        {
+          "resource": "repo://components/repo-selector.tsx",
+          "version": "repo-file-v1:sha256:da3d2089e8657ae852ba639369c73b5672ebcfe83f073c184b4d2789391a984e"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d807ec6d46f40bce3cc5eee80dab724b2aba6e152b443a18ce48ffa7b1de5fbc",
+  "claims": [
+    {
+      "id": "claim_4748748fb2b04bbdbf623e60bc166112",
+      "statement": "The legacy connect entrypoint GET /api/auth/github/signin requires a current Vercel session before it will start the OAuth dance: when getSessionFromReq returns no user, the handler redirects to / rather than to github.com/login/oauth/authorize.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts#L7-L12",
+          "version": "repo-lines-v1:sha256:73b2451bfabe21df5c2392143debfcf47238791fd3e4ef7de45dbf3dfae29135:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDY5NTNjOGNhMTIxYWYxMDhjZTI4YWM5YTg3OGFjZDI5NzVmNGFiMTcyZjBlMDJiODQyYWQwZTg2MTA4MmI4MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2Q1YmNhZWJmMWQxNTU5OGQ3YTg3M2Q2NTIwOWQ4OGJjYmZhNjVjMmUyMTA5OTZhZWMxMWUxNTNlYTA5ZTg3YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWY0YTMwYjMxNjliOTU1NTM5YTE1MDQ2ZDUyYmY4MjUwZWIzMjk5ZWRjMmMwZWI3ZmU0ODI2YWE2ZWY2NmNhMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f06bbc4bcc244ef842df8679648fde0",
+      "statement": "The legacy entrypoint writes a trio of short-lived auxiliary cookies — github_oauth_state (CSRF token), github_oauth_redirect_to (validated post-auth target), and github_oauth_user_id (the connecting user's internal users.id) — each HttpOnly / SameSite=Lax / Secure-in-production with a 10-minute TTL, and never sets github_auth_mode.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/signin/route.ts#L28-L40",
+          "version": "repo-lines-v1:sha256:181db5cbeb13a3f75c472895f006dbce52c53221020c402d71aab2b5400c8572:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MTkwZTU4ZmRhMjY1N2EyOGQ2N2JjNmEzZjJiZWRhN2VkMGFmMDc2YmRjNjU0M2VmMzBlNjY4YWVhYTQwN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ5MDZjYzY1MWEzNDVmNzYwZTM1N2NlYzhhNjUyZTM0NGQxNDFkNjA3M2I0ZWVmNjVlMWZhYThhMzU0NGVjNzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0ZmUwNjMwYzllYWJlOTAxNzAxNjUyM2M3MTYzYmVhOTdmMDBlZjExMDM1YzllZDVjMzc1OWI5ZmM4MGM0MTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_275cdb18595e4ac9824e1edfc473af3b",
+      "statement": "The callback at GET /api/auth/github/callback dispatches on the github_auth_mode cookie to select between the signin and connect branches, falling back to the legacy github_oauth_* cookie names when github_auth_mode is absent — which is exactly the case for the legacy connect path entered through GET /api/auth/github/signin.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L16-L24",
+          "version": "repo-lines-v1:sha256:6d01504ff130da0b01ea19ac5eb7088015af96bbcdded198ef57a9bcb559d93c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzE5ODE1NGUxZTA3MTFkNDg2YTA0NjgxMmJlZDUzMTljM2ViNjk4MzQzZDA3YjY1MDExZDMxZWQ0MmUzOTYwOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ4OGIxNjM2MWMzYzNjNjdhZWNlOTNhZjZiYzVmZjg0YTk0YmI4MWRkMzg2OTgxY2U1YTA5ZWZiOGQ1NzhlNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmUwYjU3OWExNDRiMmM2NTgyYjQ3NGZhNWYzZGU5NTQwMjE5MGNmYzBkMzBjYTUyYTRmNTUxZmUyNmI5NmYzMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODZhOTA2YWNhN2ZhMjIxYTBmNGY2NjY4NmVlMTU1ODkwNTkxNmI2ZDc4NjQ1NzEzNTYzOTNmYmEwYzNjNWVjMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d80bba1930c4064af2564b462a4cd52",
+      "statement": "After state validation, the callback requires github_oauth_user_id in addition to the code, matching state, and redirect_to before completing the connect flow, and returns 400 Invalid OAuth State without deleting the per-flow cookies when any field is missing or mismatched.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L27-L46",
+          "version": "repo-lines-v1:sha256:50ae6fc5995dbb2f5c1104f054dc2b0338c21e3d45a0a8c84599e099ac2593eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzN2E2YTAzNDA5ZTdmZTg4NDZhODQ3NmUxMTM2OWYzNDMzMTE3ZjYyMTg5MDI0NDNlODgxY2JhMmUyNzYyMDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkOTVjZGM4MjExZmVhOGVkNjZmOTUzMzY3MDE0OGYzZDZmMjE2NDUxYzRkMjRhNTUwOGZlNzZlNGQ1ZDY2ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyM2QxOTdjN2ZmZjBmNjAyYzYzY2Q3NzcwNmU3YzA1Y2M4ZGE3YTNlN2FmNjk4Yjk4N2M3MWVkMzcyMGNiZDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_16938d8eecb64568a99f83cc4415b2b6",
+      "statement": "In the connect branch, after encrypting the new token with AES-256-CBC, the callback handles three sub-cases based on whether an existing accounts row matches the GitHub external user ID: (1) insert a fresh row when no row exists, (2) update the existing row's accessToken/scope/username/updatedAt in place when the row belongs to the connecting user, (3) reparent every row owned by the other user and update the accounts row when the existing row belongs to a different internal user.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L142-L210",
+          "version": "repo-lines-v1:sha256:8f04e8a3bee0e98831b35bf78ab0f5cf193cb690c9c4b36e79c3ea3383342980:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YjQwOWMxYTE2YWY3ZDU0NWQzMzdmYzJkMmQ3ZmFmZThlZWY0MWIzMzIwNWVlNTVkOGVlODY5NGI4ZjY5ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5ZWE2MDVhNmI3YTVhZjRmZGIzZmUyMDMwYjA4OTM1MDlmMWZjOWZhZTIyODI1MWQ1ZGM1YzU5YzcwMGNkMTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1NGJhZGY1OTU5MDA3ZDVkYTBkM2QzYjA3YTY4YTY2NmUxMmE1OGJlODVjYWRkZmZkM2U1MmMzMjVjNmQyZGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fea7d74fcf9d41439899ec89ab471b06",
+      "statement": "The account-merge sub-case runs four reparenting UPDATEs across tasks, connectors, accounts, and keys, then deletes the old users row and updates the existing accounts row's userId and token — none of which are wrapped in a single transaction.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L157-L186",
+          "version": "repo-lines-v1:sha256:205c730e36ac8597692403f93d70b861dd4ce27103b43a5c9983dcdc7489269d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkNDg2YzQ4ZjZiNWUzOWExYmVmYjkyODkwOTlhOWIxZTdjYmY2MzExODUyY2MxN2U0MDhmZjhmNGYyMGViMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NmVhZThjY2YzYTEwZmVkYjgwNmM0OTVlNzI5M2IxM2ZmM2VlMWQzOWRkYWQyZGY4OWY4N2ZiY2FlMjcxMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNGJhODk2YmRjM2U3ZTVjMWY0ZGU0ZGZkNWRhMjA0YmM3ZWIyNDg4MGFhNzFkYThlMWY4ODlmYmI1MDIyOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2ZDgxMWRmYjExMjE4Y2NiZTUxN2RhNGY4NGQ1Y2M5OTNmNjY0ZTljNjBkMzc5YWNjNDExMjFkNzg3NmY5OGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0fb4abad1f6d42c4ba46a983967f191b",
+      "statement": "The connect branch never writes the _user_session_ JWE cookie — saveSession is only called in the signin branch — so the Vercel session persists unchanged across the round-trip.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L112-L141",
+          "version": "repo-lines-v1:sha256:131c4c2fa0ab15642603e36028ab64944c208c67a95064a4b2a3946b3345a05c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyYTU0YjU0NWZjZWIzMjMyMzZhZGYyYjA2NDIwMDI2ODY4MjcxNTg0NjBkNjRmNDNlZDE5OTZmM2Q1YjRmNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxNjdlYTk5ZjMyNTdmYTNjMGNiNzc3NDRiOTQzYWRiZWQ5ZWJkNmRlMWVjOTkyNTE0YjlhN2U3NjliMjRmY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkOTg0ZDA5NThlYjY2ZTI4Y2U5ZmJjOTU2ZjE1N2IyY2I0OWJkMWYzYzQ5OGY2NzNmNjBmMzdjODZhMjk3MDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU0MTc5Y2Q1YWFkYmIzMDM3ZWU4NmQwYzFhNTg5Y2IxNzU4MDgwZTJiOGFiYTQ2MDNiMTYwNTVlNGY3Y2JkOGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_44f1d6291c574444ae0c20126c8d4dd8",
+      "statement": "getUserGitHubToken performs an accounts-first, users-fallback lookup — checking the linked accounts row first and only consulting the primary users row if no link exists — so downstream callers see the same plaintext token regardless of whether GitHub is a primary or linked identity.",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/user-token.ts#L21-L57",
+          "version": "repo-lines-v1:sha256:17beda683ced386e6a0ad61d22fa4963fb49f82ba47b086bc2536a256e5bb60a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiNDZlMWFjZGE3NmE1YTg3NWZjYzY2NzA1YjFmZGRlZjE0ZWVjZjQ5MWM1NGYzYjliZjYxOTNjZDk2NGI2OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhMDY1OWEyNzQ0ZGQwMjcyZTQyMGRiZjBhMjRhOGQwMGIyYTY3NDYyYjNmMTg2ZGI3YTVmNWE5M2Q2OTk0YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9fff4bb7ce2b479b928464d238353ca2",
+      "statement": "The status endpoint reports connection state via the same two-bucket check (accounts first, then users fallback), which is what allows the UI to render a consistent Connected badge whether the user signed in with GitHub or linked a GitHub account to a Vercel session.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/status/route.ts#L19-L56",
+          "version": "repo-lines-v1:sha256:85e4e2809fb175fd840bbee36c5f5c5885e8f9fffb24c6e1a22a355dcd7d621f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NTk1ZjRlZTVmZjYzZDUwOTUwNDE5ZGMzNDQxNDUxMzg1MWRjOTczNmZkMTdhNGY3YmZhOTMwYjI2MWI2ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3ZTI0YzMwMzcwMzE1YWUxNzIyZTg3NjQ2ZWU2NmFlODRjZjNjOTE1NTA3ZTk2YjZjNTQ1NjlkNDJkMTAxOTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2NjgzYjlhNzVkYmIwM2QzNDMzYzJjODI5Yjg3N2UxNTFhM2E3YWVkYjU5ZGVmYjc1M2FiOWU3MjhiZjFmNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3ZGRlNDhkOTY0ZGRjYzA2ZDE4NDc4ZTljYTFkNjI5NDI3ZGU1YWQ3ZjljMmZiMTYwYTAzNTUyODJhMTU2NDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_510117ae5f144192ba65274e18d985fe",
+      "statement": "POST /api/auth/github/disconnect refuses with 400 Cannot disconnect primary authentication method when session.authProvider === 'github', because the connecting identity would be on users.accessToken (the primary row) rather than accounts.accessToken; the UI also hides the Disconnect menu item in that case.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/disconnect/route.ts#L21-L23",
+          "version": "repo-lines-v1:sha256:e2ba8153ac65cb4141436a3305d846c8331b2888bf18ceae80e95e7ddbf561fd:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjRhZjg3ZDA2MmExZTg2NDMxMTYxNTA3MWY1YWNhYmM4N2Q5MjczZGM1NjZlMDUyNTI5YTRlMjE5MzU2YzdiMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGU1MmY5MDgyOTYzMTY2ZWRiYjUxMzM0NTczZTUwNTVhNzI1NjY2ZTkyZjhkMjJhMzVlOTVmOTk1N2NiMDFhNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjMzMjIyNTQ5ZDYzOGE2MjkyM2NjOGM2MjBiZGY3MTYyYWUwZGE5ODlhZmM1NDU1MTBlMWNhNzA3MmJiMjI1NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5dad3248bc3949bab7731e21ad0952b3",
+      "statement": "The unique index accounts_user_id_provider_idx on (userId, provider) enforces one GitHub link per internal user, and the provider enum on accounts is hard-coded to 'github' so the database itself rejects any other provider value.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts#L258-L283",
+          "version": "repo-lines-v1:sha256:3560e0b5be165dddea7997114b6db0cf6ac0fc9714a87d5c7ebd17d960c2c6c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMGU5M2Q3ZmYwNDY1NGU4MzhmYWExNzI4MDU4NmU2MmY1NmJiNGEyZGU1NTBlYzc4YTdiNTBiZDQ3YjEzNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1OGFkYTIyMGE3NmMyZDVlOTE4YTRlNTFiYTM3M2FiOGM3OWMyNmU3YThmYjQyOTQ4MDUzNDA5NWYwN2I1NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1MWU5OTAwMTE0ZGZhMjVlYmJhNDI4YzAxZTRiNjVkY2IzNjVhOWMzZTYzNzVkYmU2NDAyM2VjYzhiMzZhNDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2dbf6e6439d645028d23c44aa2d0233d",
+      "statement": "getUserGitHubToken is consumed by the Octokit client, the GitHub API routes (user/orgs/repos/user-repos/verify-repo/repos/create), the task lifecycle routes (POST /api/tasks, continue, start-sandbox), the api-keys-check route, and the agent dispatcher in lib/sandbox/agents/index.ts — none of which care whether the token came from accounts (a link) or users (a primary).",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/client.ts",
+          "version": "repo-file-v1:sha256:ea5e11255cb94eee8b1167a82ad7876f506326f65660df598de2873be30aa0de"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts",
+          "version": "repo-file-v1:sha256:3944c1fcd6f008e067481aef4d79ab060752ea4a188b1f91ee1fac8a696ceae4"
+        }
+      ]
+    },
+    {
+      "id": "claim_05277ea1977d4245831579542215b954",
+      "statement": "The GitHub access token is encrypted with AES-256-CBC (encrypt from lib/crypto.ts) immediately after the code exchange in the connect branch, before any database write; the plaintext token never lands on disk.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L145-L145",
+          "version": "repo-lines-v1:sha256:498a782934bccebf1f5ebb71fa1657fd6734c84252819ee6f6f2b9ab587a3a76:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDk4YTc4MjkzNGJjY2ViZjFmNWViYjcxZmExNjU3ZmQ2NzM0Yzg0MjUyODE5ZWU2ZjZmMmI5YWI1ODdhM2E3NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDk4YTc4MjkzNGJjY2ViZjFmNWViYjcxZmExNjU3ZmQ2NzM0Yzg0MjUyODE5ZWU2ZjZmMmI5YWI1ODdhM2E3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQxNzljZDVhYWRiYjMwMzdlZTg2ZDBjMWE1ODljYjE3NTgwODBlMmI4YWJhNDYwM2IxNjA1NWU0ZjdjYmQ4YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmJkOGNjNDBiMDZiMDQxY2ZjMDI2ZThiZDQwZGUzYjY0MWMxODkzODE4ZmJkN2JiMzdkNGEzYzZjMTg4ZTIxOCJ9"
+        },
+        {
+          "resource": "repo://lib/crypto.ts#L20-L35",
+          "version": "repo-lines-v1:sha256:8436e24213ed65045411e79770b69a8b65104ba045e7760b83bb7113622e96a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzMzU1OTkyMjVmM2MxZThlM2NjY2RhMzNhYmExNmFjM2IzNDgxMzYwMDBmN2M3MWE5YTRjNDUzMGI2NTI1ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNDE3MTY5ZmQ3NDI0N2M0NGZiOGY2M2JiNjQzNTcyYzU2ZjNmMDUwODRkMDkwOTAyZTlkNjhmNzExODc4ZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2ZDkzY2VjMGUxNGU3ZDkzOWQwODM3YWNlZTQxN2M0ZjIzZDE0OTIyNmUzZGU3MTVkZTU5MTYxOTc1NWE4N2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb870482dd064e52a52e806a0b15cf07",
+      "statement": "The user-visible Connect GitHub buttons navigate to the legacy GET /api/auth/github/signin entrypoint from two places: the avatar dropdown in components/auth/sign-out.tsx (only when authProvider === 'vercel' and GitHub is enabled), and the empty repo selector in components/home-page-content.tsx (handleConnectGitHub and handleReconfigureGitHub).",
+      "evidence": [
+        {
+          "resource": "repo://components/auth/sign-out.tsx#L148-L166",
+          "version": "repo-lines-v1:sha256:6c820b3315a7d06e5a8e3613aaf540246bfaffb6052d8c47bfce99c7d7f9d354:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0N2NmZDI5YmFmZWY4NTM3ZTA0YmFmZTZlOTFhZjQ2Nzg5ZGM4MTQ0N2YzMWE3ODcwZmM2NDY0NWIxZWYyNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YjhjMTA4NWY5NWExYWZhYmU1ZDE1MmFkNThkYjlkYzI2MzM2YzEyMThlMmI4NDBhZTdhZDgyNmEwZDU3NDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkNTdjYWQxODQ1NDc2MmRmMWI0ZjE5OGM1ZDU3MDYyYzkwM2NhZWFhNWY0Y2FhNDZhMWJkZGIzY2RkOTk4M2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmODI3YzAyMzQyMDkzNmFiMzE2ODRlYmM3MDJjM2ZkMzUzODI0YjEwNDc4NjI2YjVkNzJmZTRjNjQ2NWEzZTcifQ"
+        },
+        {
+          "resource": "repo://components/home-page-content.tsx#L207-L218",
+          "version": "repo-lines-v1:sha256:c5c1b88f0f793b363898d4253b770500e948ae94191be2b7e9ea008943616723:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhOTM0NGU0YzVkNjNkMjFmM2U0NGE2YmM0ODY1ZWQ2NGU3ODY1NTFjNDI1ZmU1OWU0NmEwYWVhODNkMjg4MjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVkMWFiZmM0NWVmN2YxNDUzM2I3NmE0YmY0MjQ1MDRmNGI2NDYxYWZiODRmYTA5YmVjNWU5YTc5NDI3MTZmMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlMmRkYTI4ODY0MmJhMWYwMzFkNmFmOWE5NTNkNWVmMDVkMTZmZWI5MzQ5OGMyYjViZWZlZmIwYjg3ODJiYWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_049be0ecc3b445e39e2f28066a46248f",
+      "statement": "components/repo-selector.tsx self-heals a stale GitHub link by POSTing to /api/auth/github/disconnect and setting githubConnectionAtom.connected = false whenever /api/github/user or /api/github/orgs returns 401/403.",
+      "evidence": [
+        {
+          "resource": "repo://components/repo-selector.tsx#L130-L149",
+          "version": "repo-lines-v1:sha256:be3e027df7bbfec2093d8104f32639207e25ab8a2a6277cc856957420197321c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3NTVmOWI5N2VlMmQyOWNiNTNmZDMwNDY5NzdkMDk0OWVlNjMzODNmZThlNDIxZDJmNWNhN2MxMmM2ZTMwNzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDA1ZDU3MTA2YTM2MmViMDAwZGFmM2RhNDY3NGM4MmI1MThmZjVhMmUyZjY3ZWU4ZTc1N2EzMzNjMmFmNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyM2Q1ZWNhYzM0OWI2OGY2ZDA2NWI1ZjVhODUzZWJmNDcyYTgyYjg1OWQxOGE5ZTVmZTM1N2M2MzQ2NzVjMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZTYzNTViZDgzMjc0MTQzNDJjMjEwZTBiY2Q2ODczNWMwZmY1NmNjNmFmM2Y4MDc5Njg3N2IzNGYyYjU5NTMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

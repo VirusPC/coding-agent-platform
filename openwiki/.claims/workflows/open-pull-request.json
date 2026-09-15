@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f1a036c380fcd5dd0fb51e8f89ac20cfec13e9d83a992f3bff75a8bea1f876de",
+  "claims": [
+    {
+      "id": "claim_f8193cafdf8e48b29ffd077bc8c105d2",
+      "statement": "The merge endpoint (POST /api/tasks/:taskId/merge-pr) is the only endpoint that combines a sandbox teardown (Sandbox.get + sandbox.stop + unregisterSandbox) with writing completedAt on the tasks row, and it does so even when the task's keepAlive flag is true. A single UPDATE writes prStatus='merged', prMergeCommitSha, sandboxId=NULL, sandboxUrl=NULL, completedAt=now, updatedAt. The route catches and logs (but does not surface) errors from the sandbox teardown so a transient stop failure does not roll back the merge that GitHub has already accepted.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/merge-pr/route.ts#L57-L86",
+          "version": "repo-lines-v1:sha256:b65787f130730962df3273dfe7ccc43a720458b3a8c05dbff2abd9b64b3d397a:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMDA0NzZmNGU5ODBiMDkwNDUyY2NiZmNhODgzY2QzNDVmZDc5YjJhNGQwZTg5YjI4OWE1OTk2YWZhZmNhNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjM2E2YTUyODczZDhmZWM1M2MzZWE1NDc2OTY1NzAwMTk3ODc0ZWJhZjdlNzM4MTYzMGQ2MWNkYzA5NjBlMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwNTlmMWM2NmI2MjQwNGRmYzZmZmQ0YWE4ZjE3OGQ2NWNlMDJkMGFkYjE3NTFlODE1MmU3ZjQwYTBmYWQ0ZGQifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/merge-pr/route.ts#L66-L72",
+          "version": "repo-lines-v1:sha256:a7fd4f51d2bf5943d64be89f0fa8c5dce6dc25aff6a4b0229d3c93581b516da4:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUzZDM3ZTUyMmM1OTM3NmM2NTdhNDFmNWZjMDA5ZGRmODBkZGY3NWNhOGM1YzQ0OTNiNGM1ODEyZTFiZmJlOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDZmZmQ1MzgwZjVhNDk0OWRhMDU2MTg4NjVhYmQ0MDAyYzM2OWE1ZjMxNTI5Y2IzMjExYmViYmM3YTlmN2RjNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGI3ODYzZDgyZWE2NTkzYmRhNzFhODU1OGM3MmYyZWFlYTVmMTZiMzYwMGYwMzE2YjE2YTkxZTVmMTkxY2JjMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_21843d42887243cca13f9d8eafee050a",
+      "statement": "POST /api/tasks/:taskId/pr is idempotent: if task.prUrl is already set, the handler returns 200 with data.alreadyExists=true without contacting the GitHub API. This means re-clicking the Open PR button on an existing task safely surfaces the existing PR (the client routes to the merge dialog) and recovering from a transient network failure between GitHub's 201 Created and the local UPDATE never creates a second PR.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/pr/route.ts#L46-L58",
+          "version": "repo-lines-v1:sha256:3937bbaaee9d29cb90febe11fa5a837863fb405ab1a3842f50e3166173407945:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkZDg0MDAzMjI5YjdhYzE5ZmY2M2UxZjlmZjkzZmVkNzNjMGI2MmE3Y2E1MTlhMWEzMzNlNzE2ZDYzMmI4ODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIwZWY4ZmJkMWE5YTliYjBhZGU4NTk2Y2RlZDE2M2MwNjg2MmIwMmVkNDE4MjgxZjI5ZWViODMzZGNlODFmNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM2YzU1ZjI0ZGE2NDZiZWJmNGE1OGM2NmMyN2U5ZWVjMDhiODM3OGY2NWViM2YzMTY2N2M1NWFhZjFkZGEzOWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bef5e8cf5e7f467c9c3cece55dd8123d",
+      "statement": "POST /api/tasks/:taskId/sync-pr is the second of the three places completedAt is written: when getPullRequestStatus returns status='merged', the route's UPDATE sets prStatus, prMergeCommitSha, and completedAt=now in a single statement. The first writer is the merge endpoint itself; the third is PATCH /api/tasks/:taskId with action='stop'. The worker's success path (logger.updateStatus('completed')) deliberately does not set completedAt.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/sync-pr/route.ts#L49-L67",
+          "version": "repo-lines-v1:sha256:3367632e2687ba2efae429e9a5d75b0c7a99dcc46c71e2a160e89152f565143c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2M2NlMmU3YTM0YzEzMGQzYmQ1NmQyMTc4ZmIwZjhhZWI3NTQwYTBlMjhmNTRhZjJmMGFiYjE3NmM1NDhkNGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0MzZhNDVjMWMyOWQ4MTcyNmVmZWZhZDM0MWQ1Y2NlMjA1Y2Y5OTdlNjlkODU0OWU5MDVjMjIyZDYyOWMxNGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmNGY0Y2FlOWY3Y2YzYTU1NmU1YjMzYjdiNDYxY2UyYTU3NjMyOTA3MTliYjA3ODY1Y2UwZWQ2YWIzOWM3NWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzZGZiNGFkZjVkYjM1OTI1YzQxNzAzZWVmZTBlYzQ3NzBiYWU0YmJiNDM2OGMyZmFlNzYzY2RmMGVmNjA2NzIifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/sync-pr/route.ts#L62-L65",
+          "version": "repo-lines-v1:sha256:7dfc1c82d01aeaee627158be8230063952206854d63443bb3d1f17d06f16e180:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjhiNjA0ZGVkM2MwODU4YzQxOGY1MGExY2Q4Njg2ZmFmOGNhMTkxNjY3NDQ1MTk0Mjg5NjVhOWFjOTg1OTczYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmJkYTYzODczYjI2MGM2YjMwZDBjZDAzNDdlYTY1NGYxNGI4ODNhMzU3NTNjMzUwNGQ1NDI4ZDY5MDdlZjdkZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmEzYTM3MjMyNWNlYmE1YWNmZGZiYmM3ZTZhNzNjZWJmMzllMDMyNjVjMDkxYjhhYThjYzFkNmQ3ZjdlMzFmMCJ9"
+        },
+        {
+          "resource": "repo://lib/utils/task-logger.ts#L105-L105",
+          "version": "repo-lines-v1:sha256:ea40911052af3a89e163a65d99861f2c5883be7ae70393ceb239fb932d6da130:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWE0MDkxMTA1MmFmM2E4OWUxNjNhNjVkOTk4NjFmMmM1ODgzYmU3YWU3MDM5M2NlYjIzOWZiOTMyZDZkYTEzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWE0MDkxMTA1MmFmM2E4OWUxNjNhNjVkOTk4NjFmMmM1ODgzYmU3YWU3MDM5M2NlYjIzOWZiOTMyZDZkYTEzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWNhNWJkNTg4Y2MxOWY3OTlmMGIzODA1Zjg0ZjBlNjA1ODc0NjAzYWVjMTBkYTc1Mzg4NDNiYTg3N2UyYTUyMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmM2ZThhNTQ1YTYyYjQzMzI0NTljN2M1ZDk0ODVkYzRlZTQ1YTllNDM1NDhmODJjYWQ5N2MxOGM1ZTRhMTU3YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_96d0aac648ed40de839ea28b3c35e570",
+      "statement": "The close-pr and reopen-pr routes are thin wrappers over octokit.rest.pulls.update with state='closed' or state='open'. Neither route writes completedAt: closing is treated as a reversible state change rather than a terminal status, and reopening restores prStatus='open' without disturbing the row's prior completedAt. They share the same 401/403/404/500 status-code translations and both return 400 'Task does not have a pull request' when repoUrl or prNumber is missing.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/close-pr/route.ts#L51-L72",
+          "version": "repo-lines-v1:sha256:a42806f3eba99f21367c5af26592db93f01d7ba93f54da59e272fc4fc4892f15:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZGY4N2E0NzMxNmM3MDhjNTUwMjA5OGU5YWY2YzQ0NTM0ZWI4MGJlYWRjZjYwNjMwMjhlZmNhODU5MzdhYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MzU1MmFiNTcxNDk0YjM5OWIxODE5OTYyMmRiZTNiMzgyNmViNjFmY2QxZjc0Y2ZiMTJhYmNmODhlNGY3MjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmZDNhMmQyNDE4NjkxMGI2ZjVhMzA0MTc2YWUxZDRkMmRkOThmOGNlNGUyYjJjNmM2MTNjNTlhOGI2OTZiMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2YzdiZmM2YmVmMzE5N2JhOGVmNmNkM2ZkZTdlYmVhZjkwYmQzOWNiOTUwNDlhOGIzM2YyZjg5YjE4ZDNkYWIifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/reopen-pr/route.ts#L51-L72",
+          "version": "repo-lines-v1:sha256:66496772c611bf9974407117fa1013cc9c4dc00dc23681d4bc17b0d9db2b755b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZGY4N2E0NzMxNmM3MDhjNTUwMjA5OGU5YWY2YzQ0NTM0ZWI4MGJlYWRjZjYwNjMwMjhlZmNhODU5MzdhYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MzU1MmFiNTcxNDk0YjM5OWIxODE5OTYyMmRiZTNiMzgyNmViNjFmY2QxZjc0Y2ZiMTJhYmNmODhlNGY3MjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmZDNhMmQyNDE4NjkxMGI2ZjVhMzA0MTc2YWUxZDRkMmRkOThmOGNlNGUyYjJjNmM2MTNjNTlhOGI2OTZiMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI3ZWE2ZDdmOTJhYzVhYjg5YjIwYjE5Nzg4Y2RiZDM1NTU2MzAyNjE0OTg5M2RmZGQ1NTk1ZDA3N2Q5ODk4ZTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_154f6831a8f1438391afb1dccea677b1",
+      "statement": "MergePRDialog opens a second \"Merge Conflict Detected\" dialog when the merge endpoint's error string contains 'conflict' or 'mergeable' (the two strings the server emits for GitHub 409 and 405). The \"Fix with Agent\" action posts to /api/tasks/:taskId/continue with a fixed follow-up message asking the agent to resolve conflicts and push the result, after which the user re-clicks Merge PR. This is the only place the continue endpoint is invoked from a button rather than from a user-typed chat message.",
+      "evidence": [
+        {
+          "resource": "repo://components/merge-pr-dialog.tsx#L168-L207",
+          "version": "repo-lines-v1:sha256:efa8594a39c6e54201ad2f667b270debc9566acefd870fe9ce0ef4919d32a74f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiNGE0ZWNjYzMzZDRjZjFmZjA5YjYxYmUyYTQxYzFiZTZhYmM2NGUzNzlkNTllZmUzNzA0ZjQzZTFjZTljMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjZTAxNDBiMzA1MDliNGQwYjJkYjgwZTQ2MWQzYzlhNDQxZGIxZmZiYWQ3MmJjYWUwYTcxNjI3NmM4MWFlM2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjOTM4MTBhNGExNTg3MDkyNDAzZjhlYTQ3NzkyMjViYzUzYTJjMTZhMGEzOGZmMzQyNmEyNjA2N2E2ZDQ2NTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzZDI0Yjc0YWNmYjBkNzAxNjc0NTU5NTIzMzVkMDY0ZTQ1MjM5MjI5ZTY5NGE5YmUwZDg3YTk4MTk0YWYyNzcifQ"
+        },
+        {
+          "resource": "repo://components/merge-pr-dialog.tsx#L70-L118",
+          "version": "repo-lines-v1:sha256:155cebc9d9b8239b96d5cda023cdbd1bc271acb98b87b663738e45b4dbed5a67:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhNWEyNzZhZDJlOThmODAxNGE1MjE5YzRjOWZhZDRhYWU1YTJjZmM4ZjJjMDFmZTJlYTkxYjg2NDYwMDY4OWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBjNDYyYjdjZjg4Y2RlMzIyNjQ0NGFjZTI4N2NkNGZhYTcwZDAzZjQxZmE3MzI1YmZlNTVlNTZhYWZlMGU4YjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhYTg4MTFkMDAzZmYzMjU4MWEyMzAyNzk5MzAxOTYwM2IxYzA2MDhlMWQyN2RhMjExM2IwYjczM2M3ZGM0MzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_79d5d0619305424d982f607072b2bc88",
+      "statement": "POST /api/tasks/:taskId/sync-changes is the in-editor companion to the PR workflow. It reconnects to the sandbox (with the same getSandbox(taskId) ?? Sandbox.get(...) pattern, and a 410 'Sandbox is not running' mapping) and runs four git commands in cwd: PROJECT_DIR: git add ., git status --porcelain (short-circuits with committed=false if empty), git commit -m <message || 'Sync local changes'>, and git push origin <branchName>. It never touches prStatus or completedAt — pushing new commits is orthogonal to the PR's open/closed/merged state.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/sync-changes/route.ts#L138-L147",
+          "version": "repo-lines-v1:sha256:f1b6bfa0f439c442af213389a6cb4d296f9b5d22f9947f6c95d9ca0855b19bc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlNzcxNTM4NjY4OWRjODE1YWZhYWZiYjE2NTViMjEwNTg3MzY0YzQyY2NjMjZjYjI4ZTc0YzkyZWJhYWMzZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwMmQ0MjM3MjM5ZDI4NTBhMzcwYTE2OTE2YWJiMWRlZDIzMGE5ODQyNGU4NmJjOTI1NmY1NGRmNDZjMDlmYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1Y2RiOTRjYjUyMmYwN2UxYmQ3OGE5NjAzNDJiNjJjNWYwM2NkYzc3MDc0NGZkM2UwZGQ0MmQzODQ1ZGQyMTUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/sync-changes/route.ts#L42-L134",
+          "version": "repo-lines-v1:sha256:d150a93fa1a7d4e101085d216ae383c97a23104a8ae1365bf58c4785697e0e22:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjZGNhNDYwYTJiOTMzZDU5MzNlZTdkYTkwYzM5ZDEzNzcwNDQwYjMzYTBkYmFkNmRkYzk5YjdhOTdmOWM5YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4NWQ4NWQ2MzAxYjAyZjU2MWRjZmVkZDYyMmE3MjY0NDg2YjIwMzUyN2QzZDExZjJhNmM2NGFhMThhZGFmMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwMmQ0MjM3MjM5ZDI4NTBhMzcwYTE2OTE2YWJiMWRlZDIzMGE5ODQyNGU4NmJjOTI1NmY1NGRmNDZjMDlmYzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_29944258059d480f8ff1bac716d83548",
+      "statement": "PRCheckStatus (the sidebar overlay that wraps PRStatusIcon) fetches /api/tasks/:taskId/check-runs on mount and re-polls every 30 seconds, then renders a color-coded dot with a deliberate failure-first priority: failure/cancelled conclusions take precedence over in_progress/queued indicators, so a failing check is never masked by a passing sibling. The component renders nothing for non-open PRs, while loading, or when the check-runs array is empty.",
+      "evidence": [
+        {
+          "resource": "repo://components/pr-check-status.tsx#L27-L48",
+          "version": "repo-lines-v1:sha256:7c17c94347f19d78f03d01d7aa1d4a06482472e5ace457ff76015e5b803ff163:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NjZmYmZhODg5OThkYTc0NjU2YzUwMTk0OTU2YzI1ZjA4NDk0NTc2NjBjMDA5ZmU2M2QxZTlmYTlkYzkzMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5NzM4MmU5MGJhY2MwOWY1N2E4MzJiZDZmMmQ5MGMyNWQxOWFkMzg4ZTZkOWIzZDM0ZDBhZmExZDE2ZTdkZmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3MGU3ZWM4ZGJkYjZiYzJlYzRiOTA3MWVhMjQyMWIwOTZlZTQ2YjBjNDZlNGQwNGY0MjI4MDg0NzBiNGRjYzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4M2IwZjFkZTg0NDA1YWYwZTg5MTA5MmY5NGI3ZTgyYTg4NTIyMTdhNzgzYjBhZDkxMTIzOTllMmQ2NDAzZTAifQ"
+        },
+        {
+          "resource": "repo://components/pr-check-status.tsx#L51-L101",
+          "version": "repo-lines-v1:sha256:de2c061295bb166fc0953026779b4cd012e74b8ded4b68cf15a2b87d625d5128:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0YzdlMjBjMmY2NjBhYTdmOTI4NWE5Zjc2NTkwNzE3MWI0OTE0NTZkMGUzNmEyZTBiNGJlNjZlOTZlZGVjMWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2NmRhNmJkYTUyMGQxZmIyNDY0OGU3NTg0MzIzMjRlNjg3OTlhYzIxMmNlMWJhZDlkZWU2ZWE0M2U5YWViYTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzYzZiZmI3YjBmYzRmYzQwZmIzNjg0OTJmNWM5N2M0ZWE2YjNlMjFlOGM2YTBmMDUxNmQ5YjcwYTM4ZGJmMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7bd02659070043fc802e10313cfdce12",
+      "statement": "The mergePullRequest helper in lib/github/client.ts translates GitHub API status codes to domain messages used by the conflict dialog: 405 → 'Pull request is not mergeable', 409 → 'Merge conflict - cannot auto-merge', 403 → 'Permission denied. Check repository access', 404 → 'Pull request not found'. The MergePRDialog client treats the substrings 'conflict' and 'mergeable' in any error string as the trigger to flip to the Fix with Agent dialog.",
+      "evidence": [
+        {
+          "resource": "repo://components/merge-pr-dialog.tsx#L70-L78",
+          "version": "repo-lines-v1:sha256:ec12261aef25084f8678e61d06702481d74a73ebb72130c7976ff0e255435e81:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E1YTI3NmFkMmU5OGY4MDE0YTUyMTljNGM5ZmFkNGFhZTVhMmNmYzhmMmMwMWZlMmVhOTFiODY0NjAwNjg5ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWI2MmY2MGQ4NTkwYTU3OWNmNDZmOGQ2NzM3OGM0YzU3MmI5NjJjZWNjZGI5MGM3YTVmN2I0MmI5NjA3ODJhNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGM0NjJiN2NmODhjZGUzMjI2NDQ0YWNlMjg3Y2Q0ZmFhNzBkMDNmNDFmYTczMjViZmU1NWU1NmFhZmUwZThiMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWQ0MzhlMTAyZTdkYmMxYzZmMzUyMTMxYTM4MzE4OTBlNTQxNjcwNTViNWQ5YmI1MGNjM2ViZDg4YTkwZmU2MCJ9"
+        },
+        {
+          "resource": "repo://lib/github/client.ts#L236-L271",
+          "version": "repo-lines-v1:sha256:92d2bf4585dcf1a34925966efe60902967c60dc425bd37d499bbb76db32a0435:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5MDI1MjBiYTUwMmE5MjU2NDExYjQ5YjI1NzU0ODE2MGE4ZDQ4ZTQ0ZGM3NTk1ZWVhYjNmZjIwZjBiMzI3ZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBhYThmNTZhNTAxMmExOTY0ZTdkNzNiNjYzYzgwNTdmNTNlNmRmMjFiYTFmOWFkM2NlMWI2MWM0NTY3MTVkOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c2b0acafed4c41aa867a4899b675b0c5",
+      "statement": "The task page runs POST /api/tasks/:taskId/sync-pr on mount whenever task.prStatus is 'open' or null, so that a PR the user merged or closed on github.com while away from the page gets reconciled to the row (and, if observed as merged, gets completedAt set). The response triggers refreshTasks() whenever the returned status differs from the local prStatus, so the sidebar and overview bar update within the same polling cycle.",
+      "evidence": [
+        {
+          "resource": "repo://components/task-details.tsx#L902-L934",
+          "version": "repo-lines-v1:sha256:29eb740aaa65de973d04d89d3ca4d4faeb270b111f6b0517ba50b2ee3439c0cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0YWE2OTM1MjcxMWI2NTY0MjhlYjRhNWI1ZTg2Y2QzMGUyZTE5MjYzNjk0MjEyN2NlZGJmMmIyOWI4NzVlMTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2NmRmM2NkOTRkZDRiZGZkMDg3MGEyNDUzYTY2YzM5YzA2MDA2OTI5ZDIzZTI3ZDA3N2I1MGQwNmRlZDdmNzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NmU4Njg3ZjNiYTNiYjYzNjg0OWZjNjk2Y2ZjOGQ4ZTU2ZDk2NGExYjg4NmU4NjNlODc5MTFmYTc2OGM2MTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNhYWE0NDg3MmQ2ZmRmYzI5NWEzYWNiMzVlZTI3ODUyM2Y0MmFiNDY3N2U3NWJlZmRmY2UxZTMyNTE1ZGExMWEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

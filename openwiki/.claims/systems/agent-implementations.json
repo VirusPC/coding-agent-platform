@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:090f4510ccc2cb27dd220831dfa1fbd474ae3101ba737cab84cdf22c5381c782",
+  "claims": [
+    {
+      "id": "claim_6f337e8179554c9792f5426508b78123",
+      "statement": "The dispatcher `executeAgentInSandbox` in `lib/sandbox/agents/index.ts` is the single entry point the task worker uses to run an agent. It routes by the `AgentType` union (`'claude' | 'codex' | 'copilot' | 'cursor' | 'gemini' | 'opencode'`), snapshots and restores `process.env` for the seven agent-related env vars in a `finally` block, and dynamically fetches the user's GitHub token for the Copilot agent via `getUserGitHubToken`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L18-L159",
+          "version": "repo-lines-v1:sha256:1beb5805187f7e26c660210742f3d306fee5a038564efeaa51d573b05e8dc70b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2NDFiMWY4NDRjYTg0OTM3MzNlMjg3YzdjZDYyNjhhZWMwZTg1NTk2MzQ0NDJiYjczNTA5YTA0ZmRlNjJhMTc1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3NTAzNDg3MzgyZjQ3MWQwY2MwOGU5NjNlMzIyYzhkMjY0NjllZTg1ODFiZWJmZGU5ZGZhMGM4MWQzODQ3NjNiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b5dc308a58d345f59c6801cb1df66b9e",
+      "statement": "Every per-CLI wrapper exports an `executeXxxInSandbox` function that returns an `AgentExecutionResult`. The result shape is defined in `lib/sandbox/types.ts` as `success`, `output?`, `agentResponse?`, `cliName?`, `changesDetected?`, `error?`, `streamingLogs?`, `logs?`, `sessionId?`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/types.ts#L43-L53",
+          "version": "repo-lines-v1:sha256:a2b6382b973f6ad8928e2e8ad7383ddc58b37f01f2bc379e5caa1c589a9e0a1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5ZjBmNGQxNDQ4OTFlNDE4YzI3NTMzNDY2ZTYwN2YyZWJhMDI0OTg4YThjNGFjMjQ5YTdmNTA4NzE4MWM3MzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNiYmI0NmVmYTMwYzM0MGQ2ZDdiNzdhZjQ4YmJlMTFiZWY1MTQ5OWU5NDNhMDhhODQxNTVlMDUxOWY0N2I0OTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d52f14c75274da5921079eefefb2e3f",
+      "statement": "All six wrappers agree on four invariants: (1) repo-touching commands run via `runInProject` in `PROJECT_DIR = '/vercel/sandbox/project'`, (2) the wrappers never check `onCancellationCheck` themselves — the dispatcher does it once before the `switch`, (3) `changesDetected` is computed from `git status --porcelain` after the run, not from the CLI exit code, and (4) `success` reflects the CLI's exit code (0) rather than whether files were modified.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L37-L47",
+          "version": "repo-lines-v1:sha256:fef878774f7cab1004c716dbc22381d1d8775a566d986b8e2cc68742732ae1ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5Y2U3OWFjNWFmMTdhMzM3NGZkMjg5N2IxNWY0ODA2ZWE5ZjhjZTU3Y2Q0NmIzM2E0NWFhNjcwNGYwOGM5YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2MzBiMTBmMzY3OWU3YTRhZDY5NTBmMDYyMmRlYzJkZGVlMzBmNjNhMjExYzgxMzRkZjNiMzY4MjQyYzA0NjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwNWY1MTM4NDNjOGFhNmQxYzdhNDRjYzk0Mjg2M2I3MGU0NjM2MDgzZTNiYTUwOGZkNThkNDZiYjJmMDgzMDQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/commands.ts#L4-L76",
+          "version": "repo-lines-v1:sha256:6ac3c7df717129a56e800ebec7b3357d3abcca15c7137e0a2a24937554133458:eyJzZWxlY3RlZExpbmVDb3VudCI6NzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiOTA5MTdhZmMzMjFmZjQ2YmZiNmI3NTBmOWU1NWI3ODAzZWU5YWFmOTg0OWI1MmE4NjYxNTAxZmZmMWQwNzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIyYmQ2ZjJmMTM3Y2IzNmU0NjgxNzAyMThlNGVmNzlkNjEzOTFlZDIyM2Y2MzA5N2ZlZTkzODVkODg3YWIwOGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5NTBhMzRmMzA1YjA1OTJlYTlmM2ViOTZkY2M4ZGQ1ZTk2ZWMyZDI2MGUwYmNmM2ViYzk4M2I3N2RhMTZkZjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d3d3ee92b5d24ddc8fb2039e3f7130da",
+      "statement": "Three of the six wrappers (Claude, Cursor, Copilot) stream output incrementally into a single `taskMessages` row identified by `agentMessageId` and update it in place. Codex, Gemini, and OpenCode execute synchronously via `runInProject`/`runCommandInSandbox` and return the full captured output as `agentResponse` only when no streaming row is in play.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L278-L423",
+          "version": "repo-lines-v1:sha256:08e279f697311f10920579938df782b4992b586b0bc5e4aaff8d17717bce21a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQ2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1OGU0YzllN2EwOThlZDhkZTJkYjhjZGE1NzIyZjViZTdjYzg1N2M4MmZhZGNiYTNlNWZhMjRiMDQzNjk1MjNmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2NDc1ZTk0YTkwNGFjNDliMzE1NGQ0NjcyYTY2ZTg2MjliODZkYWM3NGUzZTI5MzdiZTY5MjdhZTNkYTExYzUzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjMmUwZGM1YzYwN2I3NzlhYmQzYTY2YmJmNDQ3YjhjYzM3ZDA0NmRlYWYxZmQ3NjA3YWNlYmNmN2M3YjgxNjk0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI2ODcyMzU3OWYyMjFmNGYyM2ViNTA5NmY1Y2EyYTU3MGMxNTc3NTU3NDQ1MjI3NDFlMmU2ZmMwODJhM2RlNzEwIn0"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L204-L246",
+          "version": "repo-lines-v1:sha256:dad56b5825a9b9f676acd92b4345b77132f2bb79ba8791f5711ce91dbbe30f58:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4MDYxMDVjZmQ5ODkzYzdjY2Q0ZThkZTFlOTVjNjc5Njg1NTU4MWYzNWViYWVlMDYyN2FkMzFhZGJlZDZlODIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4MmNlOTUxNWZmOWFhYjI3YTk3MWQxNTA4NThkNGU5M2Y0NDIzZDQ2NGFlODg2MzdiNGMyOWNiMjgwYmMxMjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExNGJhNjJkMjk1Yzc2NjY0ODBiNzM5OWE3MWU1ODViZjRkODAyZDRiMWE3YTA4NTk2MzM3ZTEzY2JkYWE1ZGIifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L324-L428",
+          "version": "repo-lines-v1:sha256:e1f3747ab4c388ca48288173979c20dbd69c29fad942fa3b3401bbe174c5df75:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlODA2MTA1Y2ZkOTg5M2M3Y2NkNGU4ZGUxZTk1YzY3OTY4NTU1ODFmMzVlYmFlZTA2MjdhZDMxYWRiZWQ2ZTgyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2NDc1ZTk0YTkwNGFjNDliMzE1NGQ0NjcyYTY2ZTg2MjliODZkYWM3NGUzZTI5MzdiZTY5MjdhZTNkYTExYzUzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzMzNkYzViMjQyMTRhZDNiZGRiMWFiY2I0ODNjZTk3ZTJkMGM1ZjBlN2Q2N2NiYzU4NjVjNGMxMzc4NjJmMWNlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI1NzkzNDFkZTZkMmZlZmJhODVjM2ZjZDY4N2UzOTdkMzE4NGI1YjI1ZmNjYWU5OGNiMmYzYTEyMjdjNGUwZGZiIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c6d6192995ff4630b6cfffdb548dae4b",
+      "statement": "Five of the six wrappers support session resumption via `isResumed`/`sessionId`: Claude, Codex, Copilot, Cursor, and OpenCode. Gemini is the only wrapper that does not accept these parameters and instead relies on the continue route prefixing the prompt with the last five conversation messages. Codex is the only wrapper that ignores an explicit `sessionId` and always uses `codex resume --last` to continue the most recent session.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/continue/route.ts#L248-L284",
+          "version": "repo-lines-v1:sha256:233e13e4916a6ec068299f3eaeaa9fdec9f47446d68bdabaec7969fa562796b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YTc3Yzk0MGRhMGNjZGZiMWEzODI4MGRmZTk3YjZkMTcyZDJkMzIwZDczYWMyZWRkMDVlMzUwMzQ5M2JhY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2MjNlNmVjZjBmOGE5NGVhNjU0OTdlYjZjYWRiNzZjZGMxYjQ4OWJjNjVkYzFjN2Q1YjViOWJiY2UxY2QzNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmOTQzMTI2MDlhNGQ0N2Y1NTAyZjExZTllNDQ5Mjg5ZjRlZmUyOTIzZmYyM2NkZDU0YWZmMDlmMWE5NWNkN2IifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L284-L292",
+          "version": "repo-lines-v1:sha256:6c94ac2e60a28ca7d5405f2b049bc3d1e3776a2236b4812553e9857e4c7586af:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTdkZjg2MmEzODliNjdlMTYxZWZhMTU1NDRmZjFkZGJhOGRlMjc3ODMxYmM0Y2Q0NzRjNjY1NjViNmMyMzY0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWVjNTIxNjFhZmEyMmU0MzYwOTM5NTQxM2MzMTEzMGIxOWMzZjNmYmZiMDAyOTdhYWZkNjFkNDc0NmJjMTYwZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTA2MDA2YzRlMDYxNmRhZTU2NDIzYzA2ZWRiNDZhNDUzZDVlMjZjNTllMDI1NDFlNzEyMjYyMDc0Nzk5ODE0ZSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L46-L52",
+          "version": "repo-lines-v1:sha256:4e5b77ccdb942227b5669685cd08c0889f7fa59da8d0e51b2ed1da72ee88fce2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTY3MjU2ZDI1OWM5YmJiZTA2YjliYTMxNjQ2ZThlNGYwYTZhNjM4ZTFmYWU3NmZiNDlkNDE4MjliMTk0Njg5OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzljZTc5YWM1YWYxN2EzMzc0ZmQyODk3YjE1ZjQ4MDZlYTlmOGNlNTdjZDQ2YjMzYTQ1YWE2NzA0ZjA4YzlhZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTZhNjdjY2Y4ZjBiNmE4NmUwN2YwZTIyNWQzNjc2OWZiM2I5YzY4YWYyMTIxMDBjODM4N2Q4YjkzYTA4NjAwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTdjZGIwY2Q3YmQ2ZDAxOTdiNDc5YWZmYWQ4NzdiMDc2MjRjMTc1NjViYjVjYTA2MmRhMzQyYjNhMDUyNzg2NiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L331-L344",
+          "version": "repo-lines-v1:sha256:56d386ec03a5450fa9438893e82f92963132e2fb42561441ead5095f38917f2f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExZDgzYjkxOTg1MDhhMWM2MTFiNmM2ZWZhOThkYTcwYTJkYzg4ODRiZmE4ZWNmYTcwZTMwNTEzNGM0MGUwNDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE4ZTQ0ODU4MDI0ZWRiYWE3NzM5MjExZjViNjI1MTk2MjVmMDJjYTE5ZGJjNjk3ZTYyYjJlNDBiY2U3MDI3NWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0NTA5MzZhMWQ3MzAzZWExMjBjZDY1NzllMDg3Njg4NjllYThiODM5YmJlMTk1NDM1NGI0NGI0NzNhOGViNzYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcb8119a172d4414827f1624eee54b31",
+      "statement": "Per-agent auth requirements, enforced by `validateEnvironmentVariables` in `lib/sandbox/config.ts` and re-checked inside each wrapper: Claude and Codex require `AI_GATEWAY_API_KEY`; Cursor requires `CURSOR_API_KEY`; Gemini requires `GEMINI_API_KEY` (with Vertex AI and OAuth alternatives the wrapper also accepts); OpenCode requires `OPENAI_API_KEY` OR `ANTHROPIC_API_KEY`; Copilot requires `GH_TOKEN` or `GITHUB_TOKEN`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L93-L100",
+          "version": "repo-lines-v1:sha256:b2103f74781134748964cff515bb71c02b86fdc075693271eaab641fe8abd178:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWNiZDY2N2FmMzljYWMzMjlhZGE3NWJkYzE3MDliZWE5NGY1MWIxY2JlNWEyMjliMmZlNDJjMTFmYjFlN2Y4NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWExNjk3MzQyYzM0MTg3ZWFmNGJkMzI1Mzk1NThjYjgzM2I0YWZhMjNhMTQ1OWNhY2JhMjg4OGI4MTQ5ZjA4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWJiMWFkMGVlZGZkNmVkNmE5NTAxZTI4MDUzMjc1ODAzYTEyZTU3NmNkNGRjM2UzMjkxMmNlYzE2ODU2ZjlmMiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L60-L69",
+          "version": "repo-lines-v1:sha256:fa7e828cbce4a4b7e368b48f5dfbcf65eb6a036e057a84d67e2b21c1d3f41307:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4ZjJlYTY3ODM4MzBlZGUyZGExMWQ3NWI0Y2U4MDc5ZmEyOGZlN2FhNDJiYTZlYmRmNzE3ZGViNmU1MzllOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0NGU5MWRjNGM0Nzk3Y2E1ZmFjZjExNGRlNjViM2Y2ZjJhZTBhYWEyZmNlMDUxMTc0ZTU4MmI4NDg0NDNkY2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0NmVmY2NkNzg0NjUzNzc5MDE0ZDgyODM2ZTdiZDM0NmNlY2I0ZGFlODZhOWNiNDBkY2Y5YWJlZDRjNGRhMTQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/config.ts#L14-L42",
+          "version": "repo-lines-v1:sha256:b46ff7fec3a86af206087c9e68cecb89d62692dca8b689b11cc3336c350d05f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkNjdhZDE5ODQ0ZjQyMzFmMzYxOTk0ZGRkMDRjNWUzZmE3NmIzM2RjMWY3YmRlN2VmZmY3ZDNmMDRlZTNhMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmYTU1ZjJiYTVkMzZiY2Y3N2UwNzI3NDNjNzI4YTcxZDI1NjE1N2RhOTAyMGU1ZDk1MjMzYzgwYTk1NjNiYTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhOGFiODNlZTVhOTg5NjM5ZTM3ZjFhMTY1MDRhYTk0YWRjOTFjYmE5NDFhZGM4MWQzMWU5NzNiZWJmOGNmNjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8599983d248455db85f95bc68c5d413",
+      "statement": "Claude installs via `curl -fsSL https://claude.ai/install.sh | bash` and writes `$HOME/.config/claude/config.json` containing `api_key`, `api_base_url` (set to `https://ai-gateway.vercel.sh`), and `default_model`. The wrapper also prefixes every shell invocation with `ANTHROPIC_API_KEY` and `ANTHROPIC_BASE_URL=https://ai-gateway.vercel.sh`, so the Claude CLI sees the gateway through two channels.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L151-L176",
+          "version": "repo-lines-v1:sha256:86a91d0c469719be35187121fed964cc6532a5025c654a998fff5a94363701d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYjJjOGU2ZThjOGJlODQzM2YzMjE2MjU0NGU4OTFmMzdmMjU0NDg2M2UxOTkxNDJlYzRlOTgwYjQ4NmU0NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxMzQxZDBjNTg4MmU5MWE2NmM2MGNiODYwMjBiMjQ3ZjBhZmMzMzZjZGY3NmMwYWUxOGJjZDIwYWM4ZmUxZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwNjk0YWYzZDRmNjBmYzNjYTE1NWQ2YmI1ODVhNzljMjdiMDQwNmFiZDA0N2RkYmQyMmUyNDY1ZWVlZDUyNzMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L80-L80",
+          "version": "repo-lines-v1:sha256:9a8f9ab24362982defc5ce233b3b95985c41eaed1b6b142f933a923bdb0a6007:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWE4ZjlhYjI0MzYyOTgyZGVmYzVjZTIzM2IzYjk1OTg1YzQxZWFlZDFiNmIxNDJmOTMzYTkyM2JkYjBhNjAwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWE4ZjlhYjI0MzYyOTgyZGVmYzVjZTIzM2IzYjk1OTg1YzQxZWFlZDFiNmIxNDJmOTMzYTkyM2JkYjBhNjAwNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjhjOTU0MDY1NTFjY2RmN2VjNGUyYzhhN2Q0YjU3NWEyMjMxNDM5M2ViODk4YzBmNTEzODJlYmEyMWU2NzQwMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjQzNjE0NGE1N2JmMDQ3YTkzNTU4NDY3NGFkMmNmNzRjNzc4NzA4OGUyMjQ5NjFiZmMyZGU5NzFjYzYxZGE2OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0362b434ad524df2b44dc63a4e650e3d",
+      "statement": "Codex branches its `~/.codex/config.toml` template on the API-key prefix: `vck_` keys produce a `vercel-ai-gateway` provider pointing at `https://ai-gateway.vercel.sh/v1` with `wire_api = \"chat\"`; `sk-` keys produce an `openai` provider pointing at `https://api.openai.com/v1` with `wire_api = \"responses\"`. The wrapper refuses to run if the key starts with neither prefix.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L88-L183",
+          "version": "repo-lines-v1:sha256:a55c34cb16f0c27073ba696aea289287350167fbd2bf126c7e15435fdc771d37:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkOWQ2MWFiOGY2NGM5NjhkMjJlMTFmOGRlMjJkNTkxNGZmMzRhZDJkZjk1NTFmNjc3NzkzMjliMTExN2E1MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0YjlhMGIxNmI5OTEwYmFhNWQwYTRkY2FmZjhhNjBjNDI5NjMzYmYyYWUzY2JhY2M4MjAyOTA3NTgwZDEwY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFlYzEyNzA3NjY5ZWIzMzc3YWFmOTIzNjYwMzBkOTFkNzBiZTU2NjZkNGQxMTM5MjA4ODNhNWM5ZjBlOTFlZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_640f4d54cfc14ca0bc6d5aeab94961e6",
+      "statement": "Copilot is the only wrapper that fetches its auth credential dynamically: `executeAgentInSandbox` dynamically imports `getUserGitHubToken` and writes the result into both `process.env.GH_TOKEN` and `process.env.GITHUB_TOKEN` before the dispatch switch runs. The wrapper is also the only one that passes its MCP config via a CLI flag (`--additional-mcp-config @PATH`) rather than relying on a well-known file path.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L171-L184",
+          "version": "repo-lines-v1:sha256:2d298528ef415227eddeead234ad7e785f81970139e3ea0eb9095344eca50623:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0MDcwY2Q4NGE2NGZlYjZkODY1YjFhYjJiY2Q4MjIyOTE3MTQwMjM0NWNhMjJjNmRjMDJlOWQ0NWEyZmM0NDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcxNTQ4YmRhZmFiMWRlYjZlMTQ1NzYwYzE5NDIzNDFkMDYzMzM0ODFjODVlMmFmODUyYzZmZGRhM2FhN2Y0ZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5MzRjMjllMjI0Y2YyNzQ1ZWE5NjQwNTlhMGMxZDc3MmI4ZDkzYTY0OTVlMDMyNTE3Y2Q3YmU2M2Y5NTRmNzcifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L51-L54",
+          "version": "repo-lines-v1:sha256:88e401b77cac05b713cda20c094ba88f05672e6cbd3477760074a6d4b4014d38:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjExODBlNWZlZjA0ODc5YmFhNjk2OTliMGUzMTJjOGY2YmE1NDQyYTQ2ODkwZmMyN2ZjNmM3N2U3ODdlMzIwMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTA1ZjUxMzg0M2M4YWE2ZDFjN2E0NGNjOTQyODYzYjcwZTQ2MzYwODNlM2JhNTA4ZmQ1OGQ0NmJiMmYwODMwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWQ3ZWUyYWYwZWM4NDNmZGFlMmRhYTkzOWM4NjUzZGQzOWEzMThkZTNjZWMzMTFkY2U5YzE5YzczNWFjZWNlNiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L72-L75",
+          "version": "repo-lines-v1:sha256:670aad9fe3491da901a9f2cde1f12e2bbfe735500e50f6a96faafbcd7ce7411f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2QyYmVlMjllYTkzMjVhMjcyMmI5ZmQ5MjNkYjIyOTRhNDYxMWY3NzM5YzI0MDY5MzVkYTc0NzQ3ODdmZTI3YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQ1MTc5OWE3MmNkNTVmZWZjMmRjZDNjMDRlZTY1Y2I0MzhjNjI2NTUzYTc4OWExYmNmNGQxZjNjNWE1Mjk0MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjJiYTc1NTcxY2EzYjVmZDg4ZDJhNTc2MDU0NjQwZjFhZTBjMjZiMDQ5ODljZmMyMzYzMjU4MDZiMmNhNWIwMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_075f96ae74594786a0c33c1ff8707bfe",
+      "statement": "Cursor installs the CLI into `~/.local/bin/cursor-agent` via `curl https://cursor.com/install -fsS | bash -s -- --verbose`, runs post-install reachability checks (`ls -la ~/.local/bin/`, `which cursor-agent` with extended `PATH`), and on success invokes the binary by its absolute path (`/home/vercel-sandbox/.local/bin/cursor-agent`) rather than via `sh -c`. `CURSOR_API_KEY` is the only credential this wrapper accepts.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L461-L472",
+          "version": "repo-lines-v1:sha256:1b23895d5a56996ef5f79f56883d37f88eb4060f3aeb99569d2a7e8e480d4f34:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3MzlhODk1ZmQ5ZGFhMzAzOWUxYTdhMTFlOWFmODcxNzJiMzM2ZTM5MDc5OGRjMDU4ZWRiOWIyNmRkMGM0Y2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwNDFkMDA3ZTE1YTc5MjZmZGZkMDdlOGM4MDEwM2JhM2NjY2UyZjk0NTRmZjQyZjhiNzYyMmE4Mjk0NjUwNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3NDU4OGY0NzAzOTk4YTdiY2I1Yjg0Y2MxZjFkMmM5YzliMWZlNzliZmZlMDUyMzlmMjUyMzE0NDA4Nzk3ZjkifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L85-L106",
+          "version": "repo-lines-v1:sha256:7d4f580fc55b72b698bdac94ee3641500d64e96b14bb923c7bc797ef47ea8d69:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiZDI4MGM0YmUyOTQ5NTczNDIyMmQwMTdkYzZmY2ZjNzBkYzExNzkzMzgyM2VlOWE3YmNlZGFiZGNhN2VhODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlYWRkMWQ2NDJkNTlmZjAyMDM2YjdiY2RhODYyODViMjc0YmEwMTE1Njg3ODFiOTk0MDc3MjdjYTJiYzc3MjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZGM0YWJhZmZkZWZkMzcxNjE4NGQ2ODUzMGMwNDg1M2RkNTQ3YTRiZGE3MzQ2MmVkYWFhM2Y4N2FkNmY2ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3f7a12d91b3f4f59840be80c62c87dd2",
+      "statement": "Gemini accepts four authentication paths in priority order: (1) `GEMINI_API_KEY`, (2) `GOOGLE_API_KEY` + `GOOGLE_GENAI_USE_VERTEXAI=true` (Vertex AI), (3) `GOOGLE_CLOUD_PROJECT` (OAuth / Code Assist, requires interactive login), (4) default OAuth via the CLI prompt. `validateEnvironmentVariables` only enforces `GEMINI_API_KEY`, so the gate is more permissive than the wrapper itself.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L178-L200",
+          "version": "repo-lines-v1:sha256:bd12433d18ed97603fee2fa5f3d17d5a6da8c66ae65443d64ca72b7a9209758a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxZWM0YmRiMzZiZmM4MGM5MDY3NjFkM2RiZjM3MGJkMDk4NGQzNDJiZDJlNTU1NjBlZWE1ZmI2M2E0Y2YzOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyODcyZTI0Y2ZkZDU1NDc0MTJiOGZhODU4NDJiYjMxNWIyMzVjOGFiYjFiMTMwMGMwNTI3N2RlMWRkZjAwZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0ZTAxNWY1NGM0NDE1ZjNkMGNlZGI2ZjY3NDc5ZTBkZjQ0ZjMyZDMwMWNmMzY4MDQxM2NjMjRiZDVjNGVlYWUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/config.ts#L27-L29",
+          "version": "repo-lines-v1:sha256:02a89a550fd111b923f6b9e0b79522153f02f8c655c837fa79702d942b27b766:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWI4NjFjNDRjMjYzZDI3Y2RiNTIyMGY0NThlN2M2NmZkYzdhZmNkYWY1MTRmYjkzMjdkNzEzZmYzYzY0ZmVjZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdlNTc4OGQ1ZDlkNzNkMjRhODFkYmMwYTVhNzRiZmE4MmM5YzNiM2FmOTllNTJhZjc5NmU5MGI0NjhhOGEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWY1NWNkNmFiZTUxM2MwZTljZjkzNzQxMDk0YzhmMzUyMWY5YzRhOTA3YTJhMTgwOTFkM2I0NzVjOThhNjRlNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjE3MjI3MzI3ZGE0NTMxZTY5NjlkNGM4MDY1YzQxMTIwMWRiZjE1NzgzYzY5ODlkY2FjMTAxYzA4MWZiZjMxZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_339d366b961542388a563e4a2c728d12",
+      "statement": "OpenCode refuses to run if neither `OPENAI_API_KEY` nor `ANTHROPIC_API_KEY` is set. For each key that is present, the wrapper pipes it into `opencode auth add PROVIDER` (so the OpenCode CLI stores it as its own credential) and additionally exports the key on the final shell invocation. The wrapper is the only one that registers credentials via the CLI's own `auth add` command rather than via config files or env-only injection.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L241-L283",
+          "version": "repo-lines-v1:sha256:147fd2173435affff67344bb3d4b2e12ada84cc2163dd2d45d885ef097c6aa67:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5NTAwMDgwNWQ3MzI5ODUzNTJiNzUzYWIxOTNlOTAzM2Y0MTg3MTY5ZjFjODdiZmY1OTE1N2QzODJhMWNkOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiNWQwYzhmYzllMDI2MGJiMWFmYTQ4NzlhMTJmODNmNTkwNzFhMjM2ZjgyMjE1N2I3MTIxZjRmM2JiMmQ0MzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5NTk2M2UwYWNiNGM1YjQwMzIzMTZhOGRlM2U4ZDQ4NzhkZDc0MmJkMjQxMmY4NzJkMDY5ZTYzMGM5ZWNiNjMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L60-L69",
+          "version": "repo-lines-v1:sha256:fa7e828cbce4a4b7e368b48f5dfbcf65eb6a036e057a84d67e2b21c1d3f41307:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4ZjJlYTY3ODM4MzBlZGUyZGExMWQ3NWI0Y2U4MDc5ZmEyOGZlN2FhNDJiYTZlYmRmNzE3ZGViNmU1MzllOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0NGU5MWRjNGM0Nzk3Y2E1ZmFjZjExNGRlNjViM2Y2ZjJhZTBhYWEyZmNlMDUxMTc0ZTU4MmI4NDg0NDNkY2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0NmVmY2NkNzg0NjUzNzc5MDE0ZDgyODM2ZTdiZDM0NmNlY2I0ZGFlODZhOWNiNDBkY2Y5YWJlZDRjNGRhMTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d5e6c974bb14b3fbab407b2762fa73d",
+      "statement": "Gemini implements a two-step retry chain when the first invocation fails with a \"Tool not found in registry\" error: the wrapper first retries with `--approval-mode auto_edit -o text`, then with the minimal flag set. Codex and OpenCode recover their `sessionId` for follow-up runs by matching the regex `(?:session[_\\s-]?id|Session)[:\\s]+([a-f0-9-]+)` against the CLI's output text.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L336-L343",
+          "version": "repo-lines-v1:sha256:77d408e5767f7730671cbaad6471ed6cbda51fac651f39cc25fea36d60ef7e21:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTFkZjg3YTQ3MzE2YzcwOGM1NTAyMDk4ZTlhZjZjNDQ1MzRlYjgwYmVhZGNmNjA2MzAyOGVmY2E4NTkzN2FiZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTYyMzg5Mzc4YWJmODViZmQ0MzA2NzQ2NGQ1YTk2N2MxYmNiYzFiM2I2NzQ5NjViY2NjMzVhMGRiODJkZjZmOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzE2MGJiYzFjMWI4ZWY3M2I4NjNiODM4NjJkN2ZlYTJiYmZjMTQwMWM1Y2U1NWE5ODk2NWQxZjE2MzNjZGI5MyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L240-L264",
+          "version": "repo-lines-v1:sha256:eee707bd1299d661815648e42b6db4f8b45bc5b188a8e14f7b4a933b9eb33e17:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlMTIzM2NlZWJhNmFkMjE5OGVlYTQ2YjgzOTAyYzY5Mzc2NWZiZjQ0YjVhMjRiNTQxOTRlMzY3ZmE1N2FkYzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0ZmFmNDVkYTc2OGM0ZmViZTRjOTk3YjE5NjI1YzFkNjJiMjkyYjMxNTk3YjczNTQ5OTQyNGQxYWMyMjQyNWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5ZDJkNjJiODZiZDc4OWZjZjFmYzhkMWRhYzFhNDFiNTRmNDQ3MmIxMjAyNTczOTUwZTUwY2MxN2NkY2M5MmEifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L380-L386",
+          "version": "repo-lines-v1:sha256:fcc4356032ca0f1abef8f8c3e6013df0b63835de74bcbb47a9794fbd4a7ab83e:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTY4ZTE5YTRhNjk0Yzg5MTg0NmIzYWFkOTk1NzRkZDVhZmQzNTY0ODAxZWE0ODdlMTUyNGM2NmM4NzM4OTdmMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTkzYTMyNzEwNTQ5ZDllODZlMzU2MmY3NGRiMzQwODc0ZDNmYzE1NzNjMjAwM2E3ZWIzYjIyODgzODQxZjg3NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDc5M2NmMGQ3MWFkNWMxYjJmYWFmMmQ2YTQ5MmNkMmM3OWUxNTI1MWNjNjJlZTFiMjU2MjM5YTc5NzlmMTQ4ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODc4NmU0NGE4YmY1NzlkM2FhOWE4MzA1MGFmNWZmOGFhNzZjMTg4MTA1NTM2ZDI1ZDM1MmI3MmY4ZDg2YjE4OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7763b1807504949a0b18a447c12b94f",
+      "statement": "Every wrapper redacts secrets before logging: each command line and each stdout/stderr line passed to the logger goes through `redactSensitiveInfo` (`lib/utils/logging.ts`), which masks API keys, GitHub tokens, and `SANDBOX_VERCEL_*` values. The wrappers also pre-compute a redacted command string before calling `logger.command(...)` so persisted logs never carry an API key in the clear.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L15-L60",
+          "version": "repo-lines-v1:sha256:96b93c7faccd00554ec27f53a890f801b46d5bfafd8e3e133ac3ec06459096ed:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExNzA3YmExYmY4NWFlYzcyNGM5ZmNjZmI2ZjBiNTUwNWE3MzljMTU4OGEyMmM5ZDk4OGEyZDc1MGZhNGQyNjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3ZTJjM2RjZjFiOWExNWI2ZTljMDA5M2RhNzE5MDExNGRhYzFlNTAzMmM0ODFiN2U4NWFhNzU2MjM1MDVhOTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkYzk5MDJjYTllMzY3ZmYwNjM0YWFmMTY2Y2MxODk2M2E2MjlmZTZjOGVmYjMxZjAyOGUzNjVlMWVhOWM2NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM2YjY3YWM3M2JhODJhMjk5NjEwMjdhMDk0YWFhZWZmNTBhM2E0NjM2ZDJiNjY1OTM1MjRlOWI4ZDdiZDU5ZjgifQ"
+        },
+        {
+          "resource": "repo://lib/utils/logging.ts#L6-L75",
+          "version": "repo-lines-v1:sha256:d376e4313c87e01626ad228041d106ea148d10124ac05da85f18064cea372133:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyMjdkZjBmMTIxZWJmNmEwNjBmY2RjNTAwMmE0MTljZWFjYTg5NDFkZDEzMDM0ZjFmMjQzZGY1ODEzMGYwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNzQ5MmYyZjhiYzM1M2Q3NzYxYzc3ZDNhNmEyNWYyZTRjZTMwNGQyYTI3YTkwM2JiOTFiZjVmZjBhMzJjOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0ZWZhNzgzNWE3NzJiYmM3YTk0YTYzNTUyNTczZmJjOGVhMGYxMjc0MGQ1OGMxN2Q3NGJmMTdhZmZlMTU0MmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_90e5b11e8fc04abd98f2a365ac9673c4",
+      "statement": "The six wrappers each write their MCP config to a different well-known file: Claude uses the CLI's internal store via `claude mcp add`, Codex writes `~/.codex/config.toml` (TOML), Copilot writes `~/.copilot/mcp-config.json` and passes it via `--additional-mcp-config @PATH`, Cursor writes `~/.cursor/mcp.json`, Gemini writes `~/.gemini/settings.json` (with the unique remote key `httpUrl`), and OpenCode writes `~/.opencode/config.json` (with a typed `type: 'local' | 'remote'` discriminator and bundled `command: string[]`).",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L99-L148",
+          "version": "repo-lines-v1:sha256:03b914cb944786d552d99f2e96834dee3736831bb1bbf2388d2839429dfd2853:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZTcwODFhZGU4NWM4YzFkOGVmM2U4NGE1OTYyMmRkNmNmODliMjYyMDI4MGYwMWYzNTNmYzhmYTEwNmUzY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjQ5M2I5MGYyY2QwNzcxNGE5ZGVkNGVmOTQyYTJlZDZmMzcxYzU3N2I5ZTQ3ZTE4ZmMwNGY5MTQ3MjZkNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjZWFlZDVjMmU2NmI3ZTE1YTAzODNjNjE3Y2IyNGI3Zjk1MGJiMDNkN2NkMTk5MmVhYjgxYTRiNjQyZTM0MWQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/codex.ts#L186-L235",
+          "version": "repo-lines-v1:sha256:a92a6a84b461f1e7641f5943e664594cfd5adbcde3af32774cef5218bc6dbfc6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMWVmNTlkNWZiMTI5NGI1ZGEzY2FkYWIwMTk4ZjkzMDM4NTliNGRiNzdhODhjZDYzMzg3OTA2OWZiNDZkNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlMjU2M2YzOTM2N2M5NDc4ZGYxMjJjODZkYmJlZDJlYWM1YzE3NjJjNGQxOGIyNDRkYTVhYzdiMjQwYmY0ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhMzcwNTlkYWYzNDBmMGQ3MmEzMjdjZGQ0ODA2ZWVmN2QzZTYwOTI0MjMyNmE2MWQzMWYyOTYwOWZlMDBjODgifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L107-L184",
+          "version": "repo-lines-v1:sha256:309e4831da92a65e27616684f8922f52901c11c5701c41506ab39e67472c3a61:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyOWQ5ZDViZjE0YjZiYjgwMTNkMmMyZGY4NThiMGI3ODVkNDZiNTZmN2EyNWY3NDlkMDc2YTUzZDY4ZTBjNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRhNTMxYmRmNGExNjUyMTI2MzE5OWE4ZGQ4ZGNkNTAwOTBlOWU2YzQ1M2M1NWUzMzI5YTYxNTNkNTU4OTNhYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5MzRjMjllMjI0Y2YyNzQ1ZWE5NjQwNTlhMGMxZDc3MmI4ZDkzYTY0OTVlMDMyNTE3Y2Q3YmU2M2Y5NTRmNzcifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/cursor.ts#L184-L239",
+          "version": "repo-lines-v1:sha256:95e9e6bedd906df26ee780191b1fa8e91633028d30dc36af54bd9fd4cc88aabb:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyOWQ5ZDViZjE0YjZiYjgwMTNkMmMyZGY4NThiMGI3ODVkNDZiNTZmN2EyNWY3NDlkMDc2YTUzZDY4ZTBjNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMzVmYjk1MTFkZDY2OWY4NGJmYTgxZDFhOGZjYmZkOGI2ZWJkZDI5MjliMjI2MDc4ODMyY2E0MzZmMTFmZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2NDM4ZTMxNzUxNjdlNDQ5ZTFhM2M2ZWRmYTQ4NzgxNGY2ZWNlZDNmOWExZjkwY2U2ZDU5OGFmZTRlZWViNzkifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L94-L148",
+          "version": "repo-lines-v1:sha256:02bfc874e51d419f50dd8e0426081ef973b1d89d968aa955dce27eade842330e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2NGNhNjRjMzhlNWU2NWQ0YWRjZWM5NTE5ODlhNmE0YTc2MzQ4Mzk5MGE2ZTkyNWU5NGUyZTE4N2Y0ZWZiZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEyMDhkMmI1NDBjNzlkN2IwYmE2MThhNjYyNzUxZThlNjRjOWYwMzBjM2Y4NDZmODFlMzZkMjY4YjExNTk4OTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0ZTBhMDM1OWIwYWRkNGQyN2EyNTI3NzEzYzBkZjM2YTYzNWU2YTg1M2FjZTQ1MTljMjdmNmFlNjFhODU3OGUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L154-L213",
+          "version": "repo-lines-v1:sha256:35baf933727c908e00bc19480c834859f59a6bb49a43a195a9cb3acee10b12f7:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5ODkzOWI3OTZmY2NkZjRiNWZmZDdhZDc4NTJmYmE1NzIxNjI3MWJjMThiYTk4MTM2NWM5YzYyYjI5ZGM3ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3ZDg3OTVlMWUwM2UyMGQ1YzQ5MmNkOTkyZDliZGEwNjk0NjIzMDEzZjA1NDdiYzJhYTQ0NDA1MzI4MDgxZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3MzdkYzJmYzcyYjllYzU5MWIzOTY1YWRkMmJjMjZkZjQ2NzhhM2EzMjQzZGJiMDgyZDdiOGVkMjViMWM4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:87772c854835781f4754ad63a75662c6738fffbaabfb5e2fa0daf79f2906952c",
+  "claims": [
+    {
+      "id": "claim_ac0bdaf459b3423a8fe8a816597aebe1",
+      "statement": "The root layout mounts providers in a fixed order: JotaiProvider wraps ThemeProvider, which wraps SessionProvider and AppLayoutWrapper, so every client component can rely on Jotai scope and the auth/connection atoms being initialised above it.",
+      "evidence": [
+        {
+          "resource": "repo://app/layout.tsx#L33-L46",
+          "version": "repo-lines-v1:sha256:d05a4e80955ba1b63112d1f41d5106d7ec24c3ef56409d3099968b7fe3798f90:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3MjE2ZThlOWMwYTFhNjhkMDZjMmZiYWE1ZmQyMTM5NDgyYjhlZmQwYTE5MzE1YjkxNWU2Y2NlODQ5ZDg5ZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1ZGQzNjdlMDAzNjE4ZGM2ZTdlYzJiZjE5MTQ2ZTM5YjdhYTY4MjQ2MTA5ZTNiNzhjZmNlYWYwZjQzYWYxYzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxMjJmZGU2ZWUzYzgwOGRlMTIzNmM4MjdjMjhiZGViY2Y0ZjBjMTllYWViZmJmMzM0NGYyODc5ZTNiMTQwMGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMTMxNTBkMjFjNmM2NjU0Yjc5NWFkNjIwZmY3ZmRiZDQ1YTQ1OTVjMjI4NzMyYWY0Yjc3Y2YwMDU1NjQ2MGEifQ"
+        },
+        {
+          "resource": "repo://components/providers/jotai-provider.tsx#L1-L8",
+          "version": "repo-lines-v1:sha256:ea86a24745fe3adf588c4c6726525326c03d7bfd58e1981b35cd58564ef60a16:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDY2NGUwMGVhNTdlYzM5ZDg4ZmMzZjY5MzRjNGI3MDkxZGIwNTZhNmMyZDViMTFhOTcxMjMwMGQwNmY4ZDIzYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc83f4ad95a94ccf80c53530e06d2374",
+      "statement": "Jotai atoms come in three flavours: plain `atom()` for volatile in-memory state, `atomWithStorage(key, default)` for localStorage-backed persistence, and `atomFamily(factory)` for key-parameterised atoms (one per task or owner).",
+      "evidence": [
+        {
+          "resource": "repo://lib/atoms/github-cache.ts#L19-L25",
+          "version": "repo-lines-v1:sha256:aeae1c6e7c152b7aafcd1c50e1d7187bb2320ce33e5f7b0edd048d12a18c674e:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2NhNGUzYTZiNGNhMDc2NmVlYzUxMDllZTJhYTUwZDYwOTg4NjMzMjE0MmNlMzk4OGM4MDg3MTQwYjFkMWMzNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAyZWQ0MzQ0YjAwZWFjMGIwNTlkNmIwZjRiYmE0ZTRmNjM2ZjJmNmIzMDQzZTA5NjE2Yzg3ZmJmYjBkMDA2MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://lib/atoms/session.ts#L1-L5",
+          "version": "repo-lines-v1:sha256:61c2a0f575b1498ff7e4d7076b2c96b0d5b83ce5ac2560e1f765b7db83b45c18:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTk4NmIxYzQ5NDc0YzI3MWM0ZDdkYjg5ZjI0NjI4YWUxOTdkNGJiNjdlODdmNmUxM2EzNDQ5N2U3M2ZmOTAyYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWRlNzM0ODVhZDViMGJkNTExMzQzMDI0ZGIwZTAwMTI3M2U5MWE5MmY0ODM5NzE3NWJiZDMwNGRiZjM5Y2RiMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://lib/atoms/task.ts#L1-L9",
+          "version": "repo-lines-v1:sha256:47e01c491ce714e5ab95d25e50bf07adbac456ebc3c3e442d002be780db32f0f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIzMzAxNWIwMjEzOWZkZTM5NGM5ZDEyNzRjODc4ZmQ3ZjUzZGYwNGRmZWYxNmQ0YTcyN2Q1MzhmN2UyODVhZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjcwNjNmZmM5YmU5ZWE0YzVmOWRmOTMwNDY4NGE3NjU1MzYxNjcyYjM4MjhhMWY3OGZiNGY3OWNhMjk3NjZjZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c8f98594da634bc99ab5cbcf00f26d30",
+      "statement": "SessionProvider is a render-less client component that refetches `/api/auth/info` and `/api/auth/github/status` on three cadences — immediate on mount, every 60 s via setInterval, and on every window focus event — writing results into the sessionAtom and githubConnectionAtom atoms so the header updates without a page refresh.",
+      "evidence": [
+        {
+          "resource": "repo://components/auth/session-provider.tsx#L16-L60",
+          "version": "repo-lines-v1:sha256:d8397f721020c94201e9309fd5b3f8d574a76ba4d691a22eafc10ccbeff52289:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NjZmYmZhODg5OThkYTc0NjU2YzUwMTk0OTU2YzI1ZjA4NDk0NTc2NjBjMDA5ZmU2M2QxZTlmYTlkYzkzMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllYzE0OTljOGVjYjEwNTg0OGIzMzY2MjZmZGQ5YzM0ZDUwYzAwZDVlMmEzYTQ5NjE3M2ViNDc5MGFjZDM5YTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkN2IwODI1MTJkZWY5Yjk3OWZhNWE4NDQxNDgzMjliNTViOTlhZWIxYzM0OTQ1N2Q5NGE3NjgzNzBmMDE0OWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIzYzZiZmI3YjBmYzRmYzQwZmIzNjg0OTJmNWM5N2M0ZWE2YjNlMjFlOGM2YTBmMDUxNmQ5YjcwYTM4ZGJmMmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_62ab15b1c7264b81b9590efc0a464108",
+      "statement": "The session and GitHub-connection atoms each have a sibling \"initialised\" flag atom so consumers can distinguish \"fetch has not completed yet\" from \"fetch completed with no user\" without a flash of disconnected state.",
+      "evidence": [
+        {
+          "resource": "repo://components/auth/session-provider.tsx#L21-L41",
+          "version": "repo-lines-v1:sha256:395f9bfd7ddb0e4d36300520a791e9dae0efd69d758d6206f05beadcbcfda48a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlMzUyMmI4ZTdjMzZjZjc3OWE2NjJjOWE0ZDM1YWJiZTM2MWM2YWU1YjY4NjU3NWEyNTkxNTMwZGJhZjYwYzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhNWUzZmYxMjY5MDYwZDFjYmI4Yzg0YTJkYzJiNDM3NDgyNDVmMThkYTU3MjE4NjE2NWEyMWViOWViYzNlNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4ZDM1MjZkNGNjODk4MTg5ZDQwZDc1ZTkwM2U0ZmY5YjM1ZTg5YjFjNWU2MTQyOWJkMTMwOGEzNzFjMDM1ZDUifQ"
+        },
+        {
+          "resource": "repo://lib/atoms/github-connection.ts#L1-L10",
+          "version": "repo-lines-v1:sha256:033f2fd65a1a66159c15cbd436a114ec97805794da34b7160a5a4a46c96abbe4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5ODZiMWM0OTQ3NGMyNzFjNGQ3ZGI4OWYyNDYyOGFlMTk3ZDRiYjY3ZTg3ZjZlMTNhMzQ0OTdlNzNmZjkwMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhYjgwNzAwYzlhZWEwODZkNjI3Y2ExMDY4NTgyNmFhNjg0ZjViMGE1YjYyMWI1NTQxYWQyYWM1ZTgzNjVjZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/atoms/session.ts#L1-L5",
+          "version": "repo-lines-v1:sha256:61c2a0f575b1498ff7e4d7076b2c96b0d5b83ce5ac2560e1f765b7db83b45c18:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTk4NmIxYzQ5NDc0YzI3MWM0ZDdkYjg5ZjI0NjI4YWUxOTdkNGJiNjdlODdmNmUxM2EzNDQ5N2U3M2ZmOTAyYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWRlNzM0ODVhZDViMGJkNTExMzQzMDI0ZGIwZTAwMTI3M2U5MWE5MmY0ODM5NzE3NWJiZDMwNGRiZjM5Y2RiMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f987212c122e4c1e895535dfc9f6c20c",
+      "statement": "The new-task textarea and per-task follow-up input use atomWithStorage (single atom and an atomFamily keyed by taskId) so user drafts survive route changes and reloads.",
+      "evidence": [
+        {
+          "resource": "repo://components/task-chat.tsx#L65-L65",
+          "version": "repo-lines-v1:sha256:fbb8fe2a87bbd75c6f675145c94ed212c0ad97df75820b5de08e0eadda39a766:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmJiOGZlMmE4N2JiZDc1YzZmNjc1MTQ1Yzk0ZWQyMTJjMGFkOTdkZjc1ODIwYjVkZTA4ZTBlYWRkYTM5YTc2NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmJiOGZlMmE4N2JiZDc1YzZmNjc1MTQ1Yzk0ZWQyMTJjMGFkOTdkZjc1ODIwYjVkZTA4ZTBlYWRkYTM5YTc2NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDM4MDE1MWNiMmE4YTYzZmM0MWRhYWZhNDhlM2Q2YWViNjhlNjIwMDVkZmY3Mzg4OGRjNDExY2Q1MTZiZThjMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTJlOGExYTBjNGJjM2QxYzVjNjZkZWRhYTIxMWU2M2Q0OGQ5ZmY2YWQ0N2RkNDA2ODRiZDdlOWY4ZDI0NjRkYiJ9"
+        },
+        {
+          "resource": "repo://components/task-form.tsx#L170-L170",
+          "version": "repo-lines-v1:sha256:460c090566b9c4fb2173e15a6892cf05fd87877499330cf349a17286673413d3:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDYwYzA5MDU2NmI5YzRmYjIxNzNlMTVhNjg5MmNmMDVmZDg3ODc3NDk5MzMwY2YzNDlhMTcyODY2NzM0MTNkMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDYwYzA5MDU2NmI5YzRmYjIxNzNlMTVhNjg5MmNmMDVmZDg3ODc3NDk5MzMwY2YzNDlhMTcyODY2NzM0MTNkMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzM1ZjZhNmJmNDlkMjlmMmJjYWZjMzU2YWNlNTdkODhiYTZmYmQ4NjRlY2QwMTU3ZTdkZjI4OWVhYWI0NDE4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDljMTliODFhMmNhZTE5MmE2MjhjNTAyZmQ1OTRhYjI4ZTIwODhlYzQ1NjNkZGZiNzllYzM1MzUyZTg1OGJhNyJ9"
+        },
+        {
+          "resource": "repo://lib/atoms/task.ts#L1-L9",
+          "version": "repo-lines-v1:sha256:47e01c491ce714e5ab95d25e50bf07adbac456ebc3c3e442d002be780db32f0f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIzMzAxNWIwMjEzOWZkZTM5NGM5ZDEyNzRjODc4ZmQ3ZjUzZGYwNGRmZWYxNmQ0YTcyN2Q1MzhmN2UyODVhZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjcwNjNmZmM5YmU5ZWE0YzVmOWRmOTMwNDY4NGE3NjU1MzYxNjcyYjM4MjhhMWY3OGZiNGY3OWNhMjk3NjZjZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2a191c44eca64c0e817e8c24b4fb42cb",
+      "statement": "The file-browser holds per-task state in a single Record<taskId, FileBrowserState> atom with four view-mode slots (local, remote, all, all-local), accessed via a derived atom that exposes a read (this task's slice or a cloned default) and a write (merge a partial into the record).",
+      "evidence": [
+        {
+          "resource": "repo://components/file-browser.tsx#L99-L100",
+          "version": "repo-lines-v1:sha256:1f2882a8dff221b46029f75f640a9bebc4961bc021db4b93c0950f117f00065e:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmEwYWY3ZTU0NjEzOWVjM2QzYmYxYzgwZjk1MTc3YWFiZmI4ZTc5Y2VhMTc1N2VmMzAyNDlmNTllYmFkYzI2MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzY5N2ViYmRiOTllYjQxYmQxNWNmMDI2MWY4YjU2NjQwZTliN2Y5Zjk4ODQzYjI1Mzc0MGExOGRhYjVhNzA5YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODY1ZjBiOWZiMmU1YWQ2ZDVmZTdiZmUxODA3ODhhNmRmMTAyNDIxNGJiYmJmZDNmNTZjNmJkNTUzNzc2ZGNkOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjQ5ZGQxMTU2MDE3ZjVjMzc2YzhkZjRkYWQ2MjRlOTE0YzJmZThhMWYwMGM1N2I2YjRiMzM3MWQ1ZTQ4MjEwNiJ9"
+        },
+        {
+          "resource": "repo://lib/atoms/file-browser.ts#L29-L73",
+          "version": "repo-lines-v1:sha256:cc4871b28ec967db9e0eb5dd99d43c0253b64e4a74f10d0543d56e7357eb1588:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkNDdmOGNiYWI3NTc4ZTVlNGI0NmFkYzBhMDExZTdmYTgxZTNhZTUyMzAzYmZkNzIyYmUxNDEwZDA4MmIwZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MjY3OTM1ZmM2MzM0NjVkODQ4YjQwYTRlZDY5NjdlN2I3YTMyM2Y4MWNkNTNjMTEwYWUyMTAyOTY4N2FhMTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2NzVkZmEyYjQyMGU4NTg0ZTdkMTI1NjQwZTlkNTYzZjAyZjE3N2ExZDYwNWRkMDQwNjBhNTVlZjY3ZDhlZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_521bd1c494d340179db82db188f0e348",
+      "statement": "The connector-management dialog encodes a list/presets/form state machine across multiple atoms, plus a set of write-only \"action\" atoms (reset, setEditingConnector, startAddingConnector, selectPreset, addCustomServer, goBackFromForm, goBackFromPresets, onSuccessAction, clearPreset) that mutate several fields in one transition.",
+      "evidence": [
+        {
+          "resource": "repo://components/connectors/manage-connectors.tsx#L129-L189",
+          "version": "repo-lines-v1:sha256:ecac6626859f10e49a1a85e7f93c748c975921f2e61b98ac317c9c6f0bfecbee:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyMTNiZDUxNjkxNTUxY2FkYTFmYzdmODQzZTUwNzUzYmJmODFlN2Y0MTlhYTRhZGUzZWU4NjU0MGY0NjA4N2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3ZWZiNmIwNTQ4MDljYzljZmFkZmI4N2VmZDg5MzE3MDgyYTczNTQ1MWVlYmJjZjVlNDUwNjUyNWZiNTA0ZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyOGMwNmE5OTQ1MzNjMGQ0MWUyYzg4MDdmNzAyYTA0Yzk3Yzg0Y2RlOWZlN2RkMGU1ZTE1YjgyMTZiZWUzMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhYWRhYWY5ZjNiODc5OTY3YmFjZjg5MmY1YzAwMzhiMTZjYWVhZGY5OTM3M2E1OWM3ZjUyODE1ZmQzM2Q2MmUifQ"
+        },
+        {
+          "resource": "repo://lib/atoms/connector-dialog.ts#L1-L126",
+          "version": "repo-lines-v1:sha256:e0ae633ab1c01e2d3735988d1978bb4881d6173636a793043029c0dc6bbb2aa3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxOTg2YjFjNDk0NzRjMjcxYzRkN2RiODlmMjQ2MjhhZTE5N2Q0YmI2N2U4N2Y2ZTEzYTM0NDk3ZTczZmY5MDJhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4NTgwYjc2NTE4ZGFlOTc5ZmFlYmQwMjM2N2EyOTI5MmE1MGQ5NzYwOTIyNTFhMzhhNmNlMzA4ODBiYTQyODI1IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_b38e653076544c1280c99c8965adef0e",
+      "statement": "Agent selection uses atomWithStorage for the last-selected agent and an atomFamily of atomWithStorage for per-agent last-selected model, so the model is scoped to the agent that was active when the user picked it.",
+      "evidence": [
+        {
+          "resource": "repo://components/task-form.tsx#L268-L292",
+          "version": "repo-lines-v1:sha256:5c6242ac1a54ac9cafc2f121fa4c4d1d88ec099477057920ce670f46d4a0d129:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwYTMwODg2MjBkZGY0NzZiOTkwMjJiMzc4NTRiY2UzYTg4YWU3MmYyNmNiMmUzMWU4Mzg0N2VjY2UyNzQ0ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1YWVmNTc2OTY2Yzc3ZDYzMWM1MmNmZGIwN2E5MTQ4NzM4ZTU0YTQxNmIzNWY1NWIxNDIzZjYwNTRjZTI4MTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmOWEyODcwYWI0YzJjNGMwZWExN2Q4YTAxZGJhYzM3ZDY3N2Y2ZDI0YzY0MzAyMjQ1YjJmMThjNDhhYWUwZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZiOGYyMjQ2NGFhOWE1ZTU1NDdiNDA0ODQ4YjU2MDQ2OWU5ZjNlMmZjZmY0OTMxMmQwMDlmYTVlYzQzMzc2ZjcifQ"
+        },
+        {
+          "resource": "repo://lib/atoms/agent-selection.ts#L1-L10",
+          "version": "repo-lines-v1:sha256:2b3bc656d5bb95b2ebc448148972f29c5c2d586b0a1f0db0572f2a7bf69cbd62:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiMzMwMTViMDIxMzlmZGUzOTRjOWQxMjc0Yzg3OGZkN2Y1M2RmMDRkZmVmMTZkNGE3MjdkNTM4ZjdlMjg1YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_34041ead2c4b4499a4165e0e5407923e",
+      "statement": "GitHub owner/repo metadata is cached in localStorage via atomWithStorage (owners) and an atomFamily of atomWithStorage keyed by owner login; the create-repo flow removes the owner's cache key after success to force a refresh on return.",
+      "evidence": [
+        {
+          "resource": "repo://app/repos/new/page.tsx#L145-L152",
+          "version": "repo-lines-v1:sha256:f86b08a209d5875cd2c30ea04ecb1db5177fc160115ca5ff17f11bff27bf552a:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDlkZTMwYzQ3Mjk3ZjE2MTE4NGFkMWY5NjgzMTcyMDU4Mjk4ODJjYTk5ZTA4ZjkxYjA1MzQwYWE5ZWE5MWZkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZiMDQ0OTE0Njk3MjJlODM2M2E5NGU0MDQ0NTM4ZTAxM2EyYTIxN2UzNmIxZTU2OGJhNjBhY2I3YjRjOGYyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTliODZlZWM4M2NkMTdiYjE2ZmVlNGY0Zjk0MjllODEzODM0ZGY0NTM4NzY3MDYzZTE5NTAyYTMzNDMyMWZmNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2NhZTkxZTVjMjc1ZTAwNTU3MGFlNDEyNTI1MWVhNzkyOTg4NWUyMDk3NGE0ZTVlNTMwOWY3ZjYxNmZlOWVlYSJ9"
+        },
+        {
+          "resource": "repo://lib/atoms/github-cache.ts#L19-L25",
+          "version": "repo-lines-v1:sha256:aeae1c6e7c152b7aafcd1c50e1d7187bb2320ce33e5f7b0edd048d12a18c674e:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2NhNGUzYTZiNGNhMDc2NmVlYzUxMDllZTJhYTUwZDYwOTg4NjMzMjE0MmNlMzk4OGM4MDg3MTQwYjFkMWMzNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAyZWQ0MzQ0YjAwZWFjMGIwNTlkNmIwZjRiYmE0ZTRmNjM2ZjJmNmIzMDQzZTA5NjE2Yzg3ZmJmYjBkMDA2MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0efadcd0f2514aa48159b9d1914ed93a",
+      "statement": "The create-repo page and home page communicate the newly-created repo via a localStorage entry keyed 'newly-created-repo'; the home page reads it on mount, applies it, then clears the entry.",
+      "evidence": [
+        {
+          "resource": "repo://app/repos/new/page.tsx#L145-L155",
+          "version": "repo-lines-v1:sha256:46d0adc958d45773d8ef996ad0bf28792ddf8ca186b32fb31272eabc1ca9edb4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ZGUzMGM0NzI5N2YxNjExODRhZDFmOTY4MzE3MjA1ODI5ODgyY2E5OWUwOGY5MWIwNTM0MGFhOWVhOTFmZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNGM3MDY1MGE2YzUzMDQxYzkyOGZkYWEzNzQ4NTI4Yjk2MWYwMmQ0NzA2MWRlMzUwZWIzMjFiOThiZjEwZjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5Yjg2ZWVjODNjZDE3YmIxNmZlZTRmNGY5NDI5ZTgxMzgzNGRmNDUzODc2NzA2M2UxOTUwMmEzMzQzMjFmZjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhODgzMDA1YTg2NzMxZjFjODgxZjFhOWRhY2QyOTEyNzYyNTY5YjBjOTY0Yzg1ZTlkZDNhYWMzMDE2ZDNjYWQifQ"
+        },
+        {
+          "resource": "repo://components/home-page-content.tsx#L97-L116",
+          "version": "repo-lines-v1:sha256:3d874d7f16abbba1fdb49f2f48cc62974dad9494347cdeea8751e6bbe4fc2cd0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NjZmYmZhODg5OThkYTc0NjU2YzUwMTk0OTU2YzI1ZjA4NDk0NTc2NjBjMDA5ZmU2M2QxZTlmYTlkYzkzMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2NDJiOWM0MjA3YzQzNmNiYTQwYTYyZTY4YWI3NjI2NGFlYzhhODliNWVhNmIwOWViNDMwM2FmMGQ0MmI2MDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkOWE2OTJiZDYwNjU3MDE1NzMwMTEwMjMwYTMwOGUyNzUwM2RmZGNkYWUyMzg1YTExMTFkZjBjODRiYzc1MDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1MjlmNTM0MDYwNTQ3OWJlMjc0NDljMDhkNDg2ZTRiMzQzN2I0YzcxNjZjMGNjODlkYTJjYWRjOTg5OGJlMDAifQ"
+        },
+        {
+          "resource": "repo://lib/atoms/newly-created-repo.ts#L1-L9",
+          "version": "repo-lines-v1:sha256:6936ba63fde9f135a0766d5ecaa8ca6bb730ebc6e685b1eb6c8dc91b0a35bca1:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIzMzAxNWIwMjEzOWZkZTM5NGM5ZDEyNzRjODc4ZmQ3ZjUzZGYwNGRmZWYxNmQ0YTcyN2Q1MzhmN2UyODVhZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDczZmNjYTIyNzQ5Y2U0MTZlMGU2MzVjZjgwM2RkMmZhZDQ1YjhhNjA3NTAyYTZhYTNkMTI2MmIzNjVmN2JlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea0308af8d26437da047328a54a57292",
+      "statement": "Every cookie write in lib/utils/cookies.ts uses the same convention: a 1-year expiry and SameSite=Strict, and setters that accept numeric values validate them against a bounded range before writing.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/cookies.ts#L1-L57",
+          "version": "repo-lines-v1:sha256:888e64a6d825286f04c5a96dedf408b3e57c8fdb61de96b6489c8f23c3e80319:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkNzg0NmRiNzU5YTBkNGY4N2Y5MWVjZTZmMzYyNTc4NDNkYTkwNDJmYzM0YWM3N2U4NjE0YTY4N2FhODBhNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4NzQ1ZWZlNGQxODNmZTIyZjZjMjI4NWU5YzE1ZmZmMGNlNjQ0ZmRiNjMyNGQ3OGEwMWJkYWM0ZTYzNDZlMGYifQ"
+        },
+        {
+          "resource": "repo://lib/utils/cookies.ts#L143-L227",
+          "version": "repo-lines-v1:sha256:671510b40609d29b7f63ac8c2ba00f0ecc91ee367c6136d25742f47a8027019d:eyJzZWxlY3RlZExpbmVDb3VudCI6ODUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5MDdmY2M4NDQ2ZjkyMGI0ZjE0NmU0M2M0MTMzZjI1OTUxNWI0MjZkNTc1M2E1Y2Y0NGUzMzBmMWQ1ODIxZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMTVhMWQyZjJiMTBkZmIyYTg2ODM2MzU2ZTZjZTc4N2UwYjg0OWNjMmUwMzI1YmI5YjI5NmNlMTQ4ODU3NmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4MGNhNDg5MWVhZmVmOTExYzY5ODQ0YTFjZmFkNTI3NGY0YzNmNDczZmVjNzY3MjY1ZTkxNTNiNWMyNzYxOGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_12826e971dd04167b72af2cf293467a9",
+      "statement": "The cookies utility exposes two read flavours: client-side getters that read via js-cookie and fall back to defaults when window is undefined, plus server-side parsers (getSidebarWidthFromCookie, getSidebarOpenFromCookie) that take a raw Cookie header string and are used by AppLayoutWrapper during SSR via next/headers to avoid a hydration flash.",
+      "evidence": [
+        {
+          "resource": "repo://components/app-layout-wrapper.tsx#L1-L28",
+          "version": "repo-lines-v1:sha256:3978e2618bfcd62f42f554a159ffedb68281f136d2ef87bb4575bd8d9fd6d9ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlM2FkZWRmYTI2MGE4MjVkMmU1MzcxNGIwYzU0NGRjNGM5ZmMwYjAwYzAyMzZjZTRjMzlmNDk1ODFmYjkxMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MjY3OTM1ZmM2MzM0NjVkODQ4YjQwYTRlZDY5NjdlN2I3YTMyM2Y4MWNkNTNjMTEwYWUyMTAyOTY4N2FhMTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/utils/cookies.ts#L30-L124",
+          "version": "repo-lines-v1:sha256:cf8b02df9d9749c0d9e6b943763edd79ef51bc1f522578c28d54de07eb79d5af:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwNTk5MjFjMjZkYTc5OGVjYTI3NzFiNDA1NzMxOTljODc3MDA2MTg2ZGU2YmEzYzYyOWNlNTZlMzljZDEzNjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4MGJkZjZmYzVjNzYxZjBjYjlmY2M3Y2EzYjA1OWFhMmI3ZTRkNTA3YmNhYzUxMDI0NThiYzE5Y2MyMjcwZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQwMWI5NDI2NWQzNDg5NmE5Y2ZhOGE0ZTZkYWFmMWNhYzlhOTVhZTM5N2NkOWM4MGZhNWNhMDdlZGM3MjAwNDgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f6b6033210584f7592fd5dab1f297012",
+      "statement": "AppLayoutWrapper performs the SSR bootstrap: it reads sidebar-width and sidebar-open cookies via next/headers and detects mobile from the user-agent header, passing both as initial props so the sidebar renders at the correct width and open state on first paint.",
+      "evidence": [
+        {
+          "resource": "repo://components/app-layout-wrapper.tsx#L1-L28",
+          "version": "repo-lines-v1:sha256:3978e2618bfcd62f42f554a159ffedb68281f136d2ef87bb4575bd8d9fd6d9ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlM2FkZWRmYTI2MGE4MjVkMmU1MzcxNGIwYzU0NGRjNGM5ZmMwYjAwYzAyMzZjZTRjMzlmNDk1ODFmYjkxMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MjY3OTM1ZmM2MzM0NjVkODQ4YjQwYTRlZDY5NjdlN2I3YTMyM2Y4MWNkNTNjMTEwYWUyMTAyOTY4N2FhMTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://components/app-layout.tsx#L94-L145",
+          "version": "repo-lines-v1:sha256:f93eb38153e571e00878445afbfea32637a99993e7fd2ac62f2ee56492572ba0:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1YmFjMjRkMDAzNGNiY2Q3NzQ1MTU2NjdhNTc5ZmYzNzUwZDZiNjc5OTVlM2Y2MzhmNjk5ZmE3ZDFiMmU3ZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0NzVlNTNmMDBiYTZlYzE3NGVhN2NjNTI3MzQyMTMxM2U4YTA2NTc3NDgzZDI3NDM4ODZhMjJlYmJiZTlkM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0MGM1ZDNkYzNhNzczMDc5M2M4OTI3OTQ4YjU1OTY2NDIwN2Y3OWJhODc3NzNjMjE1MDA0NDMxOTYyZmQ0ODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3MzY5OWNmZDFjMzY0NTZkMTI5M2JmODgyNDUzYTc2NjczNDI2ZmFmMmZiNDNkMjIyNGE2M2YxNGFhMDIzYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f96915d21b5d436795a6db22ddf7baea",
+      "statement": "The sidebar's open state is only persisted to cookies on desktop viewports (window.innerWidth >= 1024 px), and mobile resizes immediately close the sidebar without saving; this prevents a mobile-closed preference from leaking into a desktop session.",
+      "evidence": [
+        {
+          "resource": "repo://components/app-layout.tsx#L116-L179",
+          "version": "repo-lines-v1:sha256:c95ab294f6955c42749012e627ce0bf431d0f9e421faf9b567510099ce7b65a3:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlMmQ5ZmRlODliMzFiOTQxNDFiZjVlNWE5MjIxYjBmZmI5YzU2OGI1Yzg3YzhjZGM0OTdjZmZhNzNmMDk1NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjMmNhYjA5MjhjOWViNzhlMmQ5NmZkZDJmMDgyZmJlYTBkMGI1YTU2OTNkMjlkODRkYWIzN2Y2NmI2ZmFjMmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3YTRjMmI2MjQ5NzRkYzNmZWM3OTQ3ODMwMTZjYjc3YjU1ZWU5OGUxMWJmNmFhMWM4NjIzMzg5ZTAyNTRlZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhYjNmODc0YzRkZjk0ZDhkYTYyNmMxYmE5MWI3OTZjYzM3NDM5ZTUwZGIwNGVjMTk3ZjQ5Y2YyNDk3NjcwMzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f952c747bd6a470ab9e73f1ecc995769",
+      "statement": "useTask runs a four-stage polling schedule: immediate fetch on mount, a 2 s retry interval while the task is not found and attemptCount < 3 (race-condition window), a 5 s steady-state interval once isLoading is false, and an immediate 500 ms refetch when logs indicate the dev server is running but task.sandboxUrl is still missing.",
+      "evidence": [
+        {
+          "resource": "repo://lib/hooks/use-task.ts#L14-L103",
+          "version": "repo-lines-v1:sha256:58844540b338f2c6c2a9c04d7881f427e5fa6183eefdd6ad78622be284d06639:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiZTE3NzgxYWUyMGVlNjk2YmY4MWJmMjUyOTYyNDYxZGY1MjczNDcyNGU5NjVlNjFjOTM0NzM5YjU1ZjU3NjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5ZDdiMDdlMDYyNjE5Mzk1MmViZTgxNDFkYzU0YzRmNDRhNDQxMDk0NGE2ZDA1YjEzNjNhOTBhOGQwMzViN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0MGNkYWZkNDhkNzlmZjNhMjRmNmEzMjAwNThhMTEyYWJiZTgzYmU3YThiYjQyZTkzMTIzM2M5ZmNmZmMzMWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmNGNiNzM4OTM2NDQyNDBiZTk1NGJhMTVmNjEyYzEwYjMyYjMzNGZiNTFiZjY5YzFmM2E3MjBhMTNlNmRkNDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4cb5f19347924546a5e856533e7142db",
+      "statement": "useTask only surfaces the error 'Task not found' after at least three failed attempts (covering ~6 s of retry), so the brief window where the client navigates to /tasks/[id] before the POST /api/tasks row insert completes never produces a false \"Task not found\" flash.",
+      "evidence": [
+        {
+          "resource": "repo://lib/hooks/use-task.ts#L23-L46",
+          "version": "repo-lines-v1:sha256:9f9bbae3106fce3d627eed40c092af8ca303efc55eb92f3ee5c58536ef97387a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzMWMyYmJkNGEwNTkyMWM2MmRlM2VmMDllYjJiODdiZmQ2NDZhMjYzYTkxNTM5OGY3NTFmZTI4NmFjNWVkNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2NTE4MWQyNDc1MTQ5ZThiZTk5ZTE4NTgyMjRiNDQ4ZTBjMmQ3ZGRkMWRhNzllOTE0ZTM1NDMwOWYzZGE4ZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg3Yjc5ODIwNzdiYzIzMWQ5NWQ3ZDI4MDYxZDM2MDMyOTEwMWZhOWEzM2E3MGY0MGIxOGViODdmYWQ4M2M4NmQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bd44c667b915429ab73078ca71ed43b8",
+      "statement": "The dev-server fast-path in useTask is keyed off the exact log strings 'Development server is running' or 'Development server started' emitted by lib/sandbox/creation.ts and start-sandbox route, and uses a pendingSandboxRefetchRef guard so it fires at most once per pending sandboxUrl.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/start-sandbox/route.ts#L293-L293",
+          "version": "repo-lines-v1:sha256:9b9d2d56af21c965f4e62013ae92c81ff3506f7af94516814ec876f77c92c601:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWI5ZDJkNTZhZjIxYzk2NWY0ZTYyMDEzYWU5MmM4MWZmMzUwNmY3YWY5NDUxNjgxNGVjODc2Zjc3YzkyYzYwMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWI5ZDJkNTZhZjIxYzk2NWY0ZTYyMDEzYWU5MmM4MWZmMzUwNmY3YWY5NDUxNjgxNGVjODc2Zjc3YzkyYzYwMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjgxOThkZTcyNmNmZDIwZGYzYzA5MmE0ODNkMmY5ZTM4ZTdkNDRiYjNkOGRjYTkzZjM4NzUwMzQxZDA5YzM3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWZkY2E0MzIyZDZkYTYxZWUxZDIxMmVlODVmYmFjNmE1ZTY4YTY1NjY1NGZiNmIzOWNlYWM5MjU1MmY0YjIyYiJ9"
+        },
+        {
+          "resource": "repo://lib/hooks/use-task.ts#L86-L103",
+          "version": "repo-lines-v1:sha256:96d83031a947a481c660870472097f62f33de4e76d1a0d40fdf6ba4a8e597353:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NjZmYmZhODg5OThkYTc0NjU2YzUwMTk0OTU2YzI1ZjA4NDk0NTc2NjBjMDA5ZmU2M2QxZTlmYTlkYzkzMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5ZDdiMDdlMDYyNjE5Mzk1MmViZTgxNDFkYzU0YzRmNDRhNDQxMDk0NGE2ZDA1YjEzNjNhOTBhOGQwMzViN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1MzVhNmU5OWQzOTg0NzAwYTEzOWM1YWU5YzgyYjZiZWUyOTMwOTVkYTFiZDY2ODQ3ZDY0NzYwMjc4MjFmNGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmNGNiNzM4OTM2NDQyNDBiZTk1NGJhMTVmNjEyYzEwYjMyYjMzNGZiNTFiZjY5YzFmM2E3MjBhMTNlNmRkNDcifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L456-L461",
+          "version": "repo-lines-v1:sha256:f0609a7e4c4cd16debf633204aacf54216612c9fe23d51a2d3f5bfa308556714:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjliMmFhMWYwZDE3MjQxMzBiYmJhYzVhOWZkNTEwM2M0YTZmMTJhMDI2NjRiMzE1NzIxODllN2RlNDJjN2NhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzZjZjZiYTZjY2JjOWUzMjc2N2NjNzI5NjgzMjY5YTdhNWJlMjJmNjczODhlNjRhN2ZhM2FjOTBiZjY0NjhlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWJiYjUyY2UwZTY3NTk3NzFiYmZmYzQ3MDcxYTY4MzlhOWU5ZWIzOGZhNmIwYTAzNjM3MzA2N2Q3Mjc3OWNmOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTRmMTk3ODM2MTMzOTAxMmY5Y2EzNjU1MTJiYjA1ZDFhZWU4NTJkYWVmMTZhZWZhYzU1ZjA2MTM4MDg1ZGQ2ZSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cb934078175aba3102d47e219de2c67591be94a5859ea4e86389a9452782f7ba",
+  "claims": [
+    {
+      "id": "claim_fc73f37e902d4e259c7d718875ecd9ea",
+      "statement": "The repository has no test runner configured and no unit/integration test files; verification rests on `pnpm type-check`, `pnpm lint`, `pnpm format`/`pnpm format:check`, and `pnpm build`, with no `test` script in `package.json`, no `*.test.ts` or `*.spec.ts` files, no `__tests__/` directory, and no `vitest.config.*`/`jest.config.*` files.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md",
+          "version": "repo-file-v1:sha256:8d4c901cc5077769fe2ec6bf740b533eefa4eb650a12fe27a14db83807d26d16"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9e2b8cb8bec1877969f078e56b0a7d90139e88c973d7cb52b56125460a416b69"
+        }
+      ]
+    },
+    {
+      "id": "claim_9671880d3aed4a7586bf5dac243a13a3",
+      "statement": "The only GitHub Actions workflow is `.github/workflows/openwiki-update.yml`, which runs the OpenWiki docs generator on cron/manual dispatch and does not invoke type-check, lint, build, or any test runner; there is no `pull_request` or `push` CI gate that runs the verification scripts on every change.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/openwiki-update.yml",
+          "version": "repo-file-v1:sha256:1993e1121d4b4e3272cc46680b95a76ba297ac1c035d4c69a9609fc2905c3982"
+        }
+      ]
+    },
+    {
+      "id": "claim_f56f426b4fd448d18f9e6140e1f1654b",
+      "statement": "AGENTS.md codifies two `grep` commands under *Testing Changes* that act as the project's only security-policy regression test: a match in `grep -r \"logger\\.(info|error|success|command)\\(\\`.*\\$\\{\" .` or `grep -r \"console\\.(log|error|warn|info)\\(\\`.*\\$\\{\" .` is a compliance failure against the static-string logging rule.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md",
+          "version": "repo-file-v1:sha256:8d4c901cc5077769fe2ec6bf740b533eefa4eb650a12fe27a14db83807d26d16"
+        }
+      ]
+    },
+    {
+      "id": "claim_e08afcbf9b814d139a4f47b7873d09a5",
+      "statement": "The highest-leverage unit-test target is `redactSensitiveInfo` in `lib/utils/logging.ts`: a pure, security-critical string function whose three regex passes (provider-specific API key patterns, JSON `teamId`/`projectId` fields, and the env-var catch-all suffix set) must preserve variable names and mask values to first-4 + stars + last-4, with the known gap that `POSTGRES_URL` is not in the regex set.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/logging.ts",
+          "version": "repo-file-v1:sha256:2c272a7d0f5d4ff82d88bfff2b98af019198a9ee1e11ea5c886953059c2e9505"
+        }
+      ]
+    },
+    {
+      "id": "claim_80d95e1685c241729da7c927aa51969f",
+      "statement": "`validateEnvironmentVariables` in `lib/sandbox/config.ts` is a pure table-driven function whose unit tests should pin down the per-agent required key (claude/codex need `AI_GATEWAY_API_KEY`, cursor needs `CURSOR_API_KEY`, gemini needs `GEMINI_API_KEY`, opencode accepts either `AI_GATEWAY_API_KEY` or `ANTHROPIC_API_KEY`) plus the always-required `SANDBOX_VERCEL_TOKEN`/`SANDBOX_VERCEL_TEAM_ID`/`SANDBOX_VERCEL_PROJECT_ID` and a non-null GitHub token.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/config.ts",
+          "version": "repo-file-v1:sha256:c0debd06191d02816ada65f67e27be9928a5aa0e016bb2170e8e965090e386c5"
+        }
+      ]
+    },
+    {
+      "id": "claim_a24aa57f4ed84ceda88efc3b396aba4b",
+      "statement": "The AES-256-CBC round-trip in `lib/crypto.ts` and the JWE A256GCM round-trip in `lib/jwe/encrypt.ts`+`lib/jwe/decrypt.ts` are deterministic primitives whose tests should pin down the empty-string passthrough, the `'Invalid encrypted text format'` and `'Failed to decrypt: …'` failure modes, and the property that `decryptJWE` returns `undefined` (does not throw) for tampered/expired/wrong-secret ciphertext - which is what lets a bad session cookie degrade to \"not signed in\" instead of a 500.",
+      "evidence": [
+        {
+          "resource": "repo://lib/crypto.ts",
+          "version": "repo-file-v1:sha256:f354cf9b293496f1f3cda82e75ca8b705a88260488908b013068f1ce4ce7f121"
+        },
+        {
+          "resource": "repo://lib/jwe/decrypt.ts",
+          "version": "repo-file-v1:sha256:eee3a3d83f9723ab4b304166149b253818c90ed5e3cb1073df437bff3533d412"
+        },
+        {
+          "resource": "repo://lib/jwe/encrypt.ts",
+          "version": "repo-file-v1:sha256:329974e0cd3de563a53b1da6a822f5d3d00d813eff17fb5a55c2b98618f3fa87"
+        }
+      ]
+    },
+    {
+      "id": "claim_15c5bdaf84cd495ab6b8ad3cedbf8502",
+      "statement": "`upsertUser` in `lib/db/users.ts` has three branches that must resolve to one canonical user - (1) reuse an existing primary row matched by `(provider, externalId)`, (2) reuse the user from the `accounts` table when a GitHub external ID is already linked (the Vercel-then-GitHub path), (3) insert a fresh `nanoid` row - which are the canonical regressions to pin with unit tests.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/users.ts",
+          "version": "repo-file-v1:sha256:52d4835c01f84e825d7eaa0a78f8668d0ff0af60b31354b30c9bb063ae2c3e94"
+        }
+      ]
+    },
+    {
+      "id": "claim_fbacd3182bd641dbaa83827004403447",
+      "statement": "`checkRateLimit` in `lib/utils/rate-limit.ts` runs a UTC midnight-to-midnight window over `tasks` and `taskMessages`, excludes soft-deleted tasks via `isNull(tasks.deletedAt)`, clamps `remaining` to `Math.max(0, maxMessagesPerDay - count)`, and combines new tasks and user messages into one total; these four invariants are the date-window logic worth pinning with unit tests.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/rate-limit.ts",
+          "version": "repo-file-v1:sha256:7d7b9ba8bfb4b4ae5c85eb26a47e68e78ce77c8ebc2343d3bfc8eff322bd58bf"
+        }
+      ]
+    },
+    {
+      "id": "claim_481e667a18564e488d0df8efd4c87c78",
+      "statement": "`createFallbackBranchName` in `lib/utils/branch-name-generator.ts` is a pure deterministic helper whose output starts with `agent/`, contains a sanitized timestamp with no colons or dots, and ends with the first 8 characters of `taskId`; this is the natural starter target in `lib/utils/branch-name-generator.ts` because the AI-driven `generateBranchName` requires mocking `generateText` from `ai`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/branch-name-generator.ts",
+          "version": "repo-file-v1:sha256:5e767b10b91eac53a277ad2fbe56ff6b8a8bf0ebbd6b53ede3a2092173b7dfe3"
+        }
+      ]
+    },
+    {
+      "id": "claim_00ed5657ff3f49348b2d2ab4f21d95ba",
+      "statement": "Three integration suites would catch regressions that no unit test can: (1) auth callback → user row → session with mocked OAuth and a Postgres fixture to exercise the Vercel-then-GitHub dedup path, (2) sandbox config → env gate → SDK call with `@vercel/sandbox` mocked to confirm `validateEnvironmentVariables` short-circuits before `Sandbox.create`, and (3) a migration round-trip via `pnpm db:generate` → `pnpm db:migrate` against a throwaway schema plus `scripts/migrate-production.ts` gated on `VERCEL_ENV`.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/users.ts",
+          "version": "repo-file-v1:sha256:52d4835c01f84e825d7eaa0a78f8668d0ff0af60b31354b30c9bb063ae2c3e94"
+        },
+        {
+          "resource": "repo://lib/sandbox/config.ts",
+          "version": "repo-file-v1:sha256:c0debd06191d02816ada65f67e27be9928a5aa0e016bb2170e8e965090e386c5"
+        },
+        {
+          "resource": "repo://scripts/migrate-production.ts",
+          "version": "repo-file-v1:sha256:6302684f157e05ef972b5e8011e8039c480f840763dde0b19be7dc1eecdd4b65"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

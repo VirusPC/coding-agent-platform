@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ded3a457e35c3d14eb0b6a0dcd45607b32e324d418f58595ba76c54f4da8376e",
+  "claims": [
+    {
+      "id": "claim_4912f5008d4e4befb08a16410ab62ac6",
+      "statement": "getUserGitHubToken is the canonical two-tier GitHub token reader: it resolves the current session, then SELECTs accounts.accessToken WHERE userId matches and provider='github' first, falling back to SELECTing users.accessToken WHERE id matches and provider='github' on miss, decrypting whichever row wins, and returning null on either miss or a thrown decrypt error.",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/user-token.ts",
+          "version": "repo-file-v1:sha256:b6902e663e710ad5be2840ffbfc6a982283985a36b820174732e4378978deed5"
+        }
+      ]
+    },
+    {
+      "id": "claim_9cd00db0fc464b38b6e2a75997e79542",
+      "statement": "getOctokit in lib/github/client.ts is the single Octokit factory: it asks getUserGitHubToken for the token, returns new Octokit({ auth: token || undefined }) so callers can check octokit.auth as a boolean, and warns to the server console when no token is available rather than throwing.",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/client.ts",
+          "version": "repo-file-v1:sha256:ea5e11255cb94eee8b1167a82ad7876f506326f65660df598de2873be30aa0de"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae029c15198d455f9e05ed70a3f29bac",
+      "statement": "lib/github/client.ts exports five high-level helpers that wrap specific Octokit endpoints and translate known status codes into domain-level error messages: getGitHubUser (users.getAuthenticated, returns null on any error), createPullRequest (pulls.create; 422 already-exists, 403 permission, 404 missing), mergePullRequest (pulls.merge with default mergeMethod='squash'; 405 not-mergeable, 409 conflict, 403/404), getPullRequestStatus (pulls.get; maps merged_at/state to 'merged'/'closed'/'open'), and parseGitHubUrl (regex-only, returns { owner, repo } or null, accepts HTTPS and SSH forms).",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/client.ts",
+          "version": "repo-file-v1:sha256:ea5e11255cb94eee8b1167a82ad7876f506326f65660df598de2873be30aa0de"
+        }
+      ]
+    },
+    {
+      "id": "claim_c60216f1f1374a4790ac4b001fbdf8e4",
+      "statement": "The repository browser at /repos/[owner]/[repo] is a Next.js shell with three sibling tab routes (commits, issues, pull-requests), each implemented as a one-line server-component page that renders a single client component (RepoCommits, RepoIssues, RepoPullRequests). The shared layout in components/repo-layout.tsx drives navigation from a tabs array of { name, href } pairs whose active state is computed by comparing usePathname() to each tab's href, and the default page.tsx redirects to /commits.",
+      "evidence": [
+        {
+          "resource": "repo://app/repos/%5Bowner%5D/%5Brepo%5D/layout.tsx",
+          "version": "repo-file-v1:sha256:8db68b10c1d4bd5befd7c9a4ba85ec0894c6ff28df05777af37a4cc2ba2a8000"
+        },
+        {
+          "resource": "repo://app/repos/%5Bowner%5D/%5Brepo%5D/page.tsx",
+          "version": "repo-file-v1:sha256:b0ec9d86d4fcd4c40c14026597aba9af86f063aa1e9534cd6aeee0149bba0883"
+        },
+        {
+          "resource": "repo://components/repo-layout.tsx",
+          "version": "repo-file-v1:sha256:6cbde3283b897514471819102316c7ddd6cc81d4df339ece884d3ef695ff18a5"
+        }
+      ]
+    },
+    {
+      "id": "claim_297a6d57db494704a48f2faa96114956",
+      "statement": "Each repo-browser tab fetches from a dedicated GET API route that calls a single Octokit method bounded to 30 results: /api/repos/[owner]/[repo]/commits uses repos.listCommits, /issues uses issues.listForRepo with state='open' (filtering out issues that have a pull_request field), and /pull-requests uses pulls.list with state='open' sorted by updated desc.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/commits/route.ts",
+          "version": "repo-file-v1:sha256:1209242a281ec10377953e34ad65efc2892e453ff9110066a61fb641d9b7c9e3"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/issues/route.ts",
+          "version": "repo-file-v1:sha256:03b53231916e707143b3c433e066ab849d5a8551472c63d5f4ba0fd039a09773"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/pull-requests/route.ts",
+          "version": "repo-file-v1:sha256:5678f18856b2e175e9b14bb196e49d1f6655bc884a8ddc35d1b4a9242906a414"
+        }
+      ]
+    },
+    {
+      "id": "claim_f8afd29999cf46099642ddfa3d5b38c9",
+      "statement": "The PR tab calls GET /api/repos/[owner]/[repo]/pull-requests/[pr_number]/check-task for each open PR to mark rows that already have a task (and hide the Create Task menu item accordingly), and exposes a Close PR dropdown action that PATCHes /api/repos/[owner]/[repo]/pull-requests/[pr_number]/close. The close route calls octokit.rest.pulls.update({ state: 'closed' }); the check-task route SELECTs tasks where userId, prNumber, and repoUrl all match.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/pull-requests/%5Bpr_number%5D/check-task/route.ts",
+          "version": "repo-file-v1:sha256:d9b93506a4985e03c9ad4dc479d296ebed35038facec760f38707b37d3f5506a"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/pull-requests/%5Bpr_number%5D/close/route.ts",
+          "version": "repo-file-v1:sha256:bcce84b1ff9ed4c27bb1276eafa4861031621091200a7c6268b6a726d8de58c7"
+        },
+        {
+          "resource": "repo://components/repo-pull-requests.tsx",
+          "version": "repo-file-v1:sha256:e2771c8a8069047d0055657c2a04c62b3f6e5472c8a232efcc7097b3dad5c594"
+        }
+      ]
+    },
+    {
+      "id": "claim_8770ae36c8ff492eb2b960ca7d48a6a9",
+      "statement": "Five task-scoped endpoints under app/api/tasks/[taskId]/ implement the PR lifecycle: POST /pr (createPullRequest, sets prUrl/prNumber/prStatus='open', short-circuits with alreadyExists when task.prUrl is set), POST /merge-pr (mergePullRequest, sets prStatus='merged' and completedAt, tears down the sandbox), POST /close-pr (pulls.update state='closed'), POST /reopen-pr (pulls.update state='open'), and POST /sync-pr (getPullRequestStatus, sets prStatus/prMergeCommitSha and completedAt when the new state is merged).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/close-pr/route.ts",
+          "version": "repo-file-v1:sha256:02a292bfc07a42e84662f86ba3ed09165a796465299f0afc4523b9ef083d7800"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/merge-pr/route.ts",
+          "version": "repo-file-v1:sha256:f96df5480a580e5581568cea3855584ec5c6fbfd5cd4bf491487fcbf55f4d639"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/pr/route.ts",
+          "version": "repo-file-v1:sha256:bc9261860928234c97dcd37d9ece26fc758646e021f180b0d36c621016330ba1"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/reopen-pr/route.ts",
+          "version": "repo-file-v1:sha256:9a0b3f75a048f1bfc2e7931b5390f486303a0697fa12776e552d432ddccef594"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/sync-pr/route.ts",
+          "version": "repo-file-v1:sha256:b9b97f8d013734dfe47d9e188b670c95e052681643643eef0a0269584c640847"
+        }
+      ]
+    },
+    {
+      "id": "claim_98026942ba1c4d89a42e56db3e9a830e",
+      "statement": "The merge-pr endpoint stops the live sandbox as part of a successful merge: it calls Sandbox.get with the task's sandboxId, invokes sandbox.stop(), unregisters it via unregisterSandbox(taskId), then clears sandboxId and sandboxUrl on the task row. The teardown is wrapped in try/catch so a sandbox failure is logged but does not roll back the merge DB write.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/merge-pr/route.ts",
+          "version": "repo-file-v1:sha256:f96df5480a580e5581568cea3855584ec5c6fbfd5cd4bf491487fcbf55f4d639"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4e425f7d3db43459366e34c0d66116c",
+      "statement": "app/api/github/repos/create/route.ts is the only route under app/api/github/ that uses Octokit: it validates the name with /^[a-zA-Z0-9._-]+$/, then dispatches on owner — calling octokit.repos.createForAuthenticatedUser when owner equals users.getAuthenticated().login, otherwise octokit.repos.createInOrg (mapping a 404 to 403 'Organization not found or you do not have permission to create repositories'). When a template is supplied, populateRepoFromTemplate recursively walks the source via octokit.repos.getContent and seeds files via octokit.repos.createOrUpdateFileContents, continuing past per-file failures.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/github/repos/create/route.ts",
+          "version": "repo-file-v1:sha256:370a49c00de69712a36f5b7f0a75ed5c572f7469068c5bf61486e0c424ecdea3"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e909619735d41a88ee6d2577f709ecf",
+      "statement": "Five of the six routes under app/api/github/ (user, orgs, repos, user-repos, verify-repo) call raw fetch against https://api.github.com/* with a Bearer header rather than using Octokit. The repos route paginates per_page=100, deduplicates by full_name, and dispatches between /user/repos, /orgs/{owner}/repos, and /users/{owner}/repos based on whether the owner is the authenticated user. The verify-repo route returns 200 { accessible: false } for a GitHub 404 so the UI can branch on the boolean.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/github/orgs/route.ts",
+          "version": "repo-file-v1:sha256:8ce039d441f831df5789c1f7821b24ee76d68ae155aec69cbffd5e7af640f1d3"
+        },
+        {
+          "resource": "repo://app/api/github/repos/route.ts",
+          "version": "repo-file-v1:sha256:b567c48b624df5bbf8be35999c4dfca9e26ad1e9ff6126a3935618f921556039"
+        },
+        {
+          "resource": "repo://app/api/github/user-repos/route.ts",
+          "version": "repo-file-v1:sha256:3195b2cdd19aa74df414005464683370c7cfe610e0c080e4f1f7103ca29398d9"
+        },
+        {
+          "resource": "repo://app/api/github/user/route.ts",
+          "version": "repo-file-v1:sha256:298eebe06a96ebc685d5fb9744db9e11ca07e0fe85f94ab5ca34ad6f19d74b93"
+        },
+        {
+          "resource": "repo://app/api/github/verify-repo/route.ts",
+          "version": "repo-file-v1:sha256:abf32001a75a259fe2936991be7ff1c8edab7bd74cccfd46f5122012a4698fc9"
+        }
+      ]
+    },
+    {
+      "id": "claim_69d1b75a92b1414a852de8b84f575431",
+      "statement": "For the copilot agent, lib/sandbox/agents/index.ts dynamically imports getUserGitHubToken, and when a token is returned it is written into process.env.GH_TOKEN and process.env.GITHUB_TOKEN for the lifetime of that agent run, so the copilot CLI inside the sandbox can authenticate against the GitHub API on the user's behalf.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts",
+          "version": "repo-file-v1:sha256:3944c1fcd6f008e067481aef4d79ab060752ea4a188b1f91ee1fac8a696ceae4"
+        }
+      ]
+    },
+    {
+      "id": "claim_baeb97f6285044569b1807a7833378f8",
+      "statement": "The Octokit REST methods actually invoked across the GitHub integration are: users.getAuthenticated (getGitHubUser, repos/create owner check), repos.createForAuthenticatedUser and repos.createInOrg (repos/create), repos.getContent (repos/create template seeder, port-detection package.json), repos.createOrUpdateFileContents (repos/create template seeder), repos.listCommits (commits tab), issues.listForRepo (issues tab), pulls.list (pull-requests tab), pulls.get (getPullRequestStatus, used by sync-pr), pulls.create (createPullRequest, used by pr), pulls.update (close, reopen, repo-browser close), pulls.merge (mergePullRequest, used by merge-pr), and checks.listForRef (check-runs).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/github/repos/create/route.ts",
+          "version": "repo-file-v1:sha256:370a49c00de69712a36f5b7f0a75ed5c572f7469068c5bf61486e0c424ecdea3"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/commits/route.ts",
+          "version": "repo-file-v1:sha256:1209242a281ec10377953e34ad65efc2892e453ff9110066a61fb641d9b7c9e3"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/issues/route.ts",
+          "version": "repo-file-v1:sha256:03b53231916e707143b3c433e066ab849d5a8551472c63d5f4ba0fd039a09773"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/pull-requests/%5Bpr_number%5D/close/route.ts",
+          "version": "repo-file-v1:sha256:bcce84b1ff9ed4c27bb1276eafa4861031621091200a7c6268b6a726d8de58c7"
+        },
+        {
+          "resource": "repo://app/api/repos/%5Bowner%5D/%5Brepo%5D/pull-requests/route.ts",
+          "version": "repo-file-v1:sha256:5678f18856b2e175e9b14bb196e49d1f6655bc884a8ddc35d1b4a9242906a414"
+        },
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/check-runs/route.ts",
+          "version": "repo-file-v1:sha256:9d898ff10e37a74422464b94e8e9bb91e8f5c1a565a40ba9f6fb6c1afda3c128"
+        },
+        {
+          "resource": "repo://lib/github/client.ts",
+          "version": "repo-file-v1:sha256:ea5e11255cb94eee8b1167a82ad7876f506326f65660df598de2873be30aa0de"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

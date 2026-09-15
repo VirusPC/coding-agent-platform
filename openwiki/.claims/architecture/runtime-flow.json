@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ef918fcc699a521c9fb15e49a1f880cef8e6bcc5f4f36fc419300cd78087d363",
+  "claims": [
+    {
+      "id": "claim_38330c3976c14cbeb51a85f8ccebd5fe",
+      "statement": "POST /api/tasks returns immediately after inserting a 'pending' task row and uses Next.js after() to schedule three background callbacks (branch-name generation, title generation, and processTaskWithTimeout) so the serverless function is not killed when the response is flushed.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L158-L211",
+          "version": "repo-lines-v1:sha256:434fbdecc99260defaeb240d3e93fe7f6620eec2b9723ccc6d85452cdb108151:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxODE1MmY1ZDI4ZTI3MDBkN2Y4MzJlMDlhNmQ2YjBjNDk0ZDdhNzUyNzMxZjI3NDBhM2E0YTNkNmZhOTNkOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyZDgwZDE4YWFlMTQ5NjQ2M2Y2NTAwODRlZTU1ZmM3MWViN2M4YWRmYzdiOGQ5NzNlNTUxZmYzNjRlMDhkMTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwOGViNDgwMzI4YWUyMzFmZDA3ZWI2MGQ4Nzk0ZjA2NDlhMWI0MGRhMTRmNGI2MzUzYWNjY2QyZDlkNDU2MzUifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L223-L243",
+          "version": "repo-lines-v1:sha256:9758ec8b2bdc3657e4da1b7e565099963d42b273e519d143e1564427d5248dfd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxODE1MmY1ZDI4ZTI3MDBkN2Y4MzJlMDlhNmQ2YjBjNDk0ZDdhNzUyNzMxZjI3NDBhM2E0YTNkNmZhOTNkOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhYmZlYTRiZDc1ZTg2NGEzNzlhMmUwNDFjOWZiMGJiNTdiMGNmNDA4ZjIzOTcwMDUzYzk1MDkwMmE1NzY2ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4YzgwMDhlYzYxM2Q1MDc0YzMzNmI2MGVmNzgxMDVjZWY0ZDNkMzlmOGUzZDJhMzM3YTE2MTIxOTY5OThjZDkifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L94-L155",
+          "version": "repo-lines-v1:sha256:b9f11067fa99a239aec458c07d7556dfa564b6829f5bbfb7d464407eacffb540:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxODE1MmY1ZDI4ZTI3MDBkN2Y4MzJlMDlhNmQ2YjBjNDk0ZDdhNzUyNzMxZjI3NDBhM2E0YTNkNmZhOTNkOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0NGVkNDdhOGEzNDJhMGM4M2U3YzBiOWQ1YTczNDlmZTQyMjg3ZTUxZDk0Njk0NjhhMmNhODU2ZTU2NjBkYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxMGQ0ZmFhNGIzMDQ4OTIxOGM0NTNiNzhmZjY4NTNmOTY1NzkwY2U2NTdlMjY1ZDk4ZGM3N2IyOGVlNWM3M2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f69447929bf240cba1c9b8d77b93a461",
+      "statement": "All request-scoped credentials (user API keys, GitHub token, GitHub user info, max sandbox duration) must be loaded by POST /api/tasks before after() runs, because cookies and request-scoped state are not available inside the background callback.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L213-L243",
+          "version": "repo-lines-v1:sha256:fdd0e3f10e12f2d58226d788cf01c2f6bfae27b5e042e07b52c9a354a06c7e51:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlZDI2OTUyNzBkNGY2ZjZmZTE5ODQ0NGUyODhlZDU1ZjQ1OTc2OGE5NjhjMGMzOWZjZDNmMzYzMTM5YjBmNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0YWIxZTRiOGEyNzg1MWUxNzAzYjE5ZTMxZjA5NWQ2ZWU4ZTZjODA3OWViYTYzNzkwMDg2NmQ5MzUzOTVmOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA4YzgwMDhlYzYxM2Q1MDc0YzMzNmI2MGVmNzgxMDVjZWY0ZDNkMzlmOGUzZDJhMzM3YTE2MTIxOTY5OThjZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5888736f9ed04c29ba6dfc3ed46aa5bb",
+      "statement": "processTaskWithTimeout enforces the per-request maxDuration by racing processTask against a setTimeout reject and also schedules a 'Task is approaching timeout' warning one minute before the deadline; both timers are cleared on completion or failure.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L252-L332",
+          "version": "repo-lines-v1:sha256:09ebd3fba65ce10d1756612f961d77ca4fb263f1357518ba4123ae7c8d906541:eyJzZWxlY3RlZExpbmVDb3VudCI6ODEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2ZWQ1MzIxYzU0ODNjNzJiYTNhZTFkMTRkODQ0ZWFiMTNiMzJkYzk5MDIwYzI3MjhlMjViZjI1NzFiNTYzMTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1YjRjYjRkYjJmNzI2NDdhYjhkYmU4YWMxYmJiZWQ4Mjk1ZWQ3Y2MxYzk5NTEzNzljOWJjMGQ4MTNlODQ3ZTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f47468e251ac41c1adee30db388751a1",
+      "statement": "The pipeline polls isTaskStopped(taskId) (a SELECT status FROM tasks WHERE id=?) at five distinct stages - before waitForBranchName, after waitForBranchName, after createSandbox returns success, and again before agent execution - plus four additional onCancellationCheck calls inside createSandbox (before any work, after Sandbox.create, after Node.js dependency install, and before git config), so a user-initiated stop is honored at every phase boundary.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L356-L364",
+          "version": "repo-lines-v1:sha256:50d658c96f959d862eab48efb4ceba41a4b8d9b15161c537509a9a8bf9ef5ac4:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMxNWI3YzNlOTE0OGQwNTIxMWZkZjE4ZjA2NTgzYTljNjVhYjBlYzU2NTMzZWFkYjk3MDY4NGEzYTgwNDEyMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2MwNGU1MDE5NDQ2YTkwNDAxZGFkNDc0MGRjN2ZlYzQxMWZjYWM4OWNlZDYyOTE2NDIwNjY4YjA5YTdkNjBjMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGUyMGIyOTU4YzBhODAyMmVmY2E5MWUzOTY5YzBiNGZlNjhmZjgxMWNiYWQ0NDY4MTc1Njk5NDkwMzdkNjJmNyJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L420-L420",
+          "version": "repo-lines-v1:sha256:c738aea092c39cf1ea59a8c5c6634c59c9473d532ba12b01bf8079cb92d98690:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjcxYjhhNzQ2Mzg5NWUwYmJiMTM1MmU5NjBiNDE4MDdkMjIwZmNlNmQ2MGU5NmRjNGY5NDM1NGExOGEyNzY3MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzEyZjgwYzYyN2Y4OTVhZDcwZmRmZDMxNTdiNTVlYWFkNzJmODM5NjllMzlkZjdkYjEzZTE2NWIxMmEwMzgyZiJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L429-L429",
+          "version": "repo-lines-v1:sha256:c738aea092c39cf1ea59a8c5c6634c59c9473d532ba12b01bf8079cb92d98690:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDI0OGUzNzYxYzQxNGQ5MGE2MTZhYTdhYzAwZjEzZmE1YzdlMjAzNDA5YjNlMWFhNGU1ZGRmMmNhOWEzZWQ3YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWM5N2Q1YWFmYmM1YmYwMDhlYTk0YjBiYTUzNDc3NzAyNjAzZDJjMWQ5ZDc1ODI5MmFjN2IyMDNhMjJlMzIyMiJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L489-L489",
+          "version": "repo-lines-v1:sha256:c738aea092c39cf1ea59a8c5c6634c59c9473d532ba12b01bf8079cb92d98690:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmVkYjE1NWUyMjM3YzJlYWQ1YTU3YzMyMjk4ODQ3ODY0NDZlNGEwMzc5NjNiZmIyZTIzZWU2YWYzZTU4Y2RkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzE3ZTY2YjRmNjFkZDMxMWNmNTFmZTkxM2U1OGZjZTdkM2IzOGI4YjM0ODhlZmZlNThlMDEyZGZiMTRkNTA3OCJ9"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L521-L521",
+          "version": "repo-lines-v1:sha256:c738aea092c39cf1ea59a8c5c6634c59c9473d532ba12b01bf8079cb92d98690:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzczOGFlYTA5MmMzOWNmMWVhNTlhOGM1YzY2MzRjNTljOTQ3M2Q1MzJiYTEyYjAxYmY4MDc5Y2I5MmQ5ODY5MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTkyNTVjMDFkMmNjY2Y4MjY5MjM2MTg5Y2MzMTRiNDMyNDE5YTNlMzg0MWQ1MDdiNzI4ZDdiOTlkZTZhZmQ0MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmUyYTk1OGUxZTVkNWE1YzZhMDBiNTVlOThlYjM0NzhiNzAwOGJiNjZmZjU4ZTYyYTczN2RmZGVlODE5ODQyYSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L106-L106",
+          "version": "repo-lines-v1:sha256:4b570b7c76faaf46310d018f31a3579bebacff660a4142a8ffe99cfbbdd35dd8:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGI1NzBiN2M3NmZhYWY0NjMxMGQwMThmMzFhMzU3OWJlYmFjZmY2NjBhNDE0MmE4ZmZlOTljZmJiZGQzNWRkOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGI1NzBiN2M3NmZhYWY0NjMxMGQwMThmMzFhMzU3OWJlYmFjZmY2NjBhNDE0MmE4ZmZlOTljZmJiZGQzNWRkOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJhYTE0MTgxMzY0NDIzMWY5OTQ5OTFmMmZjZTlmZTQ5MzMzOWQ5MTI2OTlmNWRkNDM3MTQ0OTdhZjkzMDRhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmMxYjBmM2MwNDRlM2YzMzg5ZWI3NDc5NWUxNTIxMWRiY2NmMTVjNTFkMmUzNTE3NmYzNDM2ZGRiOGFiNjE3NSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L230-L230",
+          "version": "repo-lines-v1:sha256:dd04e1d2fbe83f2052d84400fb8a7de74deae35b423c9b9d5745e9b9d480edf8:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQwNGUxZDJmYmU4M2YyMDUyZDg0NDAwZmI4YTdkZTc0ZGVhZTM1YjQyM2M5YjlkNTc0NWU5YjlkNDgwZWRmOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQwNGUxZDJmYmU4M2YyMDUyZDg0NDAwZmI4YTdkZTc0ZGVhZTM1YjQyM2M5YjlkNTc0NWU5YjlkNDgwZWRmOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmVhMWE1ZjA3MTkyYTVlOGNhMTRiZjZkZGZjOWFiNDgyZDFhNWU0MDZkMGNhNWExODI1ZDM1Mzk4YWUyZTUxOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzQyN2VmMWIzN2EwOGU1Y2IwOTNjMDBmNzZmZmJlZTEyY2Y2OWM3YmRjZDdmNDJhMzVlZGUzY2Y5YjZiZWU4NiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L501-L501",
+          "version": "repo-lines-v1:sha256:8680d069d8a66c79aabba44c3e59c093fdb043ccc713d5db469c4f42666a19c4:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODY4MGQwNjlkOGE2NmM3OWFhYmJhNDRjM2U1OWMwOTNmZGIwNDNjY2M3MTNkNWRiNDY5YzRmNDI2NjZhMTljNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODY4MGQwNjlkOGE2NmM3OWFhYmJhNDRjM2U1OWMwOTNmZGIwNDNjY2M3MTNkNWRiNDY5YzRmNDI2NjZhMTljNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmQ1OWQ5NDkwMDg3YTM3NTY1M2M2NDQ5YjE4YTc3ZGMyMDY0YjhlYzU4NDE4ZmY3MmMxNWQ1YWNkYTYzYTFiOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjVjZTMzNWE5ZTUwYTlmNDhlOWFjODlhNTZmNTliYWM4MmQ4ZDJkZWMwY2Q0ZjllMDIyZDIyY2EzODgwNDNhZSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L52-L52",
+          "version": "repo-lines-v1:sha256:75650b5ace4fa5ef1b72381e066dc8fec3149d2fa3f1f809760e1920a2870022:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU2NTBiNWFjZTRmYTVlZjFiNzIzODFlMDY2ZGM4ZmVjMzE0OWQyZmEzZjFmODA5NzYwZTE5MjBhMjg3MDAyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU2NTBiNWFjZTRmYTVlZjFiNzIzODFlMDY2ZGM4ZmVjMzE0OWQyZmEzZjFmODA5NzYwZTE5MjBhMjg3MDAyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODQ2NmZkZTJkZWQ1NzM0NjA0MTA5ZDI2ZDQ2MjMzNzNmZjg2YjhmMDMzN2Y3NmYyN2FjMzViNTdlZWRhYTg1NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjQ5ODc1M2QxMjA4OTA5YWM4OTczMDE0NjIwMTAxY2ZmMzBkY2I2YTAxNmYyZTA3MGRiNmJkNTUxNmVmZDc4NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_36a732210ddd4a4fac3f2a390c5b2b16",
+      "statement": "createSandbox runs a fixed pipeline - validate env vars, build authenticated repo URL, Sandbox.create, git clone (depth 1) to /vercel/sandbox/project, optional dependency install (Node or Python) with npm/pnpm/yarn detection, optional detached dev-server start with Vite/Next.js port selection, optional agent-browser install with a per-agent skill file, git config, and branch resolution - and returns SandboxResult { success, sandbox, domain, branchName } or { success: false, cancelled: true } to distinguish a stop from a failure.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/commands.ts#L4-L4",
+          "version": "repo-lines-v1:sha256:7b90917afc321ff46bfb6b750f9e55b7803ee9aaf9849b52a8661501fff1d074:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2I5MDkxN2FmYzMyMWZmNDZiZmI2Yjc1MGY5ZTU1Yjc4MDNlZTlhYWY5ODQ5YjUyYTg2NjE1MDFmZmYxZDA3NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2I5MDkxN2FmYzMyMWZmNDZiZmI2Yjc1MGY5ZTU1Yjc4MDNlZTlhYWY5ODQ5YjUyYTg2NjE1MDFmZmYxZDA3NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjJiZDZmMmYxMzdjYjM2ZTQ2ODE3MDIxOGU0ZWY3OWQ2MTM5MWVkMjIzZjYzMDk3ZmVlOTM4NWQ4ODdhYjA4ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjM4MmM2MmU4NDAwM2JhNGIzNTNhZTk5ODkwNDEyZGVlYjM0OTViNjVhM2ZmMDE1NGMyOWE3Y2RjYjM4MTc4NyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L47-L996",
+          "version": "repo-lines-v1:sha256:995fde5dc96bb38b6cd4e2927e5aeb05a53ccfc7dd710152718c8f6a399764a0:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMzBmMTdiOWFkNDBlM2M5Y2Y5ZDcwN2Q0ZDYyZTVmOTdkZTUzMDMyMWEzYWExOTQ4ZDhlOGRkOTYyMTA5ZWI3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1NmE2N2NjZjhmMGI2YTg2ZTA3ZjBlMjI1ZDM2NzY5ZmIzYjljNjhhZjIxMjEwMGM4Mzg3ZDhiOTNhMDg2MDBlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://lib/sandbox/types.ts#L34-L41",
+          "version": "repo-lines-v1:sha256:c53b1c0496e146a450d52fd01374082a65b56ebb8e06d57f017c4223e7fc0bff:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTQ2ZjI5OTA1OTdhNWI4YTJhNTc2ZTBkNGI0ZTMyOWJlMTcyZWU1YTcwNTRkYmRhMzBmMmNhY2VmNmIxMWU4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2ZmZTQ4MGU3ZGI3Nzg0YjEyN2E2NDE1N2RjZWM3Nzc4MWZmYzQ1MjNhYjZjZDdlYjg0NjA3NjdlZjMyMjkzZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzk1ZDE5NWYyZTQ5MGY3NTVmYmVjNzM4YTdmN2Y2MTg4YzU0NjIxMWVhNzQ2MDFkN2Y0ZDAxYTkyMzA4NjA0OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d12e0dc7447b45d29e1561aaeb5fd397",
+      "statement": "When auto-starting the dev server, createSandbox runs the command in detached: true mode and pipes its stdout/stderr through two Writable streams that prefix every captured line with [SERVER] and forward it through TaskLogger.info, so dev-server output appears in the task log alongside agent output.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L422-L462",
+          "version": "repo-lines-v1:sha256:046fc56b4bdb45cac8a68cf9c6ed26b8aa44df0d8302d6273186252de3413874:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYTI5ZGMxNmE2NzFmZWI4ZTMwNzBmMGUxOGM2ZWJiNWQyY2M4MWUyNGIyMTZhYmNhODU3OTc2NDczNGE1YWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4MDA1ZDU3MTA2YTM2MmViMDAwZGFmM2RhNDY3NGM4MmI1MThmZjVhMmUyZjY3ZWU4ZTc1N2EzMzNjMmFmNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhNWRlNDVmYmRjZjVkY2MxODc1Mjc1ZjMxMzQ4MTZhYWJhMzI2YzNmN2JmMjRlZTM1ZGY5ZTEyNTliZTUyNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNmY4YjMwZmVhMThlMWIzNTMxNzM4MTQ5ODY1MzU3YWM2Y2I2NDZkNzJlMmY5YjM2ZmQ4ZjcxM2I2NjAzYTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bfa77351cfd649b5bdbd2865252c7fcc",
+      "statement": "executeAgentInSandbox dispatches on AgentType ('claude' | 'codex' | 'copilot' | 'cursor' | 'gemini' | 'opencode') to per-agent modules, and MCP servers are passed in with decrypted env and oauthClientSecret so the per-agent CLI can register them via 'claude mcp add' (or the agent's equivalent).",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L538-L578",
+          "version": "repo-lines-v1:sha256:e17fe565d004f7eb9e3b1f6bae3a1e7b0af034c5f389460b57f4a68e2e7f1fa7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZGY4N2E0NzMxNmM3MDhjNTUwMjA5OGU5YWY2YzQ0NTM0ZWI4MGJlYWRjZjYwNjMwMjhlZmNhODU5MzdhYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkZWYxYzAzNDZhOTdiODdmNzk0NzBkMGRjYWFiNTBkNmQ4ZTM3YjdiODJhMGVhZTBjNWJmNGNmNjc0OWRlZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhOTVmOTkwYjRkYzc3Mjg5MTNlMzE2NDgzYTgwZWMyYjYyYTI1ODc1M2NhZTYxNTUyNGVjMTFkZGM5MDM2MjcifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L99-L149",
+          "version": "repo-lines-v1:sha256:8895f9730fb1c2c1ad70d879c04d61e8eb2e0247221515a6fd7b5f23a4dfc85a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZTcwODFhZGU4NWM4YzFkOGVmM2U4NGE1OTYyMmRkNmNmODliMjYyMDI4MGYwMWYzNTNmYzhmYTEwNmUzY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkYjQ5M2I5MGYyY2QwNzcxNGE5ZGVkNGVmOTQyYTJlZDZmMzcxYzU3N2I5ZTQ3ZTE4ZmMwNGY5MTQ3MjZkNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3NDkwZjMwZGUyODc2N2RiMDdhYjNkNDYzYjgzMTY5YjJkNWQ0YjhkMjUxMmNjMzMwOWE5OGY3MzE4YjIwZGYifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L12-L12",
+          "version": "repo-lines-v1:sha256:0605ecf44146ba91a68b0b250367eae107baf91f65f746d4f0186bd5bcf89a0a:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDYwNWVjZjQ0MTQ2YmE5MWE2OGIwYjI1MDM2N2VhZTEwN2JhZjkxZjY1Zjc0NmQ0ZjAxODZiZDViY2Y4OWEwYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDYwNWVjZjQ0MTQ2YmE5MWE2OGIwYjI1MDM2N2VhZTEwN2JhZjkxZjY1Zjc0NmQ0ZjAxODZiZDViY2Y4OWEwYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDE5NTEzMDYyZGQ4ZmI0N2VhZTc0NDMxMjVkMTRjNzE0NDZhYWZkMzYzZGQ0MjE5MWU1ZWJhZjg3ODNlMjY0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjc3ZWEwMzZjMTJlZGExZGNhM2U5MTIyMjc0NzE3ZjI0MTQwMjVjNmEwNTcwNWFmMTk4MjFkZTczMDljOTMyYSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L18-L159",
+          "version": "repo-lines-v1:sha256:1beb5805187f7e26c660210742f3d306fee5a038564efeaa51d573b05e8dc70b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2NDFiMWY4NDRjYTg0OTM3MzNlMjg3YzdjZDYyNjhhZWMwZTg1NTk2MzQ0NDJiYjczNTA5YTA0ZmRlNjJhMTc1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3NTAzNDg3MzgyZjQ3MWQwY2MwOGU5NjNlMzIyYzhkMjY0NjllZTg1ODFiZWJmZGU5ZGZhMGM4MWQzODQ3NjNiIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_72027b9c3ccf4e43906f4024f182f628",
+      "statement": "executeAgentInSandbox implements a temp-env-var pattern: it snapshots OPENAI_API_KEY, GEMINI_API_KEY, CURSOR_API_KEY, ANTHROPIC_API_KEY, AI_GATEWAY_API_KEY, GH_TOKEN, and GITHUB_TOKEN from process.env into originalEnv, overrides them with the user-supplied apiKeys (and the Copilot GitHub token when applicable), and restores the originals in a finally block so per-user credentials never leak across tasks on the shared worker process.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L57-L158",
+          "version": "repo-lines-v1:sha256:675c47a5553c79a98393307d7e04a57f01e50558baa37a1c447bd60684ff430e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwNmIwZTIwZDA3MTRkM2Y2NjI2YTAxNTE3MWE0OGU1ZWExMmIyMGIyMDM2OTkyZjg3NWJkNTlkYzYzYmY3YWIxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyN2U1Nzg4ZDVkOWQ3M2QyNGE4MWRiYzBhNWE3NGJmYTgyYzljM2IzYWY5OWU1MmFmNzk2ZTkwYjQ2OGE4YTNkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyZDVkNTJlOGRmODVhYmIyOWI4Y2QxZmM5MTM0OGQyZmZhNzQwNWJhOWI1MjNkOWY1MmMzMDcxMzM5ODU5NjkxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f91304df630c4b8e9be0b496c1c96994",
+      "statement": "pushChangesToBranch runs git status --porcelain (early return if empty), git add ., git commit -m, and git push origin <branch>; a push failure with 'Permission', 'access_denied', or '403' in the stderr is reported as { success: true, pushFailed: true } so the caller can mark the task error without losing the local commit, while other failures return { success: false }.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/git.ts#L5-L73",
+          "version": "repo-lines-v1:sha256:324d01663dafa201ebd67dc454f4f8293641f5af5ed895605781ab5e4f0e8364:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3NThjMGRiNDJkZjgzNDE4MTJmYTFhYzE1ODdlMTU2M2Q4N2I5MTFmOTkyMGE5YjA2YzRhYTFjZDkzYmE1NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4ZGE0ZTY1MDEwZjY2ZWUxYWNhZTkzYTEyMmU5MGI0OWFhMjI3ODdhZjZlMDY3NDM2ZjRkZTkxMDk3MGJjYjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmMDA1ZTlhNDQ0OWMwMmViNDM5ZDY5Y2Q2YjIyYzdjNTQzNzM1YjI0NWZiZmNjYzczNWMzODAzNjQzYmM5MDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_150af1632ce64d85975832121de8304a",
+      "statement": "On successful agent execution the worker persists agentSessionId (for follow-up --resume), saves the agent response to taskMessages, generates a commit message via the AI Gateway (with createFallbackCommitMessage as fallback), runs pushChangesToBranch, and only then either transitions tasks.status to 'completed' (with progress=100) or to 'error' when pushFailed is true; sandbox shutdown is gated by keepAlive - keepAlive=true leaves the sandbox for follow-ups, keepAlive=false calls unregisterSandbox plus shutdownSandbox.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/route.ts#L607-L696",
+          "version": "repo-lines-v1:sha256:d623bcef9809c9310ed0c9e33279c9dfdd7c58b34c35cfc1ed14928e538df375:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmYTQ2ZmQ5MmExMzVjYWE2NDFjZThkMGEyMDhiNzAzYTNmNTgxYmY1MDI1NTVlYTc5ZTczMTRkYWIwYzM2MjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNGYyN2FkMWRjNTJhYjFjMWExYmI4ODM0OWEwMTkwNGQ5MjNjNWNkZDE0N2Q3NWFmMjc5MDZjYzM0ZTYxYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwMzI5MWJiNWQ4ZjU1YjAwNDc2MmVkZTZhZTUyOGZmYmM5NDE1OWNkZDdmZTM1NDVjNTJjZDVkYzFlODA1YjMifQ"
+        },
+        {
+          "resource": "repo://app/api/tasks/route.ts#L706-L728",
+          "version": "repo-lines-v1:sha256:1183d893d1c51f26c9045ff5f4f392718e1a6722055d2fa02913786835b95c55:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlZGJmODM4NzUzNjg5NjZmMzEzYWU2Mzk1MzljNDAzNzAwNDViYTUzZTJlMmNlZTkzYmI2N2Q1ZGExN2I5ODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZTgyZDU0MmI4YjcyYzdkYTU1ZTY0MDZkYTU1NjE2YzUzNTJlNDJkYTJlYWE2YzgyNmU2ZTg1YjcwNGY2ZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlNDBmYjhkMDA1ZTVmZDM4YjdkNzg3ZTFjZjc5YTk3YjQyOTZmMGQ2ZmY0NWE2MTQxMDgwN2Y3YjhhMjYyOTAifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/git.ts#L75-L100",
+          "version": "repo-lines-v1:sha256:cffe7a31b654303c1a3e63ffa3c025ef92e755cb752dc1b15ece5e3042d36cff:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMDM1NzgxODhlZjg3ZDdlMjhkODFkNzhhNzlhOGM0MWZkNjQ4ZmFlMDFmNjkxMjBmMDMxYjdkZWVhOGRhZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_657267db10f142999043ec9347ca915e",
+      "statement": "Sandbox reachability is split between a process-local Map<taskId, Sandbox> in lib/sandbox/sandbox-registry.ts (used during the current serverless execution) and the sandboxId/sandboxUrl columns on tasks (used by Sandbox.get() to reconnect in later requests such as follow-up messages), so the same sandbox survives across the serverless-function lifetime gap.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/stop-sandbox/route.ts#L36-L41",
+          "version": "repo-lines-v1:sha256:4d44650e97d9f60f6bef013376f042499e9dae114b447a12125b62cc4ca887a8:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYwMTdjMjU0YzY3YTcxMzU2MjY4YWY2ZGE4NzAxOGUxZjFhYzZkMTU2NTliNzYyNGYwOTViYzNjYmE5ZWY5OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjQ3NWU5NGE5MDRhYzQ5YjMxNTRkNDY3MmE2NmU4NjI5Yjg2ZGFjNzRlM2UyOTM3YmU2OTI3YWUzZGExMWM1MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGM1NDA4MzliZmJhNzY5NTdkYWY3ZWExODRjOGY0Y2IxMmEzNzI5YWEyYTYzZTliMWE3OTgzYzdjNWYxMDljNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2E4ZjU1NjlhMWQ5ZDkwN2I3NTYyNmY0YTI1MzU4YzlkYTk4NmFmOGM5ZGI1M2M1YjUxNGI1Zjc3YjliYTE2MyJ9"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L99-L101",
+          "version": "repo-lines-v1:sha256:c7e31008c65b57e56811f93c29b16fc08a14e0d942e4ad90c479484b400427a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQwOGQzNDc2NjIxM2JmMjA1NTAwMzcyNDNmYTgxMWZkYzRhMWVjYzM5NDA4OTdiMjQxMTdmODhjZDI3MzQyNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGJkZmQzNWIwY2Q2ZjE5MWE2YjIyNWFjMTcyMjI2NDJkMmNkNDUyNjkzODQ3Mzc3ZTA2MjVlOGUyMGQ2YjM2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzVkOTdlZDdmMTliMTI5ZWI5ZWE4ZjRjZWEyN2E4ZmQ0NzZjMjU4MmQ4ODNhZmVlODBhNzM5ZTMwY2VkYmVlNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjU3ODllZGVmNmU3NmNiYTViZWVjZjM4OTJiNmJkODMwYWZiYWUxODI5Njk5M2E2MDRhY2EyODc2ZmVmNTZhNyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/sandbox-registry.ts#L1-L63",
+          "version": "repo-lines-v1:sha256:2f6bcb7a6a20b803098999ec31e94c978ab2091c334c7ddcfc365c9a926dc574:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYzUwZGJkMjAxODM4Yzc0Mzk5NmU1NmRmMDAyZDNiNDE4NzkzMjllNzY3ZDliZjI5MTEzMjlhYmQwMzcyNWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1ZmY0NzJlMTlhYTJlNDhhMmY3MWIwOGY0MDJmMGE1Yzc0OTdjM2Y0N2ZkOGE0YzA4ZTg3MDcyYTQwNzQ1ZGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

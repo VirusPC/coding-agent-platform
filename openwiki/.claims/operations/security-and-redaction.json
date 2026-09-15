@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4ab0068994bcdaab33029a082a9c70131efb955f04d06a91c90b2286b6915b1c",
+  "claims": [
+    {
+      "id": "claim_1beb7aa84d834e93b55acd74f2683f9a",
+      "statement": "All log statements in user-facing code paths must be static strings - no template literals with `${}` interpolation - across logger.info/error/success/command and console.log/error/warn. This is the project's primary defense against leaking sensitive values into the UI, because the tasks.logs jsonb column is streamed directly to the browser.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L7-L33",
+          "version": "repo-lines-v1:sha256:8f3e8d25976bb99f385f635d4171c5fca1ecd93d900cdd2955c849885abfe2f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxNWUxNDMwYzRmNDlhYjhiMjMxMTFjMDdiYjMwYzkyZTEzNjBjNTk4YzU5OTE0MTIyYmY4ZjU1ZjAxZjgxM2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzMDhiNTM0NTcwOWJkZmQ0ZDlmNjM5OGQ4MjZiOGU2YTQ4NzExZmJiMzY2NzdjNTY5NzRmNzZhMmQ2MDNlZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NmI0NWVjODM4MGUyMzYzZjExOWRkZjZiYWE1MGY1ZTA3NGU0NDIxMDkzYjY0NmE1YmRlZjk1M2U4MTdjN2MifQ"
+        },
+        {
+          "resource": "repo://lib/utils/task-logger.ts",
+          "version": "repo-file-v1:sha256:cea858d30e24d46ac4d8347e100e408a513f73e227f844edfc209488e3692858"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d679ec65dc0444aa7b2588667344a13",
+      "statement": "AGENTS.md codifies the sensitive data classes that must never appear in logs: Vercel credentials (SANDBOX_VERCEL_TOKEN, SANDBOX_VERCEL_TEAM_ID, SANDBOX_VERCEL_PROJECT_ID), user IDs and PII, file paths and repository URLs, branch names and commit messages, error details that may embed sensitive context, and any dynamic value that exposes system internals.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L34-L40",
+          "version": "repo-lines-v1:sha256:1b02a23cfa340fc086b8c62e5b058d6da5401ff0b94407b055474aa045a5c90b:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzE5ZjAxZWQ0ZTg1OTkwZmU3Njg0Nzk3MDMwNjM4ODg5ODkyNzFiM2JlNzJmMTFmOWQ2ZGI1OWVlYzJjMzY2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzVhNjFlMzVkMGRlZmRhYjVhNTI4MDgzYzFkNGEyZjIxZWJlOGExNDk0MTdkYmVkMDkyZmRjOWE0OGRhZjk5NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDc0MmIxYTBjNzVjYTI1YTk1NDJmZmU2YTdkZGI3YzU3MjhkOTUzYWRkMTcyZTA1YWFiMTg0Y2U4ZWNmNjkwMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWIxNjVjZjk3ODNlYmUzNzY2MWEyY2ZiZDgwY2ZiOTJmMjMwMWI4MjZjMDU5Mzk5Mjg3Y2NiNjlkNjIwMDY2ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5d17965003542d28d9f2762068406f7",
+      "statement": "redactSensitiveInfo in lib/utils/logging.ts is a backup defense only; AGENTS.md explicitly says the primary defense is the static-string rule. The function runs a closed allowlist of regex patterns, so any secret that is not in the pattern set reaches the UI verbatim (POSTGRES_URL is the canonical gap).",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L42-L52",
+          "version": "repo-lines-v1:sha256:f541e8722c1b0d36458a04e81f7cdf0e93854bd8f680c634a1cabe2173e11102:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyYWE0YzBjMDJmMTE4YTU3ZDAyNWQ4ZDNjNDE3MzAwNzVkYTNlODFhYzBlZTUyZjIxYzlmNDYzZjljMTdkYmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTc0MjVlZTVhOWMwZDFjY2E3MmZhNDk1MjY5Zjc3MmJkNTJlYzI5MDA5NGJhZDIxZDM5NzBjYThiZTUwMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0ZTUxMjhmNTgzODU4OTRjMDUxNjI2YmNlY2U1MTQ5YTgyZTAxYTFhMmUxNjVmZmRiNGEzMzkyMDBiNzU0MGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwMjEzNDdkNWY1N2JmNzUzYzY1NGNhNjVmZjNhMTAxYjY4NTkwODY1MTlkY2Y5ZWQ0YTU2NDUxNDY3MmQ2NTQifQ"
+        },
+        {
+          "resource": "repo://lib/utils/logging.ts#L6-L74",
+          "version": "repo-lines-v1:sha256:6a23ea38853ca82d640df4e4f411d1ab7d8b0f2ea066dc3a546fc38b01516536:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyMjdkZjBmMTIxZWJmNmEwNjBmY2RjNTAwMmE0MTljZWFjYTg5NDFkZDEzMDM0ZjFmMjQzZGY1ODEzMGYwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNzQ5MmYyZjhiYzM1M2Q3NzYxYzc3ZDNhNmEyNWYyZTRjZTMwNGQyYTI3YTkwM2JiOTFiZjVmZjBhMzJjOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4ODM2ODE5MmQ0OWZlNzYyMjA4YTM5YTE2MjhkZmY0ODQxNTMzOWQ3NDVlNzU5ZDJkMmY0ZDJmYzVmYzJkOGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d202c8a096e4db0a904696951046fab",
+      "statement": "redactSensitiveInfo runs three passes over the input string, in order: provider-specific API key patterns (ANTHROPIC_API_KEY=sk-ant-..., OPENAI_API_KEY=sk-..., GITHUB_TOKEN=gh[pousr]_, GitHub auth-in-URL, Bearer, generic TOKEN, SANDBOX_VERCEL_*); a JSON field pattern that replaces \"teamId\"/\"projectId\" string values with \"[REDACTED]\"; and an environment-variable catch-all that matches any uppercase name ending in KEY, TOKEN, SECRET, PASSWORD, TEAM_ID, or PROJECT_ID followed by an alphanumeric value of at least 8 characters. Every matched value is masked with first-4 + max(8, len-8) stars + last-4 (full stars for values of 8 or fewer characters), preserving the variable name so the UI can tell which key leaked.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/logging.ts#L6-L74",
+          "version": "repo-lines-v1:sha256:6a23ea38853ca82d640df4e4f411d1ab7d8b0f2ea066dc3a546fc38b01516536:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyMjdkZjBmMTIxZWJmNmEwNjBmY2RjNTAwMmE0MTljZWFjYTg5NDFkZDEzMDM0ZjFmMjQzZGY1ODEzMGYwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNzQ5MmYyZjhiYzM1M2Q3NzYxYzc3ZDNhNmEyNWYyZTRjZTMwNGQyYTI3YTkwM2JiOTFiZjVmZjBhMzJjOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4ODM2ODE5MmQ0OWZlNzYyMjA4YTM5YTE2MjhkZmY0ODQxNTMzOWQ3NDVlNzU5ZDJkMmY0ZDJmYzVmYzJkOGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_344d99ac23b74aaaaa6776108c2be78c",
+      "statement": "Every persisted log entry in tasks.logs passes through redactSensitiveInfo at least once, because createLogEntry in lib/utils/logging.ts invokes it before returning. Additionally, every per-agent runAndLogCommand helper in lib/sandbox/creation.ts and lib/sandbox/agents/{claude,codex,copilot,cursor,gemini,opencode}.ts redacts the shell command, stdout, and stderr before passing them to TaskLogger.command/info/error. opencode.ts has an extra fullCommand.replace(/API_KEY=\"[^\"]*\"/g, 'API_KEY=\"[REDACTED]\"') step for inline API_KEY=\"...\" prefixes, and claude.ts has a fullCommand.replace(aiGatewayKey, '[REDACTED]') step for the AI Gateway launch command.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/claude.ts#L302-L303",
+          "version": "repo-lines-v1:sha256:f8a1c94871a8b17eb7fb57b64d06836fe2d97c30824ef9350d4817647ddaea1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWY3NzQyNWQ5MDQ5NDk1NDdmN2FlYzRhYWM2ZGE0OWFjZmI1Y2NkOTU4YjRiYWY3OGJjMDhhZGMwNzZjNThkYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzNmNWQ4ZDZmYWRhMzRkY2JmMjM4YTcxYTc2ZjUwYzlhNTgyMTcwM2FkOGE2YmZhNTY4YmUwZTU3ZTdkN2NiNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGIyYzQ2YTcxMTk5NWIwMjM4MzgwOWU5N2EzM2RiOTg0OTI1OTEwY2Y2Y2MwZjg4MDJjMjM2NDY0ZmE4MTdkNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWVmYzViODhiOWRiZmE4OTgxMTg4OTM2ZTA2MzQ4ZTM5ZWVmNmIwZGE5MjllZTQ1ZDcwZjY0OGVlN2E0ODdjZSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/opencode.ts#L349-L353",
+          "version": "repo-lines-v1:sha256:3becbbc6126d6587a61d827e6b94539fbf80bc792989ee9575f3f6b70daeef5e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI0NWRmN2RiYjQ0ODIzZmNlNjA4NDIzYmEyZmQ4YTljMTNiZWMwZmUxNDJhMzRlOGU1NTI5ZjBkOWM5M2YwMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjUyNzIwMjcxMjFhZjM4MWI2NzRkYzA0NzY1Mzg0NTM3Y2MwOTI0NTFkNzlkYjk1OTdlNTU2NjYyZDkwZTJhYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzc5Mzg3MGE3ZDQ3YWFmNjZlYzE2MzAzODFlODg2ZWE5ZTExZjZhNDNjMzNjMmE2N2I5ZGQxMjUyNjY4MGU5ZiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L13-L45",
+          "version": "repo-lines-v1:sha256:9034a48a9bd9d6cc8dcd3cf0a14a16606de2d7fe321074af0cc491fba9e04d91:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ZGQyNzg5MmQxZmQxMDNhOWE3YzQ3ZGIwNDkzZWJmZmU2YTg1ZDQxYmFlZTE1MjQ3ZjZhZTY5YjE1OGNmMTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0NTBmMWU5YTM3YWJjNjA5N2VlMWM2NzY0YTNiMzliMmNhZGU3YzNhNWU2Y2YxYjhjMTE5OWQzNzQ5ZjFlZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzMTZmNzBkNDE2MTVlOTVkYmE4NTQ0YjgxMmRmOGQzODY1M2YxODQ1MDZlZWUyZjQ5Mzc3NzI2OTZlNjg0ODgifQ"
+        },
+        {
+          "resource": "repo://lib/utils/logging.ts#L76-L99",
+          "version": "repo-lines-v1:sha256:8b611b6e2424f08e8465d76a98a17bb9629c0cceac15f92b55727af62e9f0acb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiOWU1NzdkNzQ5NTdjOGRhNDQ3ZWUzMTNhN2QxOTg0MDJlNjU5ODkwM2JkZDY2OGEwZTBlN2M3MTY5NjcwYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0ZjE5NDA3NDMwM2E3MWJiNjU4ZDZlMTczNmUwYjc4ODAxOTczYzFiMTczNDJjZmFkNDk2MWVkYzVjM2ZlM2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/utils/task-logger.ts",
+          "version": "repo-file-v1:sha256:cea858d30e24d46ac4d8347e100e408a513f73e227f844edfc209488e3692858"
+        }
+      ]
+    },
+    {
+      "id": "claim_6393fb8b5b6245e88486c7ebc5004b19",
+      "statement": "AGENTS.md's Configuration Security > Environment Variables section forbids logging or client-exposing SANDBOX_VERCEL_TOKEN, SANDBOX_VERCEL_TEAM_ID, SANDBOX_VERCEL_PROJECT_ID, ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, CURSOR_API_KEY, GH_TOKEN/GITHUB_TOKEN, JWE_SECRET, ENCRYPTION_KEY, and any user-provided API key. The companion client-safe rule limits the NEXT_PUBLIC_ prefix to exactly NEXT_PUBLIC_AUTH_PROVIDERS and NEXT_PUBLIC_GITHUB_CLIENT_ID.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L174-L196",
+          "version": "repo-lines-v1:sha256:a8004f7910ce3c97e7adb799303a03428d5703224d064d8eefe2fe514d8fb49a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhMTU4MWQ3MzViMjBhMGQwNzRiZTgwMzk2MGM4ZDFkYWRlZGViYjBmMTcyMDQyYzA2NmRjNGMwOTE1NDdlNTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiMDAxNjk1NTM2Mzc5N2YwNDdhOTUzMGZkZjMyNjJlOTkwZmNkZDVkYTMzODFjYWEzZGZmYzNlMjA2YmY0YTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMWQ1OGYzZWIxOWZiOTdjMGVkMjRjMWQxYzVmMzYzOTIyNTEwMjNlMGMzZTkzZTg3YjJkZDQxMTQ3MzMwYTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b5afd9cd3c5c496095782e977ee254d1",
+      "statement": "TaskLogger.append is wrapped in a try/catch that silently absorbs database write failures, so a logger failure cannot break the surrounding task. TaskLogger.updateProgress and TaskLogger.updateStatus re-read the existing logs array from tasks, append a new entry, and persist it inside a single update, so concurrent appends can race only on the last entry.",
+      "evidence": [
+        {
+          "resource": "repo://lib/utils/task-logger.ts#L16-L131",
+          "version": "repo-lines-v1:sha256:912734b7afeb804fa4a5be4ada0cc0f1886606a32d14bdec752cf376c8e92fd1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3OGI5YTJmYjZkZWViZDc1MTM0MTVkOTNkODRhOTRlOWFmNjJmMGQyOTEzNjE2YWQ1NjU5NjRmZTdjNDhkMzI1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyN2U1Nzg4ZDVkOWQ3M2QyNGE4MWRiYzBhNWE3NGJmYTgyYzljM2IzYWY5OWU1MmFmNzk2ZTkwYjQ2OGE4YTNkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlZDUwYjdlMmJlMDY5YWQ1YzFlMzRlMTI1N2JhM2Y1NjJiYWMxNGZiZmQ5ZThjY2M0ZDhiODMxY2MxNjc0ZGU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzNzkyOWU5MWUwZjk5YzNlODI1ZGU2OWI0MzVmYjY0ODRkMWIwYTFkZjJmNDY1NjFhYmYxYTI5ZjA0MTg4Yjg4In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f67b9f2ad51549ecbed1bf07eb07ed4d",
+      "statement": "AGENTS.md defines two grep commands under Testing Changes that detect template literals in user-facing logs (grep -r \"logger\\.(info|error|success|command)\\(`.*\\${\" .\" and grep -r \"console\\.(log|error|warn|info)\\(`.*\\${\" .\"), and a Compliance Checklist that must be completed before submission, including no template literals with ${} in any log statements, all logger calls using static strings, all console calls using static strings for user-facing logs, and UI verification of no data leakage.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L156-L173",
+          "version": "repo-lines-v1:sha256:8b3d53fef3c78271318e33cf6dc1107982ddb8b1940a5d995e52e5cf232bf3ad:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5NmY5MWZjMjhhODg4MmMyZmYwZDcyMGU1N2U4MmYxYWRjZmEyMjVjZjhkMjc4Njc0YjdjNDE4YjIwZDZkZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRhNTZhYTgxNWE0ODkyZGI2MzVmNThmMmVmZTJjYjE1MWQyMWIwZjEzOTdiZWQ5YzJlYWVjM2Y4M2Q4NjJlYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwOWY4NWVjNmM3ZDJjYmFiNzcxMzNmZTg5OThiOGYyZmQzNjJjYzdkZWM0MWUyNjE2ZmJjYzE1ZGE0OGQ2ODgifQ"
+        },
+        {
+          "resource": "repo://AGENTS.md#L247-L262",
+          "version": "repo-lines-v1:sha256:4649eb662a22fe6239e116eb26506ee7273058d866c66e353e8132526971f06f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkMWEyMzE1YTNjYTcwYTY1ZWFmMTZmMDBiN2VmOGEwMTM4NzA4NjMyNDUyYzA0ODFkMzdjNGZiZWViOTBmN2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMzczOGVjNTY0MzIzNzk0ZWFlMTgxNGZjZmU5MzhhMWRmZmQ2YWFkOWE1NmZhZWRhMzdkOGFmNjU5ZTdmZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI5ZTM5ZGYxZDdiOGI5MjliNzcwNWY1ZGVkMDFhNmVhNThhOTY2NDY1OTM1MWUxOGVjYzdiOWU2MDY3Yzk3YjAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

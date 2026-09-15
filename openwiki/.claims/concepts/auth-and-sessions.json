@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6b94fd9c774ddb55e7c27fedb18a92ad4a284c7c9fa6531ad7e52daf8f048a62",
+  "claims": [
+    {
+      "id": "claim_ddcd04f2385a4449bf95c5116b6aafc2",
+      "statement": "The set of available sign-in providers is configured at deploy time by the comma-separated environment variable NEXT_PUBLIC_AUTH_PROVIDERS; getEnabledAuthProviders in lib/auth/providers.ts parses it into a { github, vercel } boolean record that the sign-in UI consumes to decide which buttons to render, with 'github' as the default when the variable is unset.",
+      "evidence": [
+        {
+          "resource": "repo://lib/auth/providers.ts#L5-L16",
+          "version": "repo-lines-v1:sha256:0e0034bda2e6ae30bfbb761db0d87de99e3ebd28b19f238560bd6197f50aa3f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNGQzNjk3MTEzOGIzYmM3ZDliMThiM2YxNGYwYWYyNmEyNzhjNDEzODM5ODY3YTI2NDA5YzAyOTUzODAwMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzOWI5MTY5YTc1YmUzMGMyZjVkMTU2YjI1YzAxODI1NGZjMGJhMTUwMWE0MmUzYmVhYzRlYTYwMjM2NGE1OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e533c9493d51496abbd9011861d55ae6",
+      "statement": "The two providers use non-symmetric OAuth handshakes: Vercel's sign-in start is POST /api/auth/signin/vercel using arctic's PKCE (S256) flow because arctic has no built-in Vercel adapter, while GitHub's start is GET /api/auth/signin/github using the standard auth-code flow with scopes repo,read:user,user:email and no PKCE; the Vercel callback calls arctic's validateAuthorizationCode against the bespoke endpoint https://vercel.com/api/login/oauth/token.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts#L26-L41",
+          "version": "repo-lines-v1:sha256:8ed659b769f0563f93092b96f40861ae5b010f7ecf84e663b2cd9285d6b6e7cf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwNzJkZGUxN2E0YWZiNmIyZTk5ZWQ3N2IzNDJhMDYwY2JiZDk1MTkwYmUzMzYwNjQxYzk2MzZkNWY4ZTY1MzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljNzlmNjZkZTFhMGY2NmIwZWU2MzVhNDc5OTI2MTJhMzZkMjA2YWEyMzcxODY0M2E4ZTFjMDQxYzM5YTNkZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYjU2ZDgzNGVmZGU0Y2MzYWRkM2NkMTc4YThkMDQyYzFjMTk2MGZjMzUyYzZiZTczODMxN2UxODZiMDYyZGQifQ"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts#L57-L69",
+          "version": "repo-lines-v1:sha256:c888ee634c45441fd1414ab74501de5ec8c2f6739dd9b880de305d05fd680b10:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4YzIxZWMwZDRiMDJlZmUzZTI0YjUwY2JiMjhmNGZiMjcwZmFhOWYzZDgwMWRmMjAxOGM5MjNkZDc5ZDI3ZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjZjNlN2ViYWFmNjVmMmI5NmU5NzBhNTJmMGUxOGI0MGEzNTkzNTc1YzZjZDlhZjExMjI1MjJlOGQwNjcyNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L1-L43",
+          "version": "repo-lines-v1:sha256:5a676a0636c8600ec2d4eba4d207be2e273656e0f5cc40161ae8ba994852a92c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlZWFhMWQ5Yzc1MTdkMDM4OWY0MTQwMmExYzQxZjIwMDA5OWZkOWVmYzJhMmVjZTA5NzA1NGNlYTVkNWEwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c6cb3bfc6b314a8aa5c8e114acc23136",
+      "statement": "Identities are persisted across two tables: users holds the primary OAuth identity with provider enum 'github' | 'vercel' and a unique (provider, externalId) index, while accounts holds only linked additional identities with provider enum hard-coded to 'github' and a unique (userId, provider) index enforcing one GitHub link per internal user; this enforces the rule that Vercel can only be primary and GitHub can be both.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/schema.ts#L14-L39",
+          "version": "repo-lines-v1:sha256:1994b3a4db855145972fa6ec9a9d549d79301e3eb7efae384bf4c1b70a3f36bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNmM1ZThkNDdjNTU4OTE1MjNlYzMwNWYxMjc5ZTRkNTg4N2NjNjE4NWVkYmFjOWQyNzNhNTg5Yjc5M2MwMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExYzcxNmNhYjI4NDY2ZmQ1N2ZhZTIyNGNmMjlhZGNmYmRkMGRmNWFmYjg4MmQ3M2I4YmNkMmY2ZTc3NjVkNWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkOGJkNWQwYWU4ZDRiNDMyNzU4NGZmZTExNTE0ZDE3Mzc5OTJjYjQ2OTJmYjE2NTFmMDljNGZhMWUxZDY5ZmIifQ"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L258-L283",
+          "version": "repo-lines-v1:sha256:3560e0b5be165dddea7997114b6db0cf6ac0fc9714a87d5c7ebd17d960c2c6c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMGU5M2Q3ZmYwNDY1NGU4MzhmYWExNzI4MDU4NmU2MmY1NmJiNGEyZGU1NTBlYzc4YTdiNTBiZDQ3YjEzNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1OGFkYTIyMGE3NmMyZDVlOTE4YTRlNTFiYTM3M2FiOGM3OWMyNmU3YThmYjQyOTQ4MDUzNDA5NWYwN2I1NjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1MWU5OTAwMTE0ZGZhMjVlYmJhNDI4YzAxZTRiNjVkY2IzNjVhOWMzZTYzNzVkYmU2NDAyM2VjYzhiMzZhNDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_269b0c18b2414b09b1aacee78722d7af",
+      "statement": "upsertUser in lib/db/users.ts performs a three-stage deduplication in order: (1) if a users row matches (provider, externalId) update its tokens, profile, updatedAt, and lastLoginAt and return its id; (2) if the provider is github and the same GitHub numeric ID is already present in accounts.externalUserId belonging to some user X, return X.id and bump only X.updatedAt and X.lastLoginAt without overwriting X's primary users row; (3) otherwise generate a new nanoid and insert a fresh users row carrying the encrypted tokens and profile fields.",
+      "evidence": [
+        {
+          "resource": "repo://lib/db/users.ts#L15-L90",
+          "version": "repo-lines-v1:sha256:b0912c5e6093d5cefa799a5aa4fed375e7034af498048da28a89b5542ccb9ed3:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwYjFjNDAwMDJhZjE0MjdhYzdjNTQwZWExYTFlYjQwZTljOGVhMTBmY2U2MmZkNjNmNjg2ZDQwMWJhMzA1MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyMmE1ZDEyMzlmZTc1ODM5NTZkODFkMWYzZGEzZTc2NTAzMGNmYzc2ODlmZWM4OGYyYmRlNzRiYjJkNDk3YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0Zjg4Zjc1YTk0OWE0ZDM1ODM3MTM1MTZlN2Q2ODg1MDc1NTVhMzk4ZGJhNjYyODhkMTk0ZDg0MzJmYmE4MDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d9684fc11a044ba9b8767790190627c8",
+      "statement": "The single session cookie _user_session_ is a JWE produced by lib/jwe/encrypt.ts using jose's EncryptJWT with alg='dir', enc='A256GCM' and an expiration of '1y'; the symmetric key comes from process.env.JWE_SECRET base64url-decoded. lib/jwe/decrypt.ts reverses the operation with jwtDecrypt, strips the iat and exp claims, and returns undefined rather than throwing on any failure so a corrupt or expired cookie is treated as anonymous.",
+      "evidence": [
+        {
+          "resource": "repo://lib/jwe/decrypt.ts#L3-L23",
+          "version": "repo-lines-v1:sha256:aa37e23d70146804909eb276e9862a9b491526a4629de4f4fb62b40ee82eec9a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNjY2ZGQyYjVhYWQ5ODA2NmZlOGRiN2M4NWU3ZjExZmRhYmFjZDdmOGM0MjYxMWNjZWIwMWI2OGUzNTc4NTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyYTM0NGE3MDY2ODBkNGQ0N2Q5ZWEwMzg0YjAxNGJmMjY2ZTI1ZGIyNGFhZGJkNDBiMDZkYzY0N2VhNjBkMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/jwe/encrypt.ts#L3-L16",
+          "version": "repo-lines-v1:sha256:99fe52248e53f779655d55e2e5fb8c1e11fb4d98728c890277a3c7950792503c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3MDNiYmNlN2M3OTVmYTNjYzcyODIzMTMxY2NmMjMxNTFlNDVjM2JhMjg0Mzc0N2VjNjJjMjY1MTYzNDc2ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiMWMwZDcyMTY1MjRlMzNhZDNmM2VmMjBkMzY3ZGEyZWM2ZjQ4N2E2NTUyOWZhYmEzNzVjMTFjMDdmZGYzZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/session/constants.ts#L1-L1",
+          "version": "repo-lines-v1:sha256:d589985f96cf93ea1291d9c8a52a86fd6e6bf7bc25ca545227d794f59ee3c675:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU4OTk4NWY5NmNmOTNlYTEyOTFkOWM4YTUyYTg2ZmQ2ZTZiZjdiYzI1Y2E1NDUyMjdkNzk0ZjU5ZWUzYzY3NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU4OTk4NWY5NmNmOTNlYTEyOTFkOWM4YTUyYTg2ZmQ2ZTZiZjdiYzI1Y2E1NDUyMjdkNzk0ZjU5ZWUzYzY3NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed3bbfc8cbc44b7cb8cf5bfedf662806",
+      "statement": "The session cookie has exactly two read paths that converge on getSessionFromCookie in lib/session/server.ts: getServerSession in lib/session/get-server-session.ts wraps next/headers cookies() and is wrapped in React's cache() for use in React Server Components, while getSessionFromReq reads from NextRequest.cookies for use inside app/api/** route handlers.",
+      "evidence": [
+        {
+          "resource": "repo://lib/session/get-server-session.ts#L6-L10",
+          "version": "repo-lines-v1:sha256:ecd70b3f7bc2df8d10feddb730db9c0398e05f9c6f83006e19c6adff2003dbc8:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGUwYTM3MzU0YTdlZWY2MTJmYzNkYTFlMTk2YWRiOWNmMzEwZjcwY2VlNDMwMDNmYTY3OTBkNzE1YTk0OTViYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODU4MGI3NjUxOGRhZTk3OWZhZWJkMDIzNjdhMjkyOTJhNTBkOTc2MDkyMjUxYTM4YTZjZTMwODgwYmE0MjgyNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTg2YjJiNWY0ZjUyODgyMTY4MTNkMzAwNmZlNTEzNmZlYmRmMDk3NzIxMmMzNjkyY2NjNjg0MTIxZWFhM2Y0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://lib/session/server.ts#L6-L21",
+          "version": "repo-lines-v1:sha256:d7f964a2c250bc9a14233364123953aebf5e33486f7485d960b780db74e83957:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiYzYyNTg0YjQzM2I3ZDUxYjJmODcwZjJkNzE0ZTdlMWRhNzBmN2NkYTRhYjk4MzdlZGU1Nzk4YWE5ZDliY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhZDhkNzlmMWY0MmIxNzM2YmY1YTdlMTRmNWZjZmE3ODQ4Y2I4YWIxN2YxOWNjOTMzZDRiMzYwYTc5YWJhNTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBhNDY2ZTA3N2Q1ODMzMDBkNTZmOTM0ODU5YjE1YzAyNzA5MjdlZjBhYjQ5NTI4YWFlY2ZmMzQwNGVjMDQzNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ca2218b61574ccf94238d33811e5a0d",
+      "statement": "The sign-in flow uses a dual-cookie model: the long-lived _user_session_ JWE cookie carries identity across requests, while short-lived auxiliary cookies carry provider-specific OAuth state across the redirect. Vercel writes vercel_oauth_state, vercel_oauth_code_verifier, and vercel_oauth_redirect_to (the PKCE verifier being the extra cookie). GitHub writes either github_auth_state + github_auth_redirect_to + github_auth_mode='signin' or github_auth_state + github_auth_redirect_to + github_auth_mode='connect' plus github_oauth_user_id=session.user.id; both callback handlers delete these aux cookies after consuming them, and the GitHub callback still tolerates the legacy github_oauth_* cookie names without an auth_mode cookie.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/callback/vercel/route.ts#L65-L67",
+          "version": "repo-lines-v1:sha256:faeed79d9b32e9a7490b96965f17b3e35eae5367ff13eb9ed35185f76d926387:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmQxZWM2NWExNTdhODIwM2VmYzFhOTk4YTViMWVmMGE5Y2MxNGY3M2MzNzMyMDAxNWQwNzcwNGUxNzYwNjZjZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODkxN2FiNjI2ZGU0N2JiMmEyNmUxODcxZWQzOGQyYzE3ZTRhMGRmMDE2NzI2MzIzZDBjMzViYTcxYTk0M2YzMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTFkYjQ3OTA4ZWYwODgzOWE4Y2FjODgyNzY1NDFjZDM2YmNjYmEzYTg3MzJmODVmZjRmMmE0NmRjNDg2OTNkMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNhYjRjNGY3NzY0OTgxN2ZmMjg1ODkxMTFiMTJjZWVmNTViNDBlNzYwODYxOTc1NTFiMmY5YjljZTViNzhlYyJ9"
+        },
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L16-L24",
+          "version": "repo-lines-v1:sha256:6d01504ff130da0b01ea19ac5eb7088015af96bbcdded198ef57a9bcb559d93c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzE5ODE1NGUxZTA3MTFkNDg2YTA0NjgxMmJlZDUzMTljM2ViNjk4MzQzZDA3YjY1MDExZDMxZWQ0MmUzOTYwOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ4OGIxNjM2MWMzYzNjNjdhZWNlOTNhZjZiYzVmZjg0YTk0YmI4MWRkMzg2OTgxY2U1YTA5ZWZiOGQ1NzhlNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmUwYjU3OWExNDRiMmM2NTgyYjQ3NGZhNWYzZGU5NTQwMjE5MGNmYzBkMzBjYTUyYTRmNTUxZmUyNmI5NmYzMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODZhOTA2YWNhN2ZhMjIxYTBmNGY2NjY4NmVlMTU1ODkwNTkxNmI2ZDc4NjQ1NzEzNTYzOTNmYmEwYzNjNWVjMSJ9"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/github/route.ts#L37-L56",
+          "version": "repo-lines-v1:sha256:d27642900bbd9716e52547a36cbea0529b0111cb91bc056a037baca37fc3e07e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1ODkyNjJmYzVkZDBlNjQwMjIyNDAwYWQ1ODY0ZDlmYzliM2M1NjU2NTQ4ODFhNjVlNGVhN2JiODc3N2VkNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhZTUxYWIyOTJmMDk5NGZmMTIzYTlhNTk5MGY3NzA0NWI0YjViNWI2NzAyMzg5MGVlZjU5Y2Y4NTNiMDMwYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0ZmUwNjMwYzllYWJlOTAxNzAxNjUyM2M3MTYzYmVhOTdmMDBlZjExMDM1YzllZDVjMzc1OWI5ZmM4MGM0MTgifQ"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L28-L40",
+          "version": "repo-lines-v1:sha256:710d8599f3c8b96909037a584c180633d080564149ec87ac9a38d028d541e390:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1MTkwZTU4ZmRhMjY1N2EyOGQ2N2JjNmEzZjJiZWRhN2VkMGFmMDc2YmRjNjU0M2VmMzBlNjY4YWVhYTQwN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwYzJhZTZlOGMwMjZhZjY3YzQ5YjdmOWQ4MjcyYzcyNmIxZTZlYjJmM2VlZDU2ZGViZjEwYjgyOGVhNjMzYzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU3NjQ2NmZiNDllMzE5MWE5NzIzYzRlZmRhNzcwZjAwOWEwZmJkZjQ4NGVjNGJiMWQ4ZDZjNTAxMjVkODJlOTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_36c6494c231147c48de1dce716026629",
+      "statement": "OAuth access tokens are encrypted at rest by lib/crypto.ts using aes-256-cbc with a 16-byte random IV and a 32-byte key from process.env.ENCRYPTION_KEY; encrypt is called from exactly two sites (inside upsertUser for primary tokens and inside the GitHub connect callback for linked-account tokens), and decrypt is the only function that turns stored tokens back into plaintext. The GitHub primary path passes encrypt(accessToken) with refreshToken=undefined because GitHub OAuth does not issue refresh tokens, while the Vercel primary path encrypts both accessToken and refreshToken when present.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L145-L209",
+          "version": "repo-lines-v1:sha256:d80e3de516ecf8158e5fba29e2cf055dad3611e0e9a7ac72730949655a937be5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5OGE3ODI5MzRiY2NlYmYxZjVlYmI3MWZhMTY1N2ZkNjczNGM4NDI1MjgxOWVlNmY2ZjJiOWFiNTg3YTNhNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5YjE5ODJlOGRkNzQ4MTE4MTQ2YjM5YTJkMDA2MmY0MDgxZTM0Nzc5Yjg2NzVjMjM0YzRmYjEyNGRjMzkzOTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0MTc5Y2Q1YWFkYmIzMDM3ZWU4NmQwYzFhNTg5Y2IxNzU4MDgwZTJiOGFiYTQ2MDNiMTYwNTVlNGY3Y2JkOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2MWNiN2I1MWM5YTJmMDNkYTQ1MjZkYzkzMDI4MGM5ZjY2ZWY4YzkzMGRlYjQwNzE1M2I1MTY3NmE1N2U3N2UifQ"
+        },
+        {
+          "resource": "repo://lib/crypto.ts#L1-L63",
+          "version": "repo-lines-v1:sha256:f354cf9b293496f1f3cda82e75ca8b705a88260488908b013068f1ce4ce7f121:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5ZWZhNTUxZjk2NGQyNjc5MmViNDViNDA0OWJkN2M5MDg3MmU2OTA1NTUyNTM0ZGZlODMzMzdlNzFhYWExNTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://lib/session/create-github.ts#L55-L65",
+          "version": "repo-lines-v1:sha256:0bbed7ccbf7075de98050b653a7e736573d064373312f62d239cdd00a82e7ec5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhYTljMjk0NGU3ODhiN2JmZTc5NmI0NTM0YmZmNGNmOGU3MWU1MjBlNjExNjY4MTU4OGI0ZTk0ZWVhNGQyMjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMzUyNTg5YzM0ZDNjNjA2ODU5MzFiNmVjYzRkNTA5OTFhN2M1NmM4ZmJhMjg5NDExNDY1NzY5MDI3MmNhYzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwZTZmZWIyZGVkNjY4ZmVhMWNhYmVlZGQyMDJkYzczMmM4ZWI4NDJhMmE0NmQ3YzA1Njc1NTEzYTIxMjYzN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVjZGNiZDg5YmJhN2ExMGY2MDU2NjI4Zjc3YWQxMzYxZjA2NWYyNGZjMTJkMjY5ZDIzMTE0OTdkMjY3NDEyZTkifQ"
+        },
+        {
+          "resource": "repo://lib/session/create.ts#L24-L25",
+          "version": "repo-lines-v1:sha256:5e1fa636d848989e9ebfb9bfc0691e25353a30e68fb2f5b2d190fc30e6b193cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWQ4NTA1MjYzZTc2ZWE1ZDNlMzlkNTRjNDI3NzNmMGUyNDkyMzdkODcxM2ZmMjRmMWQxZWYzNDdlNjBhMmRlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDdjMGY1OWFkMWQ2N2ZiMDQ4ZGI3ZGU0OWVkZjk5M2NhZTFlNDhjOTlkMzE5ZDM1YWE5Zjk2YzJkZmY3OTJiMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDBjOTQyYTk4NjgzNTdkMzcyMDZjZDJjODljZjQzNjRhNDMwYmMwZGVhOGM4N2M4NTA4ZTE3ODIwMDAxNjUwZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDE5NWY2ZjY2ZDRkMWM1MmQwYzFlYmYwZDVmY2EzYzY1YmRhMmQ1MWRmYTQ4ZGQ0MjAyOTdlNWUyODQ1N2I5MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_91bbac246195452f87b19016681fcb64",
+      "statement": "lib/session/get-oauth-token.ts implements the provider-aware OAuth token lookup: for provider='github' it first reads accounts (linked path) and falls back to users (primary path); for provider='vercel' it reads only the users row because no link can exist. expiresAt is populated only for accounts rows; for users rows the function explicitly sets expiresAt: null. Callers are /api/auth/info (refresh Vercel profile), /api/auth/signout (revoke upstream), and /api/vercel/teams; a parallel lib/github/user-token.ts getUserGitHubToken inlines the same accounts-first, users-fallback lookup but returns only the plaintext string for sandbox injection.",
+      "evidence": [
+        {
+          "resource": "repo://lib/github/user-token.ts#L21-L56",
+          "version": "repo-lines-v1:sha256:8e38a913cb113aaba08ebf048ae2cbb62bb0101de87c436e6714a786efa9214f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiNDZlMWFjZGE3NmE1YTg3NWZjYzY2NzA1YjFmZGRlZjE0ZWVjZjQ5MWM1NGYzYjliZjYxOTNjZDk2NGI2OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhMDY1OWEyNzQ0ZGQwMjcyZTQyMGRiZjBhMjRhOGQwMGIyYTY3NDYyYjNmMTg2ZGI3YTVmNWE5M2Q2OTk0YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://lib/session/get-oauth-token.ts#L17-L84",
+          "version": "repo-lines-v1:sha256:a9152be52b4876610fcd8db446dfbf54084765904e10d0ae2ac21f25a7bdaf12:eyJzZWxlY3RlZExpbmVDb3VudCI6NjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyZThjODY5ZjNmMTM3YTgyYjIyZjc5ODM0MDQ3YzcyOGJkMzA4ZjJjM2M5ZDYwNGM3YmE3NTFmNzgyYzdhMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNjYTc2ZjIxNTVmYjVlMTcxNmU0YzBiYzU4MzIxMmU1NzkxMTZjZThlODAzMTUwMTYwNjRlYTU5NzQ1YTAwNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d07c005da0024859839ec7a2b8e9d465",
+      "statement": "In the GitHub connect flow, app/api/auth/github/callback/route.ts handles three sub-cases: same user re-connecting (in-place token update on the existing accounts row), conflict where another internal user already owns this GitHub identity (transfer tasks, connectors, accounts, and keys from the old user to the connecting user, delete the old users row, and update the existing accounts row to point at the connecting user), and a fresh link (insert a new accounts row with the encrypted token). The conflict sub-case is destructive and irreversible.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L142-L210",
+          "version": "repo-lines-v1:sha256:8f04e8a3bee0e98831b35bf78ab0f5cf193cb690c9c4b36e79c3ea3383342980:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YjQwOWMxYTE2YWY3ZDU0NWQzMzdmYzJkMmQ3ZmFmZThlZWY0MWIzMzIwNWVlNTVkOGVlODY5NGI4ZjY5ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliNjJmNjBkODU5MGE1NzljZjQ2ZjhkNjczNzhjNGM1NzJiOTYyY2VjY2RiOTBjN2E1ZjdiNDJiOTYwNzgyYTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5ZWE2MDVhNmI3YTVhZjRmZGIzZmUyMDMwYjA4OTM1MDlmMWZjOWZhZTIyODI1MWQ1ZGM1YzU5YzcwMGNkMTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1NGJhZGY1OTU5MDA3ZDVkYTBkM2QzYjA3YTY4YTY2NmUxMmE1OGJlODVjYWRkZmZkM2U1MmMzMjVjNmQyZGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d995631a349d4a02bf31bfe086f9363b",
+      "statement": "/api/auth/signout reads the current session, fetches the upstream token via getOAuthToken, and revokes it at the provider before clearing the cookie: GitHub via DELETE /applications/:client_id/token with HTTP Basic auth, Vercel via POST /api/login/oauth/token/revoke with form-urlencoded body. Revoke failures are logged but never propagated; after revocation the route returns { url } for the client to navigate to and uses saveSession(response, undefined) to emit an immediate-expiry Set-Cookie.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/auth/signout/route.ts#L7-L53",
+          "version": "repo-lines-v1:sha256:1824957a5041cf40594f296bb2cdab2cc167d8c7630800dc51a4328cde7524c6:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1ZTA5Njg0ZTFiNGE0MmU0ODQ2MmFmNjU2MGJlMzY3YTc2ZGRmMmNhNjM1ZGExZDllYmVkY2IxYjhlMDg2OGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MTZlMWQxMWQ3YzFlZmQ4ZTc0MWFmNTBmNmQwYmJlMjI4ZDZhMjJiNWJlMDAxOGE0MGFmZDBkMTc5NDczMWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZmYyMzEwODZkZDFjOTQxMDVlMmIzYmU2ZjBjNmI1MTgzODQ1N2E0ZWVmODlhODJhMTllN2U4NGFjZTc4MWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}

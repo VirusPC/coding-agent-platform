@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f588e0d4af75014902d1baf9ff70fb0bb18a2fe6ff806dbd8254c4c63739c14a",
+  "claims": [
+    {
+      "id": "claim_81ad6ec0aca745ccae1f700496d37dd7",
+      "statement": "Per-provider API keys (OPENAI, GEMINI, CURSOR, ANTHROPIC, AI_GATEWAY) follow a three-tier resolution model in lib/api-keys/user-keys.ts: the apiKeys object is seeded from process.env, then overwritten provider-by-provider with values decrypted from the keys table for the signed-in user (using decrypt() from lib/crypto.ts backed by ENCRYPTION_KEY), and the function falls back to the env-initialized object when the DB read throws.",
+      "evidence": [
+        {
+          "resource": "repo://lib/api-keys/user-keys.ts#L15-L67",
+          "version": "repo-lines-v1:sha256:9bd96879e6101e676880746a8f62cdea7c46f43a5100af4665d7b542c50922cf:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyNDk1NjFlYWU1N2U5YmM1Mzc2Y2QzODYxY2Y2NzkzOTM2Y2Y2OTg0MDFiMzUwNGE1NmU5NTg2YTgxOGYzNmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzYjRjNGZkNzAyOTJhNDM1YTNkYmY4OWM3NTczZTdlNjkzNTIxY2NmODQ3OGY4ZWFiMmM2MjE3YWNiMWRhZWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyYjQ1ZDk3OTRkMDUyODdlMDVmOWRjYWY5NDViOTVhNjg1MzZjNzIwYzRkMWYyNmJiYjhlOGQyNzE3YjNhOWMifQ"
+        },
+        {
+          "resource": "repo://lib/crypto.ts#L20-L63",
+          "version": "repo-lines-v1:sha256:27dee1db4ac6a1d96dc59c6aa015a1cf5394f2d3cb2f01fed0493ba3dae0d422:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzMzU1OTkyMjVmM2MxZThlM2NjY2RhMzNhYmExNmFjM2IzNDgxMzYwMDBmN2M3MWE5YTRjNDUzMGI2NTI1ODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNDE3MTY5ZmQ3NDI0N2M0NGZiOGY2M2JiNjQzNTcyYzU2ZjNmMDUwODRkMDkwOTAyZTlkNjhmNzExODc4ZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac2d9cfc6ffa465daa8025cb1204bdc4",
+      "statement": "executeAgentInSandbox in lib/sandbox/agents/index.ts snapshots process.env for all six provider keys plus GH_TOKEN/GITHUB_TOKEN, mutates process.env with the user-supplied keys for the duration of the try block, and unconditionally restores the original values in a finally block so the agent's direct process.env reads cannot leak into a sibling invocation.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L56-L158",
+          "version": "repo-lines-v1:sha256:3a9428ebb9fa83586d3bc489fa38c24e2c78b143584b20c040e9bcf1504baf42:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhNGJjOTMyZDFhMGUyNjE1MWYyODkzZGI1ZDlmN2ZkMjU5M2YxYzM3ODEyNGMwNjhiZjgwOWNhZjY5ZTA2MzBmIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIyN2U1Nzg4ZDVkOWQ3M2QyNGE4MWRiYzBhNWE3NGJmYTgyYzljM2IzYWY5OWU1MmFmNzk2ZTkwYjQ2OGE4YTNkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5MjYzYzQ5N2I0Yjk2MWViN2Q5MzY5ZTA3MTc5MmMwNGU4MzdjZWZjMjZmOTkyM2M4YjU4MGExMDAxOGYzMzA0IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_922f6465d0c142c5ba94a5cf798140d6",
+      "statement": "validateEnvironmentVariables in lib/sandbox/config.ts is the single gate that runs before sandbox creation; it returns {valid, error?} after accumulating per-agent key requirements (ai-gateway for claude/codex, cursor for cursor, gemini for gemini, ai-gateway or anthropic for opencode), the caller's GitHub token, and the three SANDBOX_VERCEL_* variables, so a misconfigured deploy fails before any Vercel API call.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/config.ts#L1-L67",
+          "version": "repo-lines-v1:sha256:e55f5aa69a193e445dd30384ab70bc70a1f5834c89cb9dc87c24921fd6555707:eyJzZWxlY3RlZExpbmVDb3VudCI6NjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3ODI1N2IzY2FmMDk1ZDZkZGU3OTFmODZkZDg0MTg1ZDI4NDU3ZWFlOGM3YzljZTNhM2QzZWVlOWIwNzI2MTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2YzU3MWI0ODkzODNlYTRmYjQ3NmExMjZjZDRjM2IxNjk5NzIxNjc1YmQzOTRlMGJhNjRhZTc0OGZjMmVkN2EifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L62-L67",
+          "version": "repo-lines-v1:sha256:26b8c436a74cdfc2228e37de7a1b2da6d65a1cc406864f2b3f5bf4c95eb5a0f0:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjI5YjcwY2VkNGY5NTBiMjQ5MzNhMmE5MTFkZDA2NDRiNTU4MTcxOGM0YjMwOWEyODg4OWUyNzQ1NmUxNzhkZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTRlYzMyMjE5ZDNkMGY5YzJjYThkYzJkNTAzNTdjOGRiNGQ3OGM1YzVhNDhmMGIyYjk0Y2Y4ZjEwN2FmMWY0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGRmYWE0Njc4YWIyZmRiM2JmZjFlMDgxYzJlNTk3ZDYxMzFlOTM3ZGY2YWUxYzdlYjNlYjA0MjY0YjdlOGZhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjNmNjg5MGEzZWMwMTI1NjljMmNmZjAxZjBkZDFlZWNhZTFkZDY5N2JkZThlY2Y2YzRjMDdmZmZlM2JiNDliMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e6090d0decf4c25a3e5a5bf6a28e2d7",
+      "statement": "SANDBOX_VERCEL_TOKEN, SANDBOX_VERCEL_TEAM_ID, and SANDBOX_VERCEL_PROJECT_ID are hard prerequisites for sandbox creation; validateEnvironmentVariables rejects the task when any is missing, and createSandbox passes the trio to Sandbox.create() alongside timeout/ports/runtime/resources. The same three variables are read by /api/tasks/[taskId]/discard-file-changes, /api/tasks/[taskId]/file-content, and /api/tasks/[taskId]/restart-dev to rehydrate sandboxes.",
+      "evidence": [
+        {
+          "resource": "repo://app/api/tasks/%5BtaskId%5D/restart-dev/route.ts#L40-L41",
+          "version": "repo-lines-v1:sha256:84e09ac0c50b9157cb07caf439ff3715a35d602114342d7fe69bfb98e08a6edf:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTVlMjhlZDJlY2Y1YWFjYjliMDkyZjA0MDBjYzZkNzdlNmRiNTRlMDU3MGJlZTNiZWRmYzhmMDU1ZmM5OWM1OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjBlMjk2MTU5NThlZjc2MWE3MDk1ZDAwNWU3NTdhNzE1MzVmZGQ4ZTk3YWU4MmFhMjNjYWRkOGU1MmM5ZWI0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2M0ZGNkZTQzMDQ3MGU3ZTQ5OTQwZWVhOGMyM2FjNTlkYjcxYzZmNjFlNzBiNGNlZTNjYjBhZjI1MTg1YmY1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzA2MzIyYmY1NDZlNzk5YmVhMDAzNDc1Y2Y1OGExMzk2MjFkM2M4NzcxZDQ5MzUyOGU5ZTkzMDIzMTE2YmI0YSJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/config.ts#L50-L61",
+          "version": "repo-lines-v1:sha256:26f1c2306a1810f7a807a0a469bee659abb9e091a765757acda2bae9e9ba99ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4YWVlMGJmNDljYTUzZjdhMzk2NDYwNDliOTM2YjUxZTRiZTI3NzZiODI2ZmJkMGQxNTk4ODk3NDFiOGUzOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ2NGVhODY4NzVkNmRiYTFkMjAzNzI1Y2YyNzc4NDgxMmU5Yzk2ZWJkODQ2Yzc5MjA4NmI1YzQ1N2NmNzlkNDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViN2NlNzQzNTViNTRiNWVkZDI5MGUzZjA0OGJkYTliYTQyMzFiZGQzMDc2NGY2M2ZlNTU3YzMzZGQ5NGI2OTMifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L82-L90",
+          "version": "repo-lines-v1:sha256:a52759418efb14a5146dff8c93c98e5fa481d8e759745c5f6c021ff905f545b7:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTQyM2JmMDY3MWQyMDM5OTJkYTkxMGQ4MTUyNTk0YmY0Yjk1OGVmOGU4NjgyMjllZTM5MDg4ZTU0MzYwNzkyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjZkN2MxYjJhZTY4NTY4M2Q4NWU5MTQzZTdmYWYyOWM3ZDIyZjA2NzU4ZDJhMzExZjQ0OTc3ZGU4ZTYzNTExNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2ZlNzA4ZmY0NDY4MThkYzdlMzdiYzk0NzU5YjdlZDA3ZGJiNzMyN2QzODk1MjJkYjcyNzJhYWYxY2E2NDE1NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_11e48a9ebd004548bd2d7ea074ce436d",
+      "statement": "ENCRYPTION_KEY must be a 64-character hex string (32 raw bytes); lib/crypto.ts throws 'ENCRYPTION_KEY must be a 32-byte hex string (64 characters). Generate one with: openssl rand -hex 32' when the decoded length is not exactly 32 bytes, and both encrypt() and decrypt() throw the same class of error when the variable is unset.",
+      "evidence": [
+        {
+          "resource": "repo://lib/crypto.ts#L6-L45",
+          "version": "repo-lines-v1:sha256:877a27040c2bcbdbe3a85f58fc0af857a42b98df35af422b856dde4756603f53:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxOGRhMzM1OTIzNjc5NjNkOTI4MGQ4YWYxNTQxYjUzY2E1ZDM0OTljZGU2ZGIwMzkxYjY3YzkxZmE1ZWRkMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4Mzc2ZmYyNzEyZDk4NjJhNTZmNmI5ODU5Njk1ZjkxZmY4ZTUwZTQ5YzYzZGQxZWY1MmU0ZjEwNWVhYzFjMGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIxZjNiZWNjYTE4YTA2ZjJkNWFhMDkwNDA4ZmNiMDAzMmI0MGVmZmE1MjgzOWU4YWJlY2M5MmZlNTc1NGRlNjQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_966c522f1aab41178815ff673bb61b49",
+      "statement": "JWE_SECRET is the symmetric key for the A256GCM session cookie (alg: 'dir'); both lib/jwe/encrypt.ts and lib/jwe/decrypt.ts default their secret argument to process.env.JWE_SECRET and throw 'Missing JWE secret' when it is unset, so the JWE layer fails closed rather than degrading to an unsigned cookie.",
+      "evidence": [
+        {
+          "resource": "repo://lib/jwe/decrypt.ts",
+          "version": "repo-file-v1:sha256:eee3a3d83f9723ab4b304166149b253818c90ed5e3cb1073df437bff3533d412"
+        },
+        {
+          "resource": "repo://lib/jwe/encrypt.ts#L3-L16",
+          "version": "repo-lines-v1:sha256:99fe52248e53f779655d55e2e5fb8c1e11fb4d98728c890277a3c7950792503c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3MDNiYmNlN2M3OTVmYTNjYzcyODIzMTMxY2NmMjMxNTFlNDVjM2JhMjg0Mzc0N2VjNjJjMjY1MTYzNDc2ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiMWMwZDcyMTY1MjRlMzNhZDNmM2VmMjBkMzY3ZGEyZWM2ZjQ4N2E2NTUyOWZhYmEzNzVjMTFjMDdmZGYzZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_80395620748547d08e9cd17511c2e985",
+      "statement": "POSTGRES_URL is the only database connection string in the codebase; lib/db/client.ts throws 'POSTGRES_URL environment variable is required' when unset, drizzle.config.ts uses it for live drizzle-kit commands, and scripts/migrate-production.ts hard-gates on VERCEL_ENV === 'production' before requiring it. Production deploys provision it automatically via the Neon integration declared in vercel-template.json.",
+      "evidence": [
+        {
+          "resource": "repo://drizzle.config.ts",
+          "version": "repo-file-v1:sha256:9af84cbb31426f554f8b3bfd98cf6765c7d4bbdbd27be2524402dd8cdaf10cc7"
+        },
+        {
+          "resource": "repo://lib/db/client.ts#L10-L13",
+          "version": "repo-lines-v1:sha256:5e94a5c2376a6484fdeb693fc2aa3126d031a9f58e5f26b271cd517d3bc61031:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODAxYTI5NWNjMGFkMjQ1MzcwZWQyYjgwZjU2MDc2N2RjZGZkMTA1MGRjODA0OGVjNDI2NTdjOGY2OGM5ZWNkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzhkNjc3YjE5ZDVkZTYzZWFjOGYzZjIyZTA2ZmVjYWIwNmYwYjcyNWU3Y2I5NGNiZTY1ZWU1MDI5OTE0NDIzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2ExMDM2NGY0MDQ3OWNhYzU0OTA3NzQwOWQzYTEwZjRiNDRhY2RlZjg4YzNjYWY3YjcxMGFiZDY1Yzc4NjJiOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2IyZjUyOWU0MzAyNDhiNzFjNDVlYThlMzA3NWEwZTQzNzNmM2JhNjg1NDk0NGE5NjYxNGM4N2NlZGMwZDdmOSJ9"
+        },
+        {
+          "resource": "repo://scripts/migrate-production.ts#L28-L29",
+          "version": "repo-lines-v1:sha256:6f4abc3d9ec22fe620a8b1ace65004b297b862110acf0a1eda507a39f5d0f791:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWE3NWU3MjAzMzBjOTMwZTRhODNjM2NkZTdhMzI3MWVmNjA5OTc2ZDQ0NjJmM2ZmOWJjNWNmY2VmMDVmZTQ2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWM4NGEzNDU0NjU3YTI5N2I4Y2YxNmUwZGFiYmIxYmIxNjk0M2Q4MTc2MWZlYjg5YzJiMDFjYTFkOTI3ZWU1MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjQ4NTBkNTVjYzA4ZDc5NjEwM2U4YzcxNzM5YzljNzkzMDA5NDA5OTBhMWU2NjIzNmEwYjMxMDVkYmY4NmQzMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTcyMDE2ODIzYzUyYTAxZGI2YjhhNWE0MzZhZTUyY2U0ZDkyZTA4NGRiYTgyMjgwOGU0YzgxMDdmMzc3ODNjOSJ9"
+        },
+        {
+          "resource": "repo://vercel-template.json",
+          "version": "repo-file-v1:sha256:54db1e76515923e9fcf8235664dc4ba60e1e34dc7c81ff114f310df7a7389008"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a3f387ff8f04b298ffb1f4c4668926e",
+      "statement": "NEXT_PUBLIC_AUTH_PROVIDERS is the deploy-time toggle for sign-in provider availability; getEnabledAuthProviders in lib/auth/providers.ts splits the comma-separated string, lowercases each entry, and returns a {github, vercel} boolean record defaulting to github when the variable is unset, with any token outside the allowlist silently dropped.",
+      "evidence": [
+        {
+          "resource": "repo://lib/auth/providers.ts#L5-L16",
+          "version": "repo-lines-v1:sha256:0e0034bda2e6ae30bfbb761db0d87de99e3ebd28b19f238560bd6197f50aa3f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNGQzNjk3MTEzOGIzYmM3ZDliMThiM2YxNGYwYWYyNmEyNzhjNDEzODM5ODY3YTI2NDA5YzAyOTUzODAwMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzOWI5MTY5YTc1YmUzMGMyZjVkMTU2YjI1YzAxODI1NGZjMGJhMTUwMWE0MmUzYmVhYzRlYTYwMjM2NGE1OTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5ca0f69f7bff40e285ed6110c361c3b6",
+      "statement": "Exactly three NEXT_PUBLIC_* variables exist in the application (NEXT_PUBLIC_AUTH_PROVIDERS, NEXT_PUBLIC_GITHUB_CLIENT_ID, NEXT_PUBLIC_VERCEL_CLIENT_ID) and they are the only env vars Next.js inlines into the browser bundle; every other variable, including the OAuth client secrets (GITHUB_CLIENT_SECRET, VERCEL_CLIENT_SECRET) and all API-key credentials, must remain unprefixed or it will leak to the client.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L191-L196",
+          "version": "repo-lines-v1:sha256:4bd6d0f58a76d04d7c64fa00eeb90f8fe84f0bf70ff86ca23b972a6de6322f30:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjg0YzY4NWIxNDg0ZDlhYTQ2NzAyYTc1MzM0MjRiMzFiM2U0YmRkMjhmOGYwNGMyNjg1YzBkYTIxYTZiYjUyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjM0YWFlNTIxMWM0NzU0OTQ2NWZhMTVhNzhiODRmYTlmNTBkYTM1NDliMjZlZDE0ZTdmNmZkNzc0ZDQ1MTA0NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGQxZDU4ZjNlYjE5ZmI5N2MwZWQyNGMxZDFjNWYzNjM5MjI1MTAyM2UwYzNlOTNlODdiMmRkNDExNDczMzBhMCJ9"
+        },
+        {
+          "resource": "repo://app/api/auth/github/callback/route.ts#L48-L49",
+          "version": "repo-lines-v1:sha256:d083d9f537202a2aac32a48303ff691b819440a7a7387afe7d9f95bf0939587d:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWJiN2Y0ZDc3ODVhZjRkYTU1YzMyYTIzY2IyMTFiM2YwZThkMmM2M2E3MDc2MDQxZjdlNWNjZDYxNjE2ZWMzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZThiODY5MTVmZjU5MWNkMzYwZDJjMjg1YjE4ZGMwMGE4YzdkNjU1NDUwZDhjNTMwYjk4YmY3ZTVkMWFkZGZkMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTdkODYzMmU1NGU5Mjk4YWJiOTU4NzI3ZTJkNTE0MDhhYmFmMTM2NjAzNTM3OTEwMTQwYWJmNjViMzBhYjYxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2U4NDBiZmZlMDgzMzFjYTdiY2U0YjA5MGYyNDg4OWQyMjVjMzY3OGEzYjU2YjgxZGM0ZmM5MzM4MTQ2ZTViNiJ9"
+        },
+        {
+          "resource": "repo://app/api/auth/signin/vercel/route.ts#L8-L9",
+          "version": "repo-lines-v1:sha256:ddf79cbfcf64b1a5d8e05505b1a33768063a86d075abfb3b917952746a4e9315:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjVhOWE5Y2M2MDFjODcyNjM1NmMwNWNkZTZlYWRlMGUzMDJiN2Q0NjRlYzRhMTgxOTk4MGZjYmUyY2QyNWZlMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGYwOWZiY2EyOTY2ZjEzNTljMjUzNWUyZDg2ZDlkMDIxN2ExZjllN2QwMDJkZTM5N2E0MDY4MmM4NWEzOWMzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTdmODcxYzViOWYzY2ViZjZlYmZlYjg0MTI1ZTNmYmZmZWI5NTFlMjM4Mjk4ZjY5ZjRlNzllYTljNjBhOGEzNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWRjNGIxMWU3ZjAyMzFhN2QxNzYyNDA4Y2U3NzQ0MmQzZDI5ODM2ZDllMmM0N2Y5YzM0NTI1ZmJlNjdlOTRkYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f7f28c096baa44afb94cd68c8093225e",
+      "statement": "MAX_MESSAGES_PER_DAY (default 5) and MAX_SANDBOX_DURATION (default 300 minutes) are exported from lib/constants.ts as parseInt(process.env.* || default, 10) and consumed by lib/db/settings.ts; MAX_SANDBOX_DURATION additionally seeds the tasks.max_duration column default in lib/db/schema.ts so that newly created tasks inherit the env-var-driven ceiling.",
+      "evidence": [
+        {
+          "resource": "repo://lib/constants.ts#L1-L9",
+          "version": "repo-lines-v1:sha256:cdb144231fd2418b35c810e1bd26efedd915e24319cab8a33cc224ba4666e145:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzVlMjdmNjhkY2UyMGVmYjRiZmI3MGU5YTBiOTAwMGJmODQyZTdmMjkwZGY5ZjhjMGYyMDU2NmUwMGNmMTMzZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzZlZTM1ZmEzZDBjNTVlYzQ1ODc0OTkyN2FiZWIyMTA1NWM3MDYwNDRmOWQwZWU2ZDM1NDA3YjFlODJjNGU3ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGIzODNmZTJhNzJjYzY4M2Y0MGVkMTk1ZDU0N2E3NGU1YWMyMTM2YjNiNDk2YjM2ZGUzZDRlNDhmYzQ4M2MwNiJ9"
+        },
+        {
+          "resource": "repo://lib/db/schema.ts#L87-L87",
+          "version": "repo-lines-v1:sha256:a82dd43e529fe529ef760f3efedc07aa6bae4bf864bc15e417f3dba1c0811368:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTgyZGQ0M2U1MjlmZTUyOWVmNzYwZjNlZmVkYzA3YWE2YmFlNGJmODY0YmMxNWU0MTdmM2RiYTFjMDgxMTM2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTgyZGQ0M2U1MjlmZTUyOWVmNzYwZjNlZmVkYzA3YWE2YmFlNGJmODY0YmMxNWU0MTdmM2RiYTFjMDgxMTM2OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjhkYmMxYTg2ZTFlYWZlZTgwOTRlZTQ3Mzk5MzJmMDliNzE3NjQ5M2UyNDg5NjVlNzA0OTFhZjAwYzZlMjM4NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTUyMDYzNWUzZDgyNWNmMjM1Y2UxYzY5Y2JhZDlmZjQyYjUzYzEwODcxYTgxZGJjMmExYTYxZTBhZjQ4ZGQ2YSJ9"
+        },
+        {
+          "resource": "repo://lib/db/settings.ts#L58-L71",
+          "version": "repo-lines-v1:sha256:dcddd1c0625630b9f54b51fac84d13f67f8af4e90022c97553cbe5bb3a6f794d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyZTMzMzYwNmM2Zjc2YTkxYzcyM2JlYThkNGViM2ViMTBjNGU1YmRhZGNhOTNjZTAwYTJkMjI1ZDI5MjhjNmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzNDNmYjIzZTk1OTk1NzRkOTUzYjc1NTFhOTY4N2VlYjEwYWZlOTBiZjY5MmQ0ZjQ2MzBlNTI5ZTVhMjE4NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4M2EyOGYyODBkOGQ1ZWQxM2FjOWZhOWVjODJlODAzYjk5NTI4MWIyODE4OWFkN2ZjOGQ0NDIwZWZmNjRlYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7f3c9261d6604421885ec070013e6b79",
+      "statement": "The Copilot agent reads process.env.GH_TOKEN first and falls back to process.env.GITHUB_TOKEN when the former is unset; the dispatcher in lib/sandbox/agents/index.ts treats the pair as a unit during snapshot/restore so either name may be set by the caller without breaking the env restoration.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L273-L273",
+          "version": "repo-lines-v1:sha256:bcffabb62944a42003b393a6c156f1584ab1d8917a482eddce4b957380241ea3:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmNmZmFiYjYyOTQ0YTQyMDAzYjM5M2E2YzE1NmYxNTg0YWIxZDg5MTdhNDgyZWRkY2U0Yjk1NzM4MDI0MWVhMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmNmZmFiYjYyOTQ0YTQyMDAzYjM5M2E2YzE1NmYxNTg0YWIxZDg5MTdhNDgyZWRkY2U0Yjk1NzM4MDI0MWVhMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDA4MGY2YzdkMjQ2NTFhMTZkNzg5NDBjZDQ4NDNkODkzZDQ2YmQ0OWU5ZDFlMTEyODMzZTNmNzJmNWQ5YzJkOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDFhN2ZhOWQwODllNDA5NjlkYzc1ZjAyYzAxYjkwYjZkZWIwYjhlNTIwZjRjMmI4YWIxMDY4YWMwOWE0ZTNjMyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L93-L96",
+          "version": "repo-lines-v1:sha256:f2adbb9be08b1f1154dafff0022b11c637ca486a2ab125340ce3d4702969da23:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWNiZDY2N2FmMzljYWMzMjlhZGE3NWJkYzE3MDliZWE5NGY1MWIxY2JlNWEyMjliMmZlNDJjMTFmYjFlN2Y4NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWFlMTYzZThkNzBlMTkxNWMzZTliODVkYTk0NjFlMDYwODE5ODhhNDMwY2YyMGRhNDMyZjYxZTY0NzhkNzNkYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWExNjk3MzQyYzM0MTg3ZWFmNGJkMzI1Mzk1NThjYjgzM2I0YWZhMjNhMTQ1OWNhY2JhMjg4OGI4MTQ5ZjA4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDQ5NWFlNmY1N2E3NjgyNTA4YjNjYTZkMzNmODlkMGUxOTk3NGE5YzFiMGYzNWY5NDYwYTRmNDBjNTA2YTk4MyJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/index.ts#L63-L73",
+          "version": "repo-lines-v1:sha256:93fa42cc63823f2b951573229a90a77038440ed10815c86a0bda055e3ed0438e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5MWE3ZmY4ZDZlMDY4OGNjZjEzYjBmYWRmNzJhZWI2ODFhNGYwMGQxNGIyNDBmNzY5ZGJlZjIwMmU5ZWQyNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZWJmMTcxNjUwMTA2MzdjY2Q4MWJkNjQ3MzM1YmFlYmJiNGVmNDRiZjQzMzM4M2Y0MGJiMmUxNTdmOTFjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwODZkYjU0MjZmN2RkMDk4MzZkMDM2Yjc5OWVkNGYzYjY1MDE0ODU5OTgwYzU2ZDI5NDE3ZDNlMjA3M2FmODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlZDc1MDEzOTU2YmRkNTliMmU0OGFiYWYzYzA4MWQzODBkZTY3MjVhYWU4ZTI0ZGY1MTNlN2FjOGQ3OTgyYTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_14ffbc9bb608405592190569757ee107",
+      "statement": "Per-agent API key requirements are enforced by validateEnvironmentVariables (or, for copilot, inside the agent itself): claude and codex require AI_GATEWAY_API_KEY exclusively, gemini requires GEMINI_API_KEY (with GOOGLE_API_KEY+GOOGLE_GENAI_USE_VERTEXAI or GOOGLE_CLOUD_PROJECT as alternative env-only paths), cursor requires CURSOR_API_KEY, opencode accepts either AI_GATEWAY_API_KEY or ANTHROPIC_API_KEY, and copilot requires GH_TOKEN or GITHUB_TOKEN.",
+      "evidence": [
+        {
+          "resource": "repo://lib/sandbox/agents/copilot.ts#L92-L100",
+          "version": "repo-lines-v1:sha256:4bf18021fa00a9b1dce2e84d4150d163d37cb3911f2a7759ff31f54af4138ecb:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTNlNjc3YmEzOTM5YWNhZjE1YWY4YTQyNDcwYTEyMjA4N2Q3NjllZWJmZmZjOTU2ZDk4MjlhMjE4YTUzZjQxNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDRiOWEwYjE2Yjk5MTBiYWE1ZDBhNGRjYWZmOGE2MGM0Mjk2MzNiZjJhZTNjYmFjYzgyMDI5MDc1ODBkMTBjYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWJiMWFkMGVlZGZkNmVkNmE5NTAxZTI4MDUzMjc1ODAzYTEyZTU3NmNkNGRjM2UzMjkxMmNlYzE2ODU2ZjlmMiJ9"
+        },
+        {
+          "resource": "repo://lib/sandbox/agents/gemini.ts#L177-L200",
+          "version": "repo-lines-v1:sha256:9fec18e21242792c7865bcf8f32ef98e7a8c44ebe12faa346d428b5cf60c2908:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjOGQ1YTUwZDZhZTZhMzBkOTQ4NDJjYmY3NzRmZDg3NTBhZWM0MjVkZTY2YzRhNWIwOTUxMzJlMzE0YjRiNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBhMmNjMDViZGYwMjdkMmVhNGMzMmVjOTQ2ZjA4NWNiNDE1NTBiODZiMTNkYWMxZWUxMWQ0MDk0NjlhODJmZDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0ZTAxNWY1NGM0NDE1ZjNkMGNlZGI2ZjY3NDc5ZTBkZjQ0ZjMyZDMwMWNmMzY4MDQxM2NjMjRiZDVjNGVlYWUifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/config.ts#L14-L48",
+          "version": "repo-lines-v1:sha256:0345fa2f7dea36e3877036297d5f79bf62c3c8fd31fd3e4d3ac1dc4c9f131c4f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkNjdhZDE5ODQ0ZjQyMzFmMzYxOTk0ZGRkMDRjNWUzZmE3NmIzM2RjMWY3YmRlN2VmZmY3ZDNmMDRlZTNhMTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmYTU1ZjJiYTVkMzZiY2Y3N2UwNzI3NDNjNzI4YTcxZDI1NjE1N2RhOTAyMGU1ZDk1MjMzYzgwYTk1NjNiYTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5OGI5MDlmMjI4YmM0Mjg2ZmVkMDg3ZWE5YWMyZjY5MzQ0OWQyNjRiNjU5MjZlNGY4YWUyMTI3NmU1NzYyZTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_07f53e92fc3043baa989498f0f89214e",
+      "statement": "Log redaction follows a two-layer contract: AGENTS.md mandates static-only log strings as the primary defense, and lib/utils/logging.ts provides redactSensitiveInfo as a regex-based backup that masks ANTHROPIC_API_KEY, OPENAI_API_KEY, GITHUB_TOKEN (gh[phosr]_... variants), GitHub URL-embedded tokens, Bearer tokens, generic *_KEY/*_TOKEN/*_SECRET/*_PASSWORD/*_TEAM_ID/*_PROJECT_ID assignments, and the three SANDBOX_VERCEL_* prefixes; the function is invoked from createLogEntry (every persisted log line) and directly from lib/sandbox/creation.ts and lib/sandbox/agents/codex.ts before echoing command output.",
+      "evidence": [
+        {
+          "resource": "repo://AGENTS.md#L5-L52",
+          "version": "repo-lines-v1:sha256:239812c50459ea36d16918a01e1995831363190710e91fc1ea4de715e8e7a6f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxMDA0NTdiYzNjNThkZWFmNmNiMTk2NjQ0MDUzYWI0YTJjOTYzMDU1NjA3NzJiMzA1NjZhMWM4OTM1MDA2MDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTc0MjVlZTVhOWMwZDFjY2E3MmZhNDk1MjY5Zjc3MmJkNTJlYzI5MDA5NGJhZDIxZDM5NzBjYThiZTUwMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI4NDQyYWU3MWY2YzUzOTdmNWU5YTRjMjA4OGViZGEyZjVjNmFjZjJhMDJmZjQ2MDI3M2Q3N2Y3NDZjYzllNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwMjEzNDdkNWY1N2JmNzUzYzY1NGNhNjVmZjNhMTAxYjY4NTkwODY1MTlkY2Y5ZWQ0YTU2NDUxNDY3MmQ2NTQifQ"
+        },
+        {
+          "resource": "repo://lib/sandbox/creation.ts#L20-L42",
+          "version": "repo-lines-v1:sha256:4beb996eafd97dd5c9d012190e14d250a51d7a273915d38d75a93963f914b4cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4ZGE5OWYwZTJlMGZkNWZlOTE2NmZkYjUzZmEwODdkOTczZmQwNTdjMWUyYjRmZWNmZDA2ZjYwOTE2Y2U3YmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlkMWQ4ZWJiMzk0ZGVlYzQxOGJhMTkyOWIwODlmM2IxNTk5ZTFlMzYyYjQzYzFjZTQ5Nzg4NTRjZTNjZGYwMjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc3M2JmNzdmNWQ0NDRjNjM5OTQ0ZDQ1OGNiOGM0MDY5NTQyNTVmODhhYzliMGVjZTYwYWY3MDZmNmNiYjk4NjMifQ"
+        },
+        {
+          "resource": "repo://lib/utils/logging.ts#L6-L74",
+          "version": "repo-lines-v1:sha256:6a23ea38853ca82d640df4e4f411d1ab7d8b0f2ea066dc3a546fc38b01516536:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyMjdkZjBmMTIxZWJmNmEwNjBmY2RjNTAwMmE0MTljZWFjYTg5NDFkZDEzMDM0ZjFmMjQzZGY1ODEzMGYwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNzQ5MmYyZjhiYzM1M2Q3NzYxYzc3ZDNhNmEyNWYyZTRjZTMwNGQyYTI3YTkwM2JiOTFiZjVmZjBhMzJjOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4ODM2ODE5MmQ0OWZlNzYyMjA4YTM5YTE2MjhkZmY0ODQxNTMzOWQ3NDVlNzU5ZDJkMmY0ZDJmYzVmYzJkOGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c11dbe5ad12640e59612273552343209",
+      "statement": "VERCEL_DEPLOY_URL in lib/constants.ts is a hardcoded https://vercel.com/new/clone URL whose env= parameter encodes the required variable set (SANDBOX_VERCEL_TEAM_ID, SANDBOX_VERCEL_PROJECT_ID, SANDBOX_VERCEL_TOKEN, JWE_SECRET, ENCRYPTION_KEY) so a README 'Deploy with Vercel' button never produces a half-configured instance; VERCEL_DEPLOY_BUTTON_URL is the markdown image link wrapper.",
+      "evidence": [
+        {
+          "resource": "repo://lib/constants.ts#L8-L12",
+          "version": "repo-lines-v1:sha256:348e2e13a89d65b7d018c67f497d0ef290e35ff48cdcebee557bf0fdb74de1b7:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWUyNzk0MWE2ZDliMjY1MTExOTVjZDk1MWYwMmM0NmU2YmMwYmExMDZjZTg4N2NiYTQ0YWFlNWNmMGIwZWEzMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzJjYTYxZWQ4YWZhYzFkOGE0ZDlkYmE5ZmE3Mzg2M2ZjZDQyMGUxYTBhM2Y1MDM5MzFlYzBiMWE3M2ZiN2YzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODIxYzEzYTk1NTA0MDg3ODM2MjVjMzJlYzVjZjczMDAwYjI4ZTdiZDg4MDBkNmU4ZDNlNjVmODNhYmJhZDg5NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.1",
+    "at": "2026-09-14T13:12:47.107Z"
+  }
+}
